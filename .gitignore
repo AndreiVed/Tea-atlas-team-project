@@ -1,0 +1,39 @@
+# Ігнорування віртуального середовища
+.venv/
+
+# Ігнорування бази даних
+backend/db.sqlite3
+backend/*.sqlite3
+
+# Ігнорування всіх файлів кешу та тимчасових файлів
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.tmp
+
+# Ігнорування середовища Django
+backend/media/
+backend/staticfiles/
+backend/*.log
+
+# Ігнорування міграційних кешів (але самі файли міграцій не ігноруються)
+backend/**/migrations/*.pyc
+backend/**/migrations/*.pyo
+
+# Ігнорування всіх IDE та редакторів
+.vscode/
+.idea/
+*.swp
+
+# Ігнорування Node.js файлів, якщо фронтенд буде на JS/React/Vue
+frontend/node_modules/
+frontend/.next/
+frontend/.nuxt/
+frontend/.parcel-cache/
+frontend/dist/
+frontend/build/
+frontend/yarn.lock
+frontend/package-lock.json
