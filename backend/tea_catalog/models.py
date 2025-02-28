@@ -13,7 +13,7 @@ def tea_image_file_path(instance, filename):
     return os.path.join("uploads/tea_catalog/", filename)
 
 
-class Description(models.Model):
+class Descriptor(models.Model):
     name = models.CharField(max_length=63, unique=True)
 
     def __str__(self):
@@ -22,6 +22,9 @@ class Description(models.Model):
 
 class Country(models.Model):
     name = models.CharField(max_length=68, unique=True)
+
+    class Meta:
+        verbose_name_plural = "Countries"
 
     def __str__(self):
         return self.name
@@ -40,62 +43,46 @@ class Region(models.Model):
         return f"{self.country}, {self.province}"
 
 
-"""
-* Fermentation:
-Minimally Oxidized (white and green tea)
-Lightly Oxidized (yellow, light oolong)
-Moderately Oxidized (medium oolong)
-Heavily Oxidized (dark oolong)
-Fully Oxidized (red tea)
-Post-Fermented (hei cha, shu and shen puerh)
-"""
-
-
 class Category(models.Model):
     class Fermentation(models.Choices):
-        MN = "Minimally Oxidized"
-        LT = "Lightly Oxidized"
-        MD = "Moderately Oxidized"
-        HV = "Heavily Oxidized"
-        FL = "Fully Oxidized"
-        PF = "Post-Fermented"
+        MINIMALLY = "Minimally Oxidized"
+        LIGHTLY = "Lightly Oxidized"
+        MODERATELY = "Moderately Oxidized"
+        HEAVY = "Heavily Oxidized"
+        FULLY = "Fully Oxidized"
+        POST_FERMENTED = "Post-Fermented"
 
     name = models.CharField(max_length=255, unique=True)
     region = models.ForeignKey(Region, on_delete=CASCADE)
     fermentation = models.CharField(
-        max_length=19, choices=Fermentation.choices, default=Fermentation.MN
+        max_length=19, choices=Fermentation.choices, default=Fermentation.MINIMALLY
     )
 
+    class Meta:
+        verbose_name_plural = "Categories"
 
-class Descriptor(models.Model):
-    name = models.CharField(max_length=63, unique=True)
-
-
-"""
-** Effects:
-Warming
-Cooling
-Balancing
-Moisturizing
-Cleansing
-Aids digestion
-"""
+    def __str__(self):
+        return f"{self.name}"
 
 
 class Tea(models.Model):
     class Effect(models.Choices):
-        WM = "Warming"
-        CO = "Cooling"
-        BL = "Balancing"
-        MO = "Moisturizing"
-        CL = "Cleansing"
-        AD = "Aids digestion"
+        WARMING = "Warming"
+        COOLING = "Cooling"
+        BALANCING = "Balancing"
+        MOISTURIZING = "Moisturizing"
+        CLEANSING = "Cleansing"
+        AIDS_DIGESTION = "Aids digestion"
 
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=CASCADE)
+    category = models.ForeignKey(
+        Category, on_delete=CASCADE
+    )  # TODO add field category.fermentation to serializer
     descriptors = models.ManyToManyField(Descriptor, related_name="tea")
-    effect = models.CharField(max_length=14, choices=Effect.choices, default=Effect.BL)
+    impact = models.CharField(
+        max_length=14, choices=Effect.choices, default=Effect.BALANCING
+    )
     image = models.ImageField(null=True, blank=True, upload_to=tea_image_file_path)
 
     def __str__(self):
