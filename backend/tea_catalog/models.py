@@ -76,9 +76,7 @@ class Tea(models.Model):
 
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
-    category = models.ForeignKey(
-        Category, on_delete=CASCADE
-    )  # TODO add field category.fermentation to serializer
+    category = models.ForeignKey(Category, on_delete=CASCADE)
     descriptors = models.ManyToManyField(Descriptor, related_name="tea")
     impact = models.CharField(
         max_length=14, choices=Effect.choices, default=Effect.BALANCING
@@ -90,3 +88,6 @@ class Tea(models.Model):
 
     class Meta:
         ordering = ["category", "name"]
+
+
+# TODO implement photo url
