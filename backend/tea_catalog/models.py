@@ -90,4 +90,3 @@ class Tea(models.Model):
         ordering = ["category", "name"]
 
 
-# TODO implement photo url
