@@ -28,6 +28,10 @@ class RegionSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     region = RegionSerializer()
+    fermentation = serializers.SerializerMethodField()
+
+    def get_fermentation(self, obj):
+        return obj.get_fermentation_display()
 
     class Meta:
         model = Category
