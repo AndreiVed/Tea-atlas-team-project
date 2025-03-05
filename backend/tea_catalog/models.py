@@ -33,7 +33,7 @@ class Country(models.Model):
 class Region(models.Model):
     country = models.ForeignKey(Country, on_delete=CASCADE)
     province = models.CharField(max_length=68, unique=True, null=True, blank=True)
-    photo = models.ImageField(null=True, blank=True, upload_to=tea_image_file_path)
+    # photo = models.ImageField(null=True, blank=True, upload_to=tea_image_file_path)
 
     class Meta:
         unique_together = ["country", "province"]
@@ -88,5 +88,3 @@ class Tea(models.Model):
 
     class Meta:
         ordering = ["category", "name"]
-
-
