@@ -23,7 +23,7 @@ class RegionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Region
-        fields = ["country", "province", "photo"]
+        fields = ["country", "province"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
