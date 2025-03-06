@@ -1,0 +1,94 @@
+@use './grid-mixins.scss' as *;
+
+@mixin heading($size, $line-height, $letter-spacing, $weight: 300, $font: "Cormorant") {
+  font-family: $font;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+}
+
+@mixin text($size, $line-height, $letter-spacing, $weight: regular, $uppercase: false) {
+  font-family: "Montserrat";
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+
+  @if $uppercase {
+    text-transform: uppercase;
+  }
+}
+
+// Desktop / Tablet стили
+h1 {
+  @include heading(55px, 120%, -2%);
+}
+
+h2 {
+  @include heading(40px, 120%, -2%);
+}
+
+h3 {
+  @include heading(32px, 120%, -2%);
+}
+
+h4 {
+  @include text(28px, 120%, -2%, regular);
+}
+
+.large-text {
+  @include text(20px, 150%, 0);
+}
+
+.main-text {
+  @include text(16px, 150%, 0);
+}
+
+.main-text-bold {
+  @include text(16px, 150%, 0, semibold);
+}
+
+.small-text {
+  @include text(12px, 150%, 0);
+}
+
+.button-text {
+  @include text(16px, 100%, 0, regular, true);
+}
+
+.navigation-text {
+  @include text(12px, 150%, 0, semibold, true);
+}
+
+@include on-mobile {
+  h1 {
+    @include heading(55px, 120%, -2%);
+  }
+
+  h2 {
+    @include heading(40px, 120%, -2%);
+  }
+
+  h3 {
+    @include heading(32px, 120%, -2%);
+  }
+
+  p {
+    @include text(14px, 150%, 0);
+  }
+
+  .link-button {
+    @include text(12px, 100%, 0, regular, true);
+  }
+
+  .navigation-text {
+    @include text(20px, 150%, 0, semibold, true);
+  }
+}
+
+@include on-tablet {
+  p {
+    @include text(16px, 150%, 0);
+  }
+}

@@ -1,0 +1,97 @@
+@use '../../styles/utils/colors' as *;
+@use '../../styles/utils/mixins/grid-mixins' as *;
+
+.footer {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: $gray-60;
+  padding: 24px 16px;
+
+  @include on-tablet {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 32px 40px 32px;
+  }
+
+  &__navigation {
+    display: flex;
+    align-items: center;
+  }
+
+  &__list {
+    display: flex;
+    // align-items: center;
+    flex-direction: column;
+    list-style-type: none;
+    flex-wrap: wrap;
+    max-width: 100%;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+
+    @include on-tablet {
+      flex-direction: row;
+    }
+
+    &-item {
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+  }
+
+  &__link {
+    position: relative;
+    font-family: "Montserrat", sans-serif;
+    color: $white;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 150%;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding-block: 4px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background-color: $white;
+      border-radius: 8px;
+
+      transition: width 0.3s ease-in-out;
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    width: 56px;
+    height: 56px;
+    margin: 24px auto;
+
+    background-image: url('./logo-white.svg');
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    transition: transform .4s;
+
+    @include on-tablet {
+      width: 64px;
+      height: 64px;
+      margin: 0;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      transition: transform .4s;
+    }
+  }
+}
