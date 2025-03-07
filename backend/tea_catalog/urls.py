@@ -8,4 +8,8 @@ app_name = "tea_catalog"
 router = routers.DefaultRouter()
 router.register("", TeaViewSet)
 
-urlpatterns = [path("", include(router.urls))]
+urlpatterns = [
+    path("", include(router.urls)),
+]
+
+print(router.urls)

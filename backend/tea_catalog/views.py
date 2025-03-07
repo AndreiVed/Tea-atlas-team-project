@@ -1,9 +1,16 @@
 from drf_spectacular.utils import extend_schema, OpenApiParameter
-from rest_framework import mixins
+from rest_framework import mixins, status
+from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.decorators import action
 
 from tea_catalog.models import Tea
-from tea_catalog.serializers import TeaDetailSerializer, TeaListSerializer
+from tea_catalog.serializers import (
+    TeaDetailSerializer,
+    TeaListSerializer,
+)
 
 
 class TeaViewSet(
@@ -85,3 +92,53 @@ class TeaViewSet(
         Get a list of teas with the ability to filter by name, category, country, fermentation and effect.
         """
         return super().list(request, *args, **kwargs)
+
+    @action(
+        detail=True,
+        methods=["post"],
+        url_path="add_favorite",
+        permission_classes=[IsAuthenticated],
+        serializer_class=None,
+    )
+    def add_favorite(self, request, pk=None):
+        """
+        Add/remove the tea (pk) to/from the user's favorite list
+        """
+        user = request.user
+        tea_to_favorite = get_object_or_404(Tea, id=pk)
+
+        if user.favorite.filter(id=tea_to_favorite.id).exists():
+            user.favorite.remove(tea_to_favorite)
+            return Response(
+                {"detail": "Successfully removed from favorites."},
+                status=status.HTTP_200_OK,
+            )
+        else:
+            user.favorite.add(tea_to_favorite)
+            return Response(
+                {"detail": "Successfully added to favorites."},
+                status=status.HTTP_201_CREATED,
+            )
+
+
+# class FavoriteManipulationView(APIView):
+#     permission_classes = (IsAuthenticated,)
+#
+#     def post(self, request, pk):
+#         """
+#         Add tea to favorite
+#         """
+#         user = request.user
+#         tea_to_favorite = get_object_or_404(Tea, id=pk)
+#         if tea_to_favorite in user.favorite:
+#             user.favorite.remove(tea_to_favorite)
+#             return Response(
+#                 {"detail": "Successfully removed from favorites."},
+#                 status=status.HTTP_200_OK,
+#             )
+#         else:
+#             user.favorite.add(tea_to_favorite)
+#             return Response(
+#                 {"detail": "Successfully added to favorites."},
+#                 status=status.HTTP_201_CREATED,
+#             )
