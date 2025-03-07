@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
@@ -86,3 +87,48 @@ class TeaViewSetTestCase(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+
+
+class TeaFavoriteTests(TestCase):
+    def setUp(self):
+        """Налаштування тестових даних"""
+        self.client = APIClient()
+        self.user = get_user_model().objects.create_user(
+            email="test@user.com", password="testpass"
+        )
+        self.client.force_authenticate(self.user)
+
+        self.country = Country.objects.create(name="China")
+        self.region = Region.objects.create(country=self.country, province="Yunnan")
+        self.category = Category.objects.create(name="Pu-erh", region=self.region)
+        self.descriptor1 = Descriptor.objects.create(name="Floral")
+        self.descriptor2 = Descriptor.objects.create(name="Earthy")
+
+        self.tea = Tea.objects.create(
+            name="Sheng Pu-erh",
+            description="Raw Pu-erh tea",
+            category=self.category,
+            impact="Warming",
+        )
+        self.favorite_url = reverse("tea_catalog:tea-add-favorite", args=[self.tea.id])
+
+    def test_add_favorite(self):
+        """Перевірка додавання чаю до улюбленого"""
+        response = self.client.post(self.favorite_url)
+        self.user.refresh_from_db()  # Оновити користувача з БД
+        self.assertEqual(response.status_code, 201)
+        self.assertIn(self.tea, self.user.favorite.all())
+
+    def test_remove_favorite(self):
+        """Перевірка видалення чаю з улюбленого"""
+        self.user.favorite.add(self.tea)  # Спочатку додаємо чай
+        response = self.client.post(self.favorite_url)
+        self.user.refresh_from_db()
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn(self.tea, self.user.favorite.all())
+
+    def test_unauthorized_access(self):
+        """Перевірка доступу без авторизації"""
+        self.client.logout()  # Вийти з акаунту
+        response = self.client.post(self.favorite_url)
+        self.assertEqual(response.status_code, 401)

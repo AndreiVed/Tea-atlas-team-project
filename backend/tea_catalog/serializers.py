@@ -51,3 +51,8 @@ class TeaDetailSerializer(TeaListSerializer):
             "impact",
             "image",
         ]
+
+
+class FavoriteTeaSerializer(serializers.Serializer):
+    action = serializers.ChoiceField(choices=["like", "dislike"])
+    user_id = serializers.IntegerField()
