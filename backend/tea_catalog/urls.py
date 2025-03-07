@@ -11,5 +11,3 @@ router.register("", TeaViewSet)
 urlpatterns = [
     path("", include(router.urls)),
 ]
-
-print(router.urls)

@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics, status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import get_object_or_404
@@ -5,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from tea_catalog.models import Tea
 from tea_catalog.serializers import TeaListSerializer
@@ -42,3 +44,32 @@ class FavoriteListView(APIView):
 
     def get_object(self):
         return self.request.user
+
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        summary="Logout User",
+        description="Logout the authenticated user by blacklisting their refresh token.",
+        request=None,
+        responses={205: {"detail": "Successfully logged out"}},
+    )
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(
+                {"detail": "Successfully logged out"},
+                status=status.HTTP_205_RESET_CONTENT,
+            )
+        except KeyError:
+            return Response(
+                {"error": "Refresh token is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except Exception:
+            return Response(
+                {"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST
+            )
