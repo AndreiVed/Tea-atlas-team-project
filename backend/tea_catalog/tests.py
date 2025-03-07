@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
+from yaml import serialize
 
 from tea_catalog.models import Tea, Category, Region, Country, Descriptor
 from tea_catalog.serializers import TeaListSerializer, TeaDetailSerializer
@@ -101,8 +102,6 @@ class TeaFavoriteTests(TestCase):
         self.country = Country.objects.create(name="China")
         self.region = Region.objects.create(country=self.country, province="Yunnan")
         self.category = Category.objects.create(name="Pu-erh", region=self.region)
-        self.descriptor1 = Descriptor.objects.create(name="Floral")
-        self.descriptor2 = Descriptor.objects.create(name="Earthy")
 
         self.tea = Tea.objects.create(
             name="Sheng Pu-erh",
@@ -132,3 +131,11 @@ class TeaFavoriteTests(TestCase):
         self.client.logout()  # Вийти з акаунту
         response = self.client.post(self.favorite_url)
         self.assertEqual(response.status_code, 401)
+
+    def test_favorite_list(self):
+        """Перевірка відображення списку улюбленого чаю"""
+        self.client.post(self.favorite_url)
+        self.user.refresh_from_db()
+        res = self.client.get(reverse("user:favorite_list"))
+        serializer = TeaListSerializer(self.tea, many=False)
+        self.assertEqual(res.data, [serializer.data])

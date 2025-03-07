@@ -13,7 +13,7 @@ class TeaListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tea
-        fields = ["name", "category", "descriptors", "image"]
+        fields = ["id", "name", "category", "descriptors", "image"]
 
 
 class RegionSerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class RegionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Region
-        fields = ["country", "province"]
+        fields = ["id", "country", "province"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -35,7 +35,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ["name", "region", "fermentation"]
+        fields = ["id", "name", "region", "fermentation"]
 
 
 class TeaDetailSerializer(TeaListSerializer):
@@ -44,6 +44,7 @@ class TeaDetailSerializer(TeaListSerializer):
     class Meta:
         model = Tea
         fields = [
+            "id",
             "name",
             "category",
             "description",
