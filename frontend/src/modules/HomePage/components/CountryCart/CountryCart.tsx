@@ -11,11 +11,13 @@ export const CountryCart: FC<Props> = ({ country }) => {
 
   return (
     <article className={styles["cart"]}>
-      <img
-        className={styles["cart__photo"]}
-        src={photoPath}
-        alt="Country picture"
-      />
+      <div className={styles["cart-photo-wrap"]}>
+        <img
+          className={styles["cart__photo"]}
+          src={photoPath}
+          alt="Country picture"
+        />
+      </div>
       <h3 className={styles["cart__title"]}>{title}</h3>
     </article>
   );

@@ -1,5 +1,5 @@
 import { Button } from "../../components/Button/Button";
-import { desktopWidth, tabletWidth } from "../../config";
+import { Banner } from "./components/Banner";
 import { Carousel } from "./components/Carousel";
 import styles from "./HomePage.module.scss";
 
@@ -7,23 +7,10 @@ export const HomePage = () => {
   return (
     <>
       <section className={styles["discover-world-of-tea"]}>
-        <div className={styles["discover-world-of-tea__banner"]}>
-          <picture>
-            <source
-              srcSet="./banners/teapot-with-tea-bright-table-desktop.jpg"
-              media={`min-width: ${desktopWidth}px`}
-            />
-            <source
-              srcSet="./banners/teapot-with-tea-bright-table-tablet.jpg"
-              media={`min-width: ${tabletWidth}px`}
-            />
-            <img
-              className={styles["discover-world-of-tea__mobile-banner"]}
-              src="./banners/teapot-with-tea-bright-table-mobile.jpg"
-              alt="Discover world of tea banner"
-            />
-          </picture>
-        </div>
+        <Banner
+          className="discover-world-of-tea__banner"
+          baseSrc="/banners/homepage/teapot-with-tea-bright-table.jpg"
+        />
         <div className={styles["discover-world-of-tea__wrap"]}>
           <h2 className={styles["discover-world-of-tea__title"]}>
             Discover the <br />
@@ -33,17 +20,10 @@ export const HomePage = () => {
         </div>
       </section>
       <section className={styles["tea-catalog"]}>
-        <div className={styles["tea-catalog__banner"]}>
-          <picture>
-            <source srcSet="" media={`min-width: ${desktopWidth}px`} />
-            <source srcSet="" media={`min-width: ${tabletWidth}px`} />
-            <img
-              className={styles["tea-catalog__banner-mobile"]}
-              src="./banners/homepage-tea-catalog-banner-mobile.jpg"
-              alt="Tea catalog"
-            />
-          </picture>
-        </div>
+        <Banner
+          className="tea-catalog__banner"
+          baseSrc="/banners/homepage/tea-catalog-banner.jpg"
+        />
         <div className={styles["tea-catalog__info"]}>
           <h3 className={styles["tea-catalog__info-title"]}>Tea Catalog</h3>
           <p className={styles["tea-catalog__info-description"]}>
@@ -60,23 +40,10 @@ export const HomePage = () => {
       </section>
 
       <section className={styles["guide"]}>
-        <div className={styles["guide__banner"]}>
-          <picture>
-            <source
-              srcSet="./banners/homepage-brewing-desktop.jpg"
-              media={`min-width: ${desktopWidth}px`}
-            />
-            <source
-              srcSet="./banners/homepage-brewing-tablet.jpg"
-              media={`min-width: ${tabletWidth}px`}
-            />
-            <img
-              className={styles["guide__banner-mobile"]}
-              src="./banners/homepage-brewing-mobile.jpg"
-              alt="Tea catalog"
-            />
-          </picture>
-        </div>
+        <Banner
+          className="guide__banner"
+          baseSrc="/banners/homepage/brewing.jpg"
+        />
         <div className={styles["guide__info"]}>
           <h3 className={styles["guide__info-title"]}>Brewing Guide</h3>
           <p className={styles["guide__info-description"]}>
