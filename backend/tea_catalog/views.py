@@ -119,26 +119,3 @@ class TeaViewSet(
                 {"detail": "Successfully added to favorites."},
                 status=status.HTTP_201_CREATED,
             )
-
-
-# class FavoriteManipulationView(APIView):
-#     permission_classes = (IsAuthenticated,)
-#
-#     def post(self, request, pk):
-#         """
-#         Add tea to favorite
-#         """
-#         user = request.user
-#         tea_to_favorite = get_object_or_404(Tea, id=pk)
-#         if tea_to_favorite in user.favorite:
-#             user.favorite.remove(tea_to_favorite)
-#             return Response(
-#                 {"detail": "Successfully removed from favorites."},
-#                 status=status.HTTP_200_OK,
-#             )
-#         else:
-#             user.favorite.add(tea_to_favorite)
-#             return Response(
-#                 {"detail": "Successfully added to favorites."},
-#                 status=status.HTTP_201_CREATED,
-#             )

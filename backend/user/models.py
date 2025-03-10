@@ -1,11 +1,7 @@
 import os
 import uuid
 
-from django.conf import settings
 from django.db import models
-from django.db.models import CASCADE
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 from django.contrib.auth.models import AbstractUser, BaseUserManager
@@ -78,45 +74,3 @@ class User(AbstractUser):
         elif self.last_name:
             return self.last_name
         return self.email
-
-
-# class Profile(models.Model):
-#     user = models.OneToOneField(
-#         settings.AUTH_USER_MODEL, on_delete=CASCADE, related_name="profile"
-#     )
-#     first_name = models.CharField(max_length=63, null=True, blank=True)
-#     last_name = models.CharField(max_length=63, null=True, blank=True)
-#     bio = models.TextField(null=True, blank=True)
-#     phone = models.CharField(max_length=16, null=True, blank=True)
-#     city = models.CharField(max_length=63, null=True, blank=True)
-#     country = models.CharField(max_length=63, null=True, blank=True)
-#     avatar = models.ImageField(null=True, blank=True, upload_to=profile_image_file_path)
-#     followers = models.ManyToManyField(
-#         settings.AUTH_USER_MODEL, related_name="following", blank=True
-#     )
-#
-#     def __str__(self):
-#         return f"Profile of {self.user}"
-#
-#     # @property
-#     # def followers_count(self):
-#     #     return self.followers.count()
-#     #
-#     # @property
-#     # def following_count(self):
-#     #     return self.user.following.count()  # Count users this user follows
-#
-#     @property
-#     def full_name(self):
-#         return f"{self.first_name} {self.last_name}"
-#
-#
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-#
-#
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
