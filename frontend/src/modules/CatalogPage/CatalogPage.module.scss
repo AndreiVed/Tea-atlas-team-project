@@ -1,0 +1,54 @@
+@use '../../styles/utils/colors' as *;
+@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.catalog {
+  position: relative;
+
+  &-banner-wrap {
+    position: relative;
+  }
+
+  &-wrap {
+    min-height: 100vh;
+    height: 100%;
+
+    position: relative;
+
+    @include tablet-grid;
+    @include desktop-grid;
+
+    @include on-mobile {
+      margin-bottom: 56px;
+      padding-inline: 16px;
+    }
+
+    @include on-tablet {
+      margin-block: 48px 72px;
+    }
+  }
+
+  &-products {
+    @include on-desktop {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+    }
+  }
+
+  &__title {
+    position: absolute;
+    margin: 0;
+    color: $white;
+    bottom: 16px;
+    left: 16px;
+
+    @include on-tablet {
+      bottom: 32px;
+      left: 32px;
+    }
+
+    @include on-desktop {
+      bottom: 40px;
+      left: 80px;
+    }
+  }
+}

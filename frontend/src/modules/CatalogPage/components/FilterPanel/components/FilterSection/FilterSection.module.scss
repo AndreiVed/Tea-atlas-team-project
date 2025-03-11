@@ -1,0 +1,73 @@
+@use "../../../../../../styles/utils/colors" as *;
+
+.filter-section {
+  border: none;
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 8px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $gray-30;
+    }
+
+    &-logo {
+      width: 24px;
+      height: 24px;
+    }
+
+    &-text {
+      width: 100%;
+    }
+
+    &-arrow-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background-color: inherit;
+
+      background-image: url("/icons/arrow-down.svg");
+      background-position: center;
+
+      transition: transform 0.3s ease;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &--clicked {
+        transform: rotate(180deg);
+        // background-image: url("/icons/arrow-up.svg");
+      }
+    }
+  }
+
+  &__list-wrapper {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    margin: 0;
+    padding-left: 8px;
+
+    // max-height: 0;
+    // overflow: hidden;
+    // transition: max-height 1s ease-in-out, opacity 1s ease-in-out;
+    // opacity: 0;
+
+    // &--opened {
+    //   max-height: 500px;
+    //   opacity: 1;
+    // }
+  }
+}

@@ -1,9 +1,12 @@
+import { Banner } from "../../components/Banner";
 import { Button } from "../../components/Button/Button";
-import { Banner } from "./components/Banner";
+import { useScroll } from "../../hooks/useScroll";
 import { Carousel } from "./components/Carousel";
 import styles from "./HomePage.module.scss";
 
 export const HomePage = () => {
+  useScroll({ options: { top: 0, behavior: "instant" } });
+
   return (
     <>
       <section className={styles["discover-world-of-tea"]}>

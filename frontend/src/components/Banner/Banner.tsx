@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { desktopWidth, tabletWidth } from "../../../../config";
+import { desktopWidth, tabletWidth } from "../../config";
 import styles from "./Banner.module.scss";
 
 type Device = "mobile" | "tablet" | "desktop";

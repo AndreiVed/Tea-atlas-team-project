@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Provider } from "react-redux";
 import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
@@ -8,6 +9,7 @@ import { HomePage } from "./modules/HomePage";
 import { Menu } from "./modules/Menu";
 import { PageNotFound } from "./modules/PageNotFound";
 import { ProductPage } from "./modules/ProductPage";
+import { catalogStore } from "./store/catalogStore";
 
 export const App: FC = () => (
   <Router>
@@ -15,7 +17,14 @@ export const App: FC = () => (
     <main className="main">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/catalog" element={<CatalogPage />} />
+        <Route
+          path="/catalog"
+          element={
+            <Provider store={catalogStore}>
+              <CatalogPage />
+            </Provider>
+          }
+        />
         <Route path="/product" element={<ProductPage />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="*" element={<PageNotFound />} />

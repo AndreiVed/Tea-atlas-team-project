@@ -1,0 +1,69 @@
+@use '../../../../styles/utils/colors' as *;
+@use '../../../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.filter {
+  padding-inline: 16px;
+
+  @include on-tablet {
+    grid-column: 1 / -1;
+  }
+
+  &--desktop {
+    display: none;
+  }
+
+  &__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 32px 16px;
+
+    @include on-tablet {
+      margin: 0;
+    }
+  }
+
+  &__button {
+    background-color: inherit;
+    border: none;
+    padding: 4px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &-text {
+      margin: 0;
+    }
+
+    &-counter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      width: 14px;
+      height: 14px;
+      background-color: $primary;
+      border: 1px solid $white;
+      border-radius: 50%;
+      margin: 0;
+
+      font-family: 'Montserrat', sans-serif;
+      font-size: 8px;
+      color: $white;
+    }
+  }
+
+  &__reset {
+    box-sizing: border-box;
+    height: 100%;
+    background-color: inherit;
+    border: none;
+    text-decoration: underline;
+    text-transform: uppercase;
+  }
+}
+
+.reset-margins {
+  margin: 0;
+}

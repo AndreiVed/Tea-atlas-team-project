@@ -1,0 +1,95 @@
+@use "../../../../styles/utils/mixins/grid-mixins.scss" as *;
+@use "../../../../styles/utils/colors" as *;
+
+.filter {
+  width: 100vw;
+  height: 100vh;
+
+  position: fixed;
+  top: 0;
+
+  box-sizing: border-box;
+  overflow: auto;
+  z-index: 3;
+
+  background-color: $white;
+  padding-inline: 16px;
+
+  @include on-tablet {
+    padding: 20px;
+    width: 50vw;
+  }
+
+  &--desktop {
+    position: sticky;
+
+    width: 100%;
+
+    top: 60px;
+    bottom: 0;
+
+    @include on-desktop {
+      grid-column: 1 / 4;
+    }
+  }
+
+  &__header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-text {
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    &-close-btn {
+      width: 24px;
+      height: 24px;
+      padding: 8px;
+
+      border: none;
+
+      background-image: url("/icons/close.svg");
+      background-color: inherit;
+    }
+  }
+
+  &__top-buttons {
+    display: flex;
+    gap: 8px;
+    margin-block: 24px 32px;
+
+    &-apply {
+      width: 100%;
+      height: 40px;
+      border: none;
+      background-color: $primary;
+      color: $white;
+
+      &:disabled {
+        background-color: $primary-30;
+        color: $primary-50;
+      }
+    }
+
+    &-clear-all-filters {
+      width: 40px;
+      height: 40px;
+      border: 1px solid $primary-50;
+
+      &:disabled {
+        background-image: url("/icons/filter-x-inactive.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: inherit;
+      }
+    }
+  }
+
+  &__form-sections {
+    min-width: 100%;
+    padding-top: 8px;
+  }
+}

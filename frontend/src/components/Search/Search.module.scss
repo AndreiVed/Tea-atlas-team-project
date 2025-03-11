@@ -1,0 +1,14 @@
+@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.search {
+  width: 100%;
+
+  padding-inline: 16px;
+
+  @include on-desktop {
+    width: 70vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
