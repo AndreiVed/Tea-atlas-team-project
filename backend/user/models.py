@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from rest_framework.fields import empty
 
 from tea_catalog.models import Tea
 
@@ -52,7 +53,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     """User model."""
 
-    username = None
+    username = models.CharField(max_length=63, blank=True, null=True, unique=True)
     email = models.EmailField(_("email address"), unique=True)
     avatar = models.ImageField(null=True, blank=True, upload_to=user_image_file_path)
     favorite = models.ManyToManyField(Tea, related_name="users")

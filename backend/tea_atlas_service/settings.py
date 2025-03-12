@@ -38,9 +38,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "rest_framework",
     "rest_framework.authtoken",
     "dj_rest_auth",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth.registration",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "drf_spectacular",
@@ -56,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "tea_atlas_service.urls"
@@ -158,4 +164,16 @@ REST_AUTH = {
     "JWT_AUTH_COOKIE": "_auth",  # Ім'я маркера доступу cookie
     "JWT_AUTH_REFRESH_COOKIE": "_refresh",  # Ім'я маркера оновлення cookie
     "JWT_AUTH_HTTPONLY": False,  # Забезпечує надсилання маркера оновлення
+    "REGISTER_SERIALIZER": "user.serializers.UserSerializer",
 }
+
+# django.contrib.sites
+SITE_ID = 1
+
+# ACCOUNT_AUTHENTICATION_METHOD = (
+#     "email"  # Використовувати автентифікацію електронною поштою / паролем
+# )
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "none"  # Не вимагати підтвердження електронною поштою
