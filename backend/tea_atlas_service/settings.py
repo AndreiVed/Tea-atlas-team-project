@@ -166,11 +166,7 @@ REST_AUTH = {
     "JWT_AUTH_HTTPONLY": False,  # Забезпечує надсилання маркера оновлення
     "REGISTER_SERIALIZER": "user.serializers.UserSerializer",
     "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
-}
-
-REST_USE_JWT = True
-REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
+    "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
 }
 
 # django.contrib.sites

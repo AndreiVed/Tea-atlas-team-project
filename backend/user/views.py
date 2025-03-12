@@ -10,26 +10,27 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from tea_catalog.models import Tea
 from tea_catalog.serializers import TeaListSerializer
-from user.serializers import UserSerializer, AuthTokenSerializer, UserProfileSerializer
+
+# from user.serializers import UserSerializer, AuthTokenSerializer, UserProfileSerializer
 
 
-class CreateUserView(generics.CreateAPIView):
-    serializer_class = UserSerializer
-    permission_classes = (AllowAny,)
-
-
-class CreateTokenView(ObtainAuthToken):
-    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
-    permission_classes = (IsAuthenticated,)
-    serializer_class = AuthTokenSerializer
-
-
-class ManageUserView(generics.RetrieveUpdateAPIView):
-    serializer_class = UserProfileSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def get_object(self):
-        return self.request.user
+# class CreateUserView(generics.CreateAPIView):
+#     serializer_class = UserSerializer
+#     permission_classes = (AllowAny,)
+#
+#
+# class CreateTokenView(ObtainAuthToken):
+#     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+#     permission_classes = (IsAuthenticated,)
+#     serializer_class = AuthTokenSerializer
+#
+#
+# class ManageUserView(generics.RetrieveUpdateAPIView):
+#     serializer_class = UserProfileSerializer
+#     permission_classes = (IsAuthenticated,)
+#
+#     def get_object(self):
+#         return self.request.user
 
 
 class FavoriteListView(APIView):
@@ -46,30 +47,31 @@ class FavoriteListView(APIView):
         return self.request.user
 
 
-class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    @extend_schema(
-        summary="Logout User",
-        description="Logout the authenticated user by blacklisting their refresh token.",
-        request=None,
-        responses={205: {"detail": "Successfully logged out"}},
-    )
-    def post(self, request):
-        try:
-            refresh_token = request.data["refresh"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            return Response(
-                {"detail": "Successfully logged out"},
-                status=status.HTTP_205_RESET_CONTENT,
-            )
-        except KeyError:
-            return Response(
-                {"error": "Refresh token is required"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        except Exception:
-            return Response(
-                {"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST
-            )
+#
+# class LogoutView(APIView):
+#     permission_classes = [IsAuthenticated]
+#
+#     @extend_schema(
+#         summary="Logout User",
+#         description="Logout the authenticated user by blacklisting their refresh token.",
+#         request=None,
+#         responses={205: {"detail": "Successfully logged out"}},
+#     )
+#     def post(self, request):
+#         try:
+#             refresh_token = request.data["refresh"]
+#             token = RefreshToken(refresh_token)
+#             token.blacklist()
+#             return Response(
+#                 {"detail": "Successfully logged out"},
+#                 status=status.HTTP_205_RESET_CONTENT,
+#             )
+#         except KeyError:
+#             return Response(
+#                 {"error": "Refresh token is required"},
+#                 status=status.HTTP_400_BAD_REQUEST,
+#             )
+#         except Exception:
+#             return Response(
+#                 {"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST
+#             )

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -6,24 +6,25 @@ from rest_framework_simplejwt.views import (
 )
 
 from user.views import (
-    CreateUserView,
-    ManageUserView,
+    # CreateUserView,
+    # ManageUserView,
     FavoriteListView,
-    LogoutView,
+    # LogoutView,
 )
 
 app_name = "user"
 
 urlpatterns = [
-    path("register/", CreateUserView.as_view(), name="create"),
-    path("me/", ManageUserView.as_view(), name="manage"),
+    # path("register/", CreateUserView.as_view(), name="create"),
+    # path("me/", ManageUserView.as_view(), name="manage"),
     # path("login/", TokenObtainPairView.as_view(), name="login"),
     # path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     # path("token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     # path("logout/", LogoutView.as_view(), name="logout"),
-
+    path("", include("dj_rest_auth.urls")),  # dj_rest_auth
+    path("registration/", include("dj_rest_auth.registration.urls")),
     path(
-        "me/favorite_list/",
+        "user/favorite_list/",
         FavoriteListView.as_view(),
         name="favorite_list",
     ),
