@@ -21,3 +21,4 @@ rpds-py==0.23.1
 sqlparse==0.5.3
 typing_extensions==4.12.2
 uritemplate==4.1.1
+dj-rest-auth == 6.0.0

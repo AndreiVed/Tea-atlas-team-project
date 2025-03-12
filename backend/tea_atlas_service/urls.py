@@ -11,7 +11,9 @@ from drf_spectacular.views import (
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/catalog/", include("tea_catalog.urls", namespace="tea_catalog")),
-    path("api/v1/user/", include("user.urls", namespace="user")),
+    path("api/v1/user/", include("user.urls", namespace="user")),  # build in simple JWT
+    path("api/v1/auth/", include("dj_rest_auth.urls")),  # dj_rest_auth
+    # documentation
     path("api/v1/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/v1/schema/swagger/",
