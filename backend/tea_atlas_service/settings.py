@@ -12,16 +12,19 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from datetime import timedelta
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv(".env")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-6y$lv18ycka!+c9&!qrcns3l)-$_*+v#ox0x#r=h616j$s15ev"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -45,6 +48,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",  # <- Support Login with Google
     "dj_rest_auth.registration",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
@@ -70,7 +74,7 @@ ROOT_URLCONF = "tea_atlas_service.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "backend/templates"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -180,16 +184,41 @@ ACCOUNT_EMAIL_REQUIRED = True
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 465  # 587
+EMAIL_PORT = 465  # 587 - port for TSL
 EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
 EMAIL_HOST_USER = "catblues87@gmail.com"  # Вкажіть свою email-адресу
 EMAIL_HOST_PASSWORD = "ujzu rkou zrtu hllu"  # Використовуйте пароль або App Password (якщо у вас включено 2FA)
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-EMAIL_USE_SSL = True  # Використовуємо SSL
-
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # або "optional"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # or "optional"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
 LOGIN_URL = "/api/v1/auth/user"
 REST_USE_JWT = True
+
+# Google OAuth
+GOOGLE_OAUTH_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
+GOOGLE_OAUTH_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
+GOOGLE_OAUTH_CALLBACK_URL = os.getenv("GOOGLE_OAUTH_CALLBACK_URL")
+
+# django-allauth (social)
+# Authenticate if local account with this email address already exists
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+# Connect local account and social account if local account with that email address already exists
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APPS": [
+            {
+                "client_id": GOOGLE_OAUTH_CLIENT_ID,
+                "secret": GOOGLE_OAUTH_CLIENT_SECRET,
+                "key": "",
+            },
+        ],
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}

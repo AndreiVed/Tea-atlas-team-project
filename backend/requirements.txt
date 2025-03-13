@@ -10,11 +10,13 @@ defusedxml==0.7.1
 dj-rest-auth==7.0.1
 Django==5.1.6
 django-allauth==65.4.1
+django-anymail==12.0
 django-oauth-toolkit==3.0.1
 django-rest-auth==0.9.5
 django-rest-framework-social-oauth2==1.2.0
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.5.0
+dotenv==0.9.9
 drf-spectacular==0.28.0
 idna==3.10
 inflection==0.5.1
@@ -29,6 +31,7 @@ pillow==11.1.0
 platformdirs==4.3.6
 pycparser==2.22
 PyJWT==2.9.0
+python-dotenv==1.0.1
 python3-openid==3.2.0
 PyYAML==6.0.2
 referencing==0.36.2
