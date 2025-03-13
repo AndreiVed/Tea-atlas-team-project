@@ -1,35 +1,20 @@
-from drf_spectacular.utils import extend_schema
-from rest_framework import generics, status
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from urllib.parse import urljoin
+
+import requests
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from dj_rest_auth.registration.views import SocialLoginView
+from django.conf import settings
+from django.shortcuts import render
+from django.urls import reverse
+from django.views import View
+from rest_framework import status
+
 from rest_framework.response import Response
-from rest_framework.settings import api_settings
 from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import RefreshToken
-
-from tea_catalog.models import Tea
 from tea_catalog.serializers import TeaListSerializer
-from user.serializers import UserSerializer, AuthTokenSerializer, UserProfileSerializer
 
 
-class CreateUserView(generics.CreateAPIView):
-    serializer_class = UserSerializer
-    permission_classes = (AllowAny,)
-
-
-class CreateTokenView(ObtainAuthToken):
-    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
-    permission_classes = (IsAuthenticated,)
-    serializer_class = AuthTokenSerializer
-
-
-class ManageUserView(generics.RetrieveUpdateAPIView):
-    serializer_class = UserProfileSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def get_object(self):
-        return self.request.user
 
 
 class FavoriteListView(APIView):
@@ -46,30 +31,42 @@ class FavoriteListView(APIView):
         return self.request.user
 
 
-class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+    callback_url = settings.GOOGLE_OAUTH_CALLBACK_URL
+    client_class = OAuth2Client
 
-    @extend_schema(
-        summary="Logout User",
-        description="Logout the authenticated user by blacklisting their refresh token.",
-        request=None,
-        responses={205: {"detail": "Successfully logged out"}},
-    )
-    def post(self, request):
-        try:
-            refresh_token = request.data["refresh"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            return Response(
-                {"detail": "Successfully logged out"},
-                status=status.HTTP_205_RESET_CONTENT,
-            )
-        except KeyError:
-            return Response(
-                {"error": "Refresh token is required"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        except Exception:
-            return Response(
-                {"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST
-            )
+
+class GoogleLoginCallback(APIView):
+    def get(self, request, *args, **kwargs):
+        """
+        If you are building a fullstack application (eq. with React app next to Django)
+        you can place this endpoint in your frontend application to receive
+        the JWT tokens there - and store them in the state
+        """
+
+        code = request.GET.get("code")
+        if code is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        # Remember to replace the localhost:8000 with the actual domain name before deployment
+
+        token_endpoint_url = urljoin(
+            "http://localhost:8000", reverse("user:google_login")
+        )
+
+        response = requests.post(url=token_endpoint_url, data={"code": code})
+        print(f"RESPONSE: {response}")
+        return Response(response.json(), status=status.HTTP_200_OK)
+
+
+class LoginPage(View):
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            "pages/login.html",
+            {
+                "google_callback_uri": settings.GOOGLE_OAUTH_CALLBACK_URL,
+                "google_client_id": settings.GOOGLE_OAUTH_CLIENT_ID,
+            },
+        )
