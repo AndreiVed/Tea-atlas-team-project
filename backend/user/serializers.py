@@ -7,8 +7,8 @@ from django.utils.translation import gettext as _
 
 class UserSerializer(RegisterSerializer):
     username = None
-    first_name = serializers.CharField(required=True)
-    last_name = serializers.CharField(required=True)
+    first_name = serializers.CharField(required=False)
+    last_name = serializers.CharField(required=False)
 
     class Meta:
         model = get_user_model()

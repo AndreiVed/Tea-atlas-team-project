@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "drf_spectacular",
+    "anymail",
     "tea_catalog",
     "user",
 ]
@@ -172,10 +173,23 @@ REST_AUTH = {
 # django.contrib.sites
 SITE_ID = 1
 
-# ACCOUNT_AUTHENTICATION_METHOD = (
-#     "email"  # Використовувати автентифікацію електронною поштою / паролем
-# )
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "none"  # Не вимагати підтвердження електронною поштою
+# ACCOUNT_EMAIL_VERIFICATION = "none"  # Не вимагати підтвердження електронною поштою
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 465  # 587
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = "catblues87@gmail.com"  # Вкажіть свою email-адресу
+EMAIL_HOST_PASSWORD = "ujzu rkou zrtu hllu"  # Використовуйте пароль або App Password (якщо у вас включено 2FA)
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+EMAIL_USE_SSL = True  # Використовуємо SSL
+
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # або "optional"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+LOGIN_URL = "/api/v1/auth/user"
+REST_USE_JWT = True
