@@ -20,6 +20,7 @@ load_dotenv(".env")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -48,7 +49,6 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",  # <- Support Login with Google
     "dj_rest_auth.registration",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "anymail",
     "tea_catalog",
     "user",
+    "google_login_service",
 ]
 
 MIDDLEWARE = [
@@ -74,7 +75,7 @@ ROOT_URLCONF = "tea_atlas_service.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [BASE_DIR / "backend/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -184,41 +185,40 @@ ACCOUNT_EMAIL_REQUIRED = True
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 465  # 587 - port for TSL
+EMAIL_PORT = 465  # 587
 EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
 EMAIL_HOST_USER = "catblues87@gmail.com"  # Вкажіть свою email-адресу
 EMAIL_HOST_PASSWORD = "ujzu rkou zrtu hllu"  # Використовуйте пароль або App Password (якщо у вас включено 2FA)
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # or "optional"
+EMAIL_USE_SSL = True  # Використовуємо SSL
+
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # або "optional"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
 LOGIN_URL = "/api/v1/auth/user"
 REST_USE_JWT = True
 
-# Google OAuth
 GOOGLE_OAUTH_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
+GOOGLE_OAUTH_PROJECT_ID = os.getenv("GOOGLE_OAUTH_PROJECT_ID")
 GOOGLE_OAUTH_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
 GOOGLE_OAUTH_CALLBACK_URL = os.getenv("GOOGLE_OAUTH_CALLBACK_URL")
+BASE_BACKEND_URL = os.getenv("BASE_BACKEND_URL")
 
-# django-allauth (social)
-# Authenticate if local account with this email address already exists
-SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
-# Connect local account and social account if local account with that email address already exists
-SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APPS": [
-            {
-                "client_id": GOOGLE_OAUTH_CLIENT_ID,
-                "secret": GOOGLE_OAUTH_CLIENT_SECRET,
-                "key": "",
-            },
-        ],
-        "SCOPE": ["profile", "email"],
-        "AUTH_PARAMS": {
-            "access_type": "online",
-        },
-    }
-}
+# Вибір механізму для збереження сесій
+SESSION_ENGINE = (
+    "django.contrib.sessions.backends.db"  # Для збереження сесій в базі даних
+)
+SESSION_COOKIE_NAME = (
+    "sessionid"  # Назва cookie, яка буде зберігати ідентифікатор сесії
+)
+
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_DOMAIN = (
+    None  # налаштуйте домен, якщо використовуєте домен на різних серверах
+)
+SESSION_COOKIE_PATH = "/"
+SESSION_COOKIE_SECURE = (
+    False  # Для локального середовища (не використовувати в продакшн)
+)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Сесія закінчується при закритті браузера
