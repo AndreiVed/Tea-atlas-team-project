@@ -17,7 +17,6 @@ def user_list(*, filters=None):
 
     queryset = get_user_model().objects.all()
 
-    # Фільтруємо за наданими параметрами
     if "email" in filters:
         queryset = queryset.filter(email=filters["email"])
     if "is_admin" in filters:
@@ -27,10 +26,10 @@ def user_list(*, filters=None):
 
     return queryset
 
-def user_get(user_id):
-    user = get_user_model(pk=user_id)
-
-    return user
+# def user_get(user_id):
+#     user = get_user_model(pk=user_id)
+#
+#     return user
 
 def get_or_create_user(user_info):
     User = get_user_model()
@@ -45,14 +44,14 @@ def get_or_create_user(user_info):
         defaults={
             "first_name": user_first_name,
             "last_name": user_last_name,
-            "avatar": user_avatar,  # Переконайтесь, що це поле є в моделі User
+            "avatar": user_avatar,
         },
     )
 
     return user, created
 
 def generate_jwt_token(user):
-    refresh = RefreshToken.for_user(user)  # Генеруємо JWT-токени
+    refresh = RefreshToken.for_user(user)
 
     return {
         "refresh": str(refresh),

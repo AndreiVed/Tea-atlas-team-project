@@ -5,7 +5,6 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from rest_framework.fields import empty
 
 from tea_catalog.models import Tea
 

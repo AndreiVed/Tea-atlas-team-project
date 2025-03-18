@@ -9,8 +9,9 @@ cryptography==44.0.2
 defusedxml==0.7.1
 dj-rest-auth==7.0.1
 Django==5.1.6
-django-allauth==65.4.1
+django-allauth==65.5.0
 django-anymail==12.0
+django-cors-headers==4.7.0
 django-oauth-toolkit==3.0.1
 django-rest-auth==0.9.5
 django-rest-framework-social-oauth2==1.2.0

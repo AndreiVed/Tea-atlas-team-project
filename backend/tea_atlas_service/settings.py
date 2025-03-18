@@ -15,7 +15,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-load_dotenv(".env")
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -68,6 +70,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React / Vue / Angular на локальному сервері
 ]
 
 ROOT_URLCONF = "tea_atlas_service.urls"
@@ -148,8 +154,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        # "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
@@ -169,7 +175,7 @@ REST_AUTH = {
     "USE_JWT": True,
     "JWT_AUTH_COOKIE": "_auth",  # Ім'я маркера доступу cookie
     "JWT_AUTH_REFRESH_COOKIE": "_refresh",  # Ім'я маркера оновлення cookie
-    "JWT_AUTH_HTTPONLY": False,  # Забезпечує надсилання маркера оновлення
+    "JWT_AUTH_HTTPONLY": True,  # Забезпечує надсилання маркера оновлення
     "REGISTER_SERIALIZER": "user.serializers.UserSerializer",
     "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
@@ -178,9 +184,6 @@ REST_AUTH = {
 # django.contrib.sites
 SITE_ID = 1
 
-ACCOUNT_LOGIN_METHODS = {"email"}
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_EMAIL_VERIFICATION = "none"  # Не вимагати підтвердження електронною поштою
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -194,6 +197,10 @@ EMAIL_HOST_PASSWORD = "ujzu rkou zrtu hllu"  # Використовуйте па
 EMAIL_USE_SSL = True  # Використовуємо SSL
 
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # або "optional"
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+
+ACCOUNT_LOGIN_METHODS = ["email"]
+
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
 LOGIN_URL = "/api/v1/auth/user"
@@ -206,19 +213,19 @@ GOOGLE_OAUTH_CALLBACK_URL = os.getenv("GOOGLE_OAUTH_CALLBACK_URL")
 BASE_BACKEND_URL = os.getenv("BASE_BACKEND_URL")
 
 # Вибір механізму для збереження сесій
-SESSION_ENGINE = (
-    "django.contrib.sessions.backends.db"  # Для збереження сесій в базі даних
-)
-SESSION_COOKIE_NAME = (
-    "sessionid"  # Назва cookie, яка буде зберігати ідентифікатор сесії
-)
-
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_DOMAIN = (
-    None  # налаштуйте домен, якщо використовуєте домен на різних серверах
-)
-SESSION_COOKIE_PATH = "/"
-SESSION_COOKIE_SECURE = (
-    False  # Для локального середовища (не використовувати в продакшн)
-)
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Сесія закінчується при закритті браузера
+# SESSION_ENGINE = (
+#     "django.contrib.sessions.backends.db"  # Для збереження сесій в базі даних
+# )
+# SESSION_COOKIE_NAME = (
+#     "sessionid"  # Назва cookie, яка буде зберігати ідентифікатор сесії
+# )
+#
+# CSRF_COOKIE_SECURE = False
+# SESSION_COOKIE_DOMAIN = (
+#     None  # налаштуйте домен, якщо використовуєте домен на різних серверах
+# )
+# SESSION_COOKIE_PATH = "/"
+# SESSION_COOKIE_SECURE = (
+#     False  # Для локального середовища (не використовувати в продакшн)
+# )
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Сесія закінчується при закритті браузера
