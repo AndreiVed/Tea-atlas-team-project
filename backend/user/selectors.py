@@ -26,10 +26,6 @@ def user_list(*, filters=None):
 
     return queryset
 
-# def user_get(user_id):
-#     user = get_user_model(pk=user_id)
-#
-#     return user
 
 def get_or_create_user(user_info):
     User = get_user_model()

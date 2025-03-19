@@ -46,13 +46,13 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "rest_framework",
     "rest_framework.authtoken",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "dj_rest_auth",
+    "dj_rest_auth.registration",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "dj_rest_auth.registration",
-    "rest_framework_simplejwt",
-    "rest_framework_simplejwt.token_blacklist",
     "drf_spectacular",
     "anymail",
     "tea_catalog",
@@ -165,8 +165,11 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "ROTATE_REFRESH_TOKENS": True,
+    "ROTATE_REFRESH_TOKENS": True,  # Оновлення refresh токена
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
 
 AUTH_USER_MODEL = "user.User"
 
@@ -180,9 +183,9 @@ REST_AUTH = {
     "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
 }
-
 # django.contrib.sites
 SITE_ID = 1
+REST_USE_JWT = True  # Використання JWT у dj-rest-auth
 
 # ACCOUNT_EMAIL_VERIFICATION = "none"  # Не вимагати підтвердження електронною поштою
 
@@ -198,13 +201,10 @@ EMAIL_USE_SSL = True  # Використовуємо SSL
 
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # або "optional"
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
-
 ACCOUNT_LOGIN_METHODS = ["email"]
-
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
-LOGIN_URL = "/api/v1/auth/user"
-REST_USE_JWT = True
+LOGIN_URL = "/api/v1/catalog/"
 
 GOOGLE_OAUTH_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
 GOOGLE_OAUTH_PROJECT_ID = os.getenv("GOOGLE_OAUTH_PROJECT_ID")
