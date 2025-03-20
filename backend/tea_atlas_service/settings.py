@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
-    "rest_framework_simplejwt.token_blacklist",
+    # "rest_framework_simplejwt.token_blacklist",
     "dj_rest_auth",
     "dj_rest_auth.registration",
     "allauth",
@@ -163,29 +163,28 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "ROTATE_REFRESH_TOKENS": True,  # Оновлення refresh токена
-    "BLACKLIST_AFTER_ROTATION": True,
-    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
+    "ROTATE_REFRESH_TOKENS": True,
 }
 
 
 AUTH_USER_MODEL = "user.User"
-
 # dj-rest-auth
 REST_AUTH = {
     "USE_JWT": True,
-    "JWT_AUTH_COOKIE": "_auth",  # Ім'я маркера доступу cookie
-    "JWT_AUTH_REFRESH_COOKIE": "_refresh",  # Ім'я маркера оновлення cookie
-    "JWT_AUTH_HTTPONLY": True,  # Забезпечує надсилання маркера оновлення
+    # "JWT_AUTH_COOKIE": "_auth",  # Ім'я маркера доступу cookie
+    # "JWT_AUTH_REFRESH_COOKIE": "_refresh",  # Ім'я маркера оновлення cookie
+    "JWT_AUTH_HTTPONLY": False,  # Забезпечує надсилання маркера оновлення
     "REGISTER_SERIALIZER": "user.serializers.UserSerializer",
     "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
+    "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
 }
 # django.contrib.sites
 SITE_ID = 1
 REST_USE_JWT = True  # Використання JWT у dj-rest-auth
+JWT_ALLOW_REFRESH = True
 
 # ACCOUNT_EMAIL_VERIFICATION = "none"  # Не вимагати підтвердження електронною поштою
 
