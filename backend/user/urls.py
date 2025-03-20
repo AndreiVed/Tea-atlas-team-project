@@ -1,6 +1,4 @@
-from allauth.account.views import ConfirmEmailView
 from django.urls import path, include, re_path
-from rest_framework_simplejwt.views import TokenRefreshView
 
 from user.serializers import CustomConfirmEmailView
 from user.views import (
