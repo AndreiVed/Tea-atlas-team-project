@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:16.0-alpine3.17
+    restart: always
+    env_file:
+      - .env
+#    volumes:
+#      - ./data/db:/var/lib/postgresql/data
+
+  web:
+    build: .
+    command: >
+      sh -c "python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000"
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+#TODO add create superuser script
+#TODO add volumes to DB, web and images
+#TODO set up postgressDB
