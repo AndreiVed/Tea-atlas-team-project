@@ -1,29 +1,39 @@
-from django.contrib.auth import get_user_model
+from allauth.account.models import EmailAddress
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
 from django.urls import reverse
 from django.core import mail
 import re
-
-
-User = get_user_model()
 
 
 class AuthTests(APITestCase):
 
     def setUp(self):
         """Створюємо тестового користувача"""
+        self.client = APIClient()
+
         self.user_data = {
-            "email": "test@example.com",
-            "password": "password123"
+            "email": "testuser@example.com",
+            "password1": "strongpassword123",
+            "password2": "strongpassword123"
         }
-        self.user = User.objects.create_user(**self.user_data)
 
         # URL для реєстрації та логіну
-        self.registration_url = "/api/v1/auth/registration/"
-        self.login_url = "/api/v1/auth/login/"
-        self.verify_email_url = "api/v1/auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$"  # URL підтвердження email
+        self.registration_url = reverse("rest_register")
+        self.login_url = reverse("user:rest_login")
+        self.logout_url = reverse("user:rest_logout")
 
+        # 1. Реєструємо користувача
+        self.user = self.client.post(self.registration_url, self.user_data, format="json")
+
+        # 2. Отримуємо підтвердження email
+        self.email_confirmation()
+
+    def email_confirmation(self):
+        """Імітуємо підтвердження email"""
+        email_address = EmailAddress.objects.get(email=self.user_data["email"])
+        email_address.verified = True  # Позначаємо email підтвердженим
+        email_address.save()
 
     def test_user_registration(self):
         """Перевіряємо, чи можна зареєструвати нового користувача"""
@@ -38,9 +48,7 @@ class AuthTests(APITestCase):
         self.assertEqual(response.data["detail"], "Verification e-mail sent.")
 
         # Переконуємось, що лист відправлено
-        self.assertEqual(len(mail.outbox), 1)  # Має бути 1 лист
-        email_body = mail.outbox[0].body  # Отримуємо тіло листа
-
+        email_body = mail.outbox[-1].body  # Отримуємо тіло листа
         match = re.search(r"account-confirm-email/([-:\w]+)/", email_body)
         self.assertIsNotNone(match, "Email confirmation key not found in email body")
         confirmation_key = match.group(1)  # Отримуємо ключ
@@ -54,28 +62,23 @@ class AuthTests(APITestCase):
         # Логін після підтвердження email
         login_data = {"email": "new_user@example.com", "password": "newpassword123"}
         login_response = self.client.post(self.login_url, login_data, format="json")
-        print(login_response.data["refresh"])
         self.assertEqual(login_response.status_code, status.HTTP_200_OK)
         self.assertIn("access", login_response.data)  # JWT access токен отримано
         self.assertIn("refresh", login_response.data)  # JWT refresh токен отримано
         self.assertNotEqual(login_response.data["refresh"], '') # JWT refresh токен не пустий
 
-
-    def test_user_login(self):
-        """Перевіряємо, чи може користувач увійти в систему"""
-        # Спочатку логінімся
-        data = {
-            "email": self.user_data["email"],
-            "password": self.user_data["password"]
-        }
+    def test_user_login_after_email_confirmation(self):
+        """Тестуємо логін користувача після підтвердження пошти"""
+        data = {"email": self.user_data["email"], "password": self.user_data["password1"]}
         response = self.client.post(self.login_url, data, format="json")
-        print(response.data)
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("key", response.data)  # Токен має бути в відповіді
+        self.assertIn("access", response.data)  # Переконуємося, що видається токен # Токен має бути в відповіді
+        self.assertIn("refresh", response.data)  # Переконуємося, що видається токен # Токен має бути в відповіді
 
     def test_unauthorized_access(self):
         """Перевіряємо, чи може неавторизований користувач доступити захищений ресурс"""
-        protected_url = reverse("some-protected-view-url")  # URL захищеного ресурсу
+        protected_url = "/api/v1/auth/user/"  # URL захищеного ресурсу
         response = self.client.get(protected_url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -86,5 +89,17 @@ class AuthTests(APITestCase):
             "password": "wrongpassword"
         }
         response = self.client.post(self.login_url, data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("non_field_errors", response.data)
+
+    def test_user_logout(self):
+        """Тестуємо вихід користувача з системи"""
+        # Логін
+        data = {"email": self.user_data["email"], "password": self.user_data["password1"]}
+        login_response = self.client.post(self.login_url, data, format="json")
+        refresh_token = login_response.data["refresh"]
+
+        # Логаут
+        logout_response = self.client.post(self.logout_url, {"refresh": refresh_token}, format="json")
+        self.assertEqual(logout_response.status_code, status.HTTP_200_OK)
+        self.assertEqual(logout_response.data["detail"], "Successfully logged out.")

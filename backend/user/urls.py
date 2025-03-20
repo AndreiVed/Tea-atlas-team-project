@@ -1,4 +1,3 @@
-from allauth.account.views import ConfirmEmailView
 from django.urls import path, include, re_path
 
 from user.serializers import CustomConfirmEmailView

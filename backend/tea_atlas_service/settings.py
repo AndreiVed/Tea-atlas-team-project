@@ -155,7 +155,6 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-        # "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
@@ -163,29 +162,26 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "ROTATE_REFRESH_TOKENS": True,  # Оновлення refresh токена
-    "BLACKLIST_AFTER_ROTATION": True,
-    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
+    "ROTATE_REFRESH_TOKENS": True,
 }
 
 
 AUTH_USER_MODEL = "user.User"
-
 # dj-rest-auth
 REST_AUTH = {
     "USE_JWT": True,
-    "JWT_AUTH_COOKIE": "_auth",  # Ім'я маркера доступу cookie
-    "JWT_AUTH_REFRESH_COOKIE": "_refresh",  # Ім'я маркера оновлення cookie
-    "JWT_AUTH_HTTPONLY": True,  # Забезпечує надсилання маркера оновлення
+    "JWT_AUTH_HTTPONLY": False,  # Забезпечує надсилання маркера оновлення
     "REGISTER_SERIALIZER": "user.serializers.UserSerializer",
     "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
+    "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
 }
 # django.contrib.sites
 SITE_ID = 1
 REST_USE_JWT = True  # Використання JWT у dj-rest-auth
+JWT_ALLOW_REFRESH = True
 
 # ACCOUNT_EMAIL_VERIFICATION = "none"  # Не вимагати підтвердження електронною поштою
 
@@ -195,7 +191,6 @@ EMAIL_PORT = 465  # 587
 EMAIL_USE_TLS = False
 EMAIL_HOST_USER = "catblues87@gmail.com"  # Вкажіть свою email-адресу
 EMAIL_HOST_PASSWORD = "ujzu rkou zrtu hllu"  # Використовуйте пароль або App Password (якщо у вас включено 2FA)
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 EMAIL_USE_SSL = True  # Використовуємо SSL
 
@@ -211,21 +206,3 @@ GOOGLE_OAUTH_PROJECT_ID = os.getenv("GOOGLE_OAUTH_PROJECT_ID")
 GOOGLE_OAUTH_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
 GOOGLE_OAUTH_CALLBACK_URL = os.getenv("GOOGLE_OAUTH_CALLBACK_URL")
 BASE_BACKEND_URL = os.getenv("BASE_BACKEND_URL")
-
-# Вибір механізму для збереження сесій
-# SESSION_ENGINE = (
-#     "django.contrib.sessions.backends.db"  # Для збереження сесій в базі даних
-# )
-# SESSION_COOKIE_NAME = (
-#     "sessionid"  # Назва cookie, яка буде зберігати ідентифікатор сесії
-# )
-#
-# CSRF_COOKIE_SECURE = False
-# SESSION_COOKIE_DOMAIN = (
-#     None  # налаштуйте домен, якщо використовуєте домен на різних серверах
-# )
-# SESSION_COOKIE_PATH = "/"
-# SESSION_COOKIE_SECURE = (
-#     False  # Для локального середовища (не використовувати в продакшн)
-# )
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Сесія закінчується при закритті браузера
