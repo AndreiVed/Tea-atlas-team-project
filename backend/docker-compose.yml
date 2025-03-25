@@ -9,9 +9,6 @@ services:
 
   web:
     build: .
-    command: >
-      sh -c "python manage.py migrate &&
-      python manage.py runserver 0.0.0.0:8000"
     env_file:
       - .env
     ports:
@@ -19,6 +16,5 @@ services:
     depends_on:
       - db
 
-#TODO add create superuser script
 #TODO add volumes to DB, web and images
 #TODO set up postgressDB
