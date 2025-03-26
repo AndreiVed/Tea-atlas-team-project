@@ -4,8 +4,10 @@ services:
     restart: always
     env_file:
       - .env
-#    volumes:
-#      - ./data/db:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    volumes:
+      - my_db:$PGDATA
 
   web:
     build: .
@@ -15,6 +17,9 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    volumes:
+      - ./:/app
 
-#TODO add volumes to DB, web and images
-#TODO set up postgressDB
+volumes:
+  my_db:
+
