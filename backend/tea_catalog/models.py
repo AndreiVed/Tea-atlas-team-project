@@ -33,7 +33,6 @@ class Country(models.Model):
 class Region(models.Model):
     country = models.ForeignKey(Country, on_delete=CASCADE)
     province = models.CharField(max_length=68, unique=True, null=True, blank=True)
-    # photo = models.ImageField(null=True, blank=True, upload_to=tea_image_file_path)
 
     class Meta:
         unique_together = ["country", "province"]
@@ -52,7 +51,7 @@ class Category(models.Model):
         FULLY = "Fully Oxidized"
         POST_FERMENTED = "Post-Fermented"
 
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     region = models.ForeignKey(Region, on_delete=CASCADE)
     fermentation = models.CharField(
         max_length=19, choices=Fermentation.choices, default=Fermentation.MINIMALLY
@@ -60,6 +59,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "Categories"
+        unique_together = ["name", "region"]
 
     def __str__(self):
         return f"{self.name}"
@@ -97,3 +97,6 @@ class Steeping(models.Model):
     water_temperature = models.IntegerField()
     steep_time = models.IntegerField()
     infusion = models.IntegerField()
+
+    class Meta:
+        ordering = ["tea_category"]
