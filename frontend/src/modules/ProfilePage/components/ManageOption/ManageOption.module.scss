@@ -1,0 +1,32 @@
+@use '../../../../styles/utils/colors' as *;
+
+.manage-option {
+  display: flex;
+  align-items: end;
+  gap: 24px;
+
+  &__info {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &-title {
+      margin: 0;
+      color: $gray-80;
+    }
+
+    &-desc {
+      margin: 0;
+      color: $gray-60;
+    }
+  }
+
+  &__delete {
+    height: min-content;
+    border: none;
+    background-color: inherit;
+    color: $error;
+  }
+}

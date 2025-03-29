@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: always
+
+  backend:
+    image: python:3.9
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    command: python app.py
+    ports:
+      - "8000:8000"

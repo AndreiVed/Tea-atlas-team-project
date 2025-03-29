@@ -1,0 +1,31 @@
+@use "../../styles/utils/mixins/font-mixins.scss" as *;
+@use "../../styles/utils/colors" as *;
+
+.input {
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  border: 1px solid $gray-60;
+  border-radius: 4px;
+
+  margin: 4px 0 0 0;
+
+  &:focus {
+    border: 1px solid $primary;
+  }
+
+  &::placeholder {
+    font-family: Montserrat, sans-serif;
+    color: $gray-40;
+  }
+
+  &-label {
+    height: 100%;
+    color: $gray-60;
+
+
+    &__star {
+      color: $error;
+    }
+  }
+}

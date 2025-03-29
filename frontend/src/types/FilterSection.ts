@@ -1,0 +1,1 @@
+export type FilterSection = 'country' | 'impact' | 'fermentation';

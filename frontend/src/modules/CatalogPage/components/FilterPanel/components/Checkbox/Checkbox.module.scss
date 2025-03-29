@@ -14,10 +14,6 @@
     align-items: center;
 
     gap: 8px;
-
-    &:hover {
-      cursor: pointer;
-    }
   }
 
   &__input {
@@ -26,10 +22,6 @@
     height: 20px;
     outline: 1px solid $gray-100;
     margin: 0;
-
-    &:hover {
-      cursor: pointer;
-    }
 
     &:checked {
       background-image: url('/icons/checked.svg');

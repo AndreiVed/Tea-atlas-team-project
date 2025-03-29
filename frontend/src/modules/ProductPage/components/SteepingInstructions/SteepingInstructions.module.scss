@@ -1,0 +1,45 @@
+@use '../../../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.steeping-instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 16px 0 16px;
+
+  @include on-tablet {
+    padding-inline: 32px;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__content {
+    display: flex;
+    gap: 16px;
+
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  &__instruction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 90px;
+
+    &-title {
+      margin-block: 16px 0;
+    }
+
+    &-desc {
+      margin: 0;
+    }
+  }
+}

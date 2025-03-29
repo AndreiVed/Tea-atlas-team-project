@@ -1,17 +1,19 @@
 @use "../../../../../../styles/utils/colors" as *;
 
 .filter-section {
+  width: 100%;
+  padding: 0;
+
   border: none;
 
   &__heading {
     display: flex;
     align-items: center;
     gap: 8px;
-
     padding: 12px 8px;
 
     &:hover {
-      cursor: pointer;
+      transition: background-color .4s;
       background-color: $gray-30;
     }
 
@@ -21,6 +23,7 @@
     }
 
     &-text {
+      text-transform: capitalize;
       width: 100%;
     }
 
@@ -35,13 +38,8 @@
 
       transition: transform 0.3s ease;
 
-      &:hover {
-        cursor: pointer;
-      }
-
       &--clicked {
         transform: rotate(180deg);
-        // background-image: url("/icons/arrow-up.svg");
       }
     }
   }
@@ -56,18 +54,8 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-
     margin: 0;
+
     padding-left: 8px;
-
-    // max-height: 0;
-    // overflow: hidden;
-    // transition: max-height 1s ease-in-out, opacity 1s ease-in-out;
-    // opacity: 0;
-
-    // &--opened {
-    //   max-height: 500px;
-    //   opacity: 1;
-    // }
   }
 }

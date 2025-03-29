@@ -7,15 +7,17 @@
   align-items: center;
   justify-content: center;
   border: 0;
+  gap: 8px;
 
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
   text-transform: uppercase;
   color: $white;
   height: 48px;
+  transition: background-color .4s;
 
   &:hover {
-    cursor: pointer;
+    transition: background-color .4s;
   }
 
   
@@ -49,13 +51,11 @@
     background-color: inherit;
     border: 1px solid $primary;
     color: $primary;
-    transition: background-color .4s ease-in-out;
 
     &:hover {
       border: 1px solid $primary-70;
       background-color: $primary-10;
       color: $primary-70;
-      transition: background-color .4s;
     }
 
     &:focus {
@@ -74,5 +74,21 @@
   &--text {
     color: $primary;
     background-color: $white;
+  }
+
+  &--danger {
+    background-color: $error;
+
+    &:hover {
+      background-color: #EA6975;
+    }
+
+    &:focus {
+      background-color: #AD1B29;
+    }
+
+    &:disabled {
+      background-color: #FFD7DA;
+    }
   }
 }

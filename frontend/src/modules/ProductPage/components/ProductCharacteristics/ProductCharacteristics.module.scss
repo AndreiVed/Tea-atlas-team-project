@@ -1,0 +1,9 @@
+@use '../../../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.product__characteristics {
+  padding-inline: 16px;
+
+  @include on-tablet {
+    padding-inline: 32px;
+  }
+}

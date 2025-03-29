@@ -1,11 +1,12 @@
 import cn from "classnames";
 import { FC, useRef, useState } from "react";
 import { FilterOption } from "../../../../../../types/FilterOption";
+import { FilterSection as FilterSectionType } from "../../../../../../types/FilterSection";
 import { CheckBox } from "../Checkbox";
 import styles from "./FilterSection.module.scss";
 
 type Props = {
-  title: string;
+  title: FilterSectionType;
   icon: string;
   options: FilterOption[];
 };
@@ -35,7 +36,6 @@ export const FilterSection: FC<Props> = ({ title, icon, options }) => {
             [styles["filter-section__heading-arrow-btn--clicked"]]:
               isListOpened,
           })}
-          // onClick={() => setIsListOpened(!isListOpened)}
         />
       </div>
       <div
@@ -46,7 +46,7 @@ export const FilterSection: FC<Props> = ({ title, icon, options }) => {
       >
         <ul ref={listRef} className={styles["filter-section__list"]}>
           {options.map((option) => (
-            <CheckBox key={option.id} option={option} />
+            <CheckBox key={option.id} option={option} usedForSection={title} />
           ))}
         </ul>
       </div>

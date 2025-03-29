@@ -8,9 +8,19 @@
   padding: 24px 16px;
 
   @include on-tablet {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px 32px 40px 32px;
+    padding: 16px 32px 32px;
+  }
+
+  @include on-desktop {
+    padding-inline: 80px;
+  }
+
+  &__links-wrap {
+    @include on-tablet {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 32px;
+    }
   }
 
   &__navigation {
@@ -20,7 +30,6 @@
 
   &__list {
     display: flex;
-    // align-items: center;
     flex-direction: column;
     list-style-type: none;
     flex-wrap: wrap;
@@ -75,9 +84,9 @@
     align-items: center;
     width: 56px;
     height: 56px;
-    margin: 24px auto;
+    margin: 24px auto 40px auto;
 
-    background-image: url('./logo-white.svg');
+    background-image: url('/icons/logo-white.svg');
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -92,6 +101,21 @@
     &:hover {
       transform: scale(1.1);
       transition: transform .4s;
+    }
+  }
+
+  &__rights-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-brand-name {
+      color: $gray-40;
+      margin-inline: 2px 8px;
+    }
+    
+    &-text {
+      color: $gray-40;
     }
   }
 }

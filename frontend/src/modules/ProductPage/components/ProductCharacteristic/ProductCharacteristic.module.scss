@@ -1,0 +1,25 @@
+@use '../../../../styles/utils/colors' as *;
+
+.product-characteristics {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  border-bottom: 1px solid $gray-30;
+
+  padding-block: 24px;
+
+  &--first {
+    padding-top: 0;
+  }
+
+  &__badges {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__title {
+    margin: 0;
+  }
+}

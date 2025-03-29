@@ -2,10 +2,14 @@
 @use '../../../../styles/utils/mixins/grid-mixins.scss' as *;
 
 .filter {
-  padding-inline: 16px;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
   @include on-tablet {
     grid-column: 1 / -1;
+    padding-inline: 32px;
+    margin-bottom: 16px;
   }
 
   &--desktop {
@@ -13,6 +17,8 @@
   }
 
   &__heading {
+    width: 100%;
+
     display: flex;
     justify-content: space-between;
     align-items: center;

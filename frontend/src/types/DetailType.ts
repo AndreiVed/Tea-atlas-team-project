@@ -1,0 +1,1 @@
+export type DetailType = 'name' | 'email' | 'password';

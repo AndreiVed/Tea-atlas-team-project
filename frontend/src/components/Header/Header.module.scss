@@ -11,13 +11,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1;
+  z-index: 4;
 
   position: fixed;
   top: 0;
 
   @include on-tablet {
-    height: 64px;
+    height: 72px;
     padding-inline: 32px;
   }
 
@@ -33,7 +33,7 @@
   &__logo {
     width: 40px;
     height: 40px;
-    background-image: url("./logo.svg");
+    background-image: url("/icons/logo.svg");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -61,7 +61,7 @@
     background-color: inherit;
 
     border: none;
-    background-image: url('./exit.svg');
+    background-image: url("/icons/exit.svg");
     background-size: 100%;
   }
 
@@ -124,6 +124,10 @@
         width: 100%;
       }
     }
+
+    &--active {
+      color: black;
+    }
   }
 
   &__btns-wrap {
@@ -149,9 +153,12 @@
     transition: transform 0.4s;
 
     &:hover {
-      cursor: pointer;
       transform: scale(1.1);
       transition: transform 0.4s;
+    }
+
+    &--opened {
+      background-image: url("/icons/search-black.svg");
     }
   }
 
@@ -162,16 +169,19 @@
     border: none;
     padding: 8px;
     background-color: inherit;
-    background-image: url("./heart.svg");
+    background-image: url("/icons/heart-gray.svg");
     background-position: center;
     background-repeat: no-repeat;
 
     transition: transform 0.4s;
 
     &:hover {
-      cursor: pointer;
       transform: scale(1.1);
       transition: transform 0.4s;
+    }
+
+    &--active {
+      background-image: url("/icons/heart-black.svg");
     }
   }
 
@@ -182,35 +192,41 @@
     border: none;
     padding: 8px;
     background-color: inherit;
-    background-image: url("./burger-menu.svg");
+    background-image: url("/icons/burger-menu.svg");
     background-repeat: no-repeat;
     background-position: center;
 
     transition: transform 0.4s;
 
     &:hover {
-      cursor: pointer;
       transform: scale(1.1);
       transition: transform 0.4s;
     }
   }
 
   &__profile {
-    width: 24px;
-    height: 24px;
-    border: none;
-    background-color: inherit;
+    position: relative;
 
-    background-image: url("./profile.svg");
-    background-repeat: no-repeat;
-    background-position: center;
+    &-open {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background-color: inherit;
 
-    transition: transform 0.4s;
+      background-image: url("/icons/profile-gray.svg");
+      background-repeat: no-repeat;
+      background-position: center;
 
-    &:hover {
-      cursor: pointer;
-      transform: scale(1.1);
       transition: transform 0.4s;
+
+      &:hover {
+        transform: scale(1.1);
+        transition: transform 0.4s;
+      }
+
+      &--active {
+        background-image: url("/icons/profile.svg");
+      }
     }
   }
 

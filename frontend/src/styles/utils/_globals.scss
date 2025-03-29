@@ -4,4 +4,11 @@ html {
 
 body {
   margin: 0;
+  height: 100%;
+}
+
+*,
+*:hover,
+*:active {
+  cursor: none;
 }

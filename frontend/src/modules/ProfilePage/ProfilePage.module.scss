@@ -1,0 +1,116 @@
+@use "../../styles/utils/colors" as *;
+@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+@use '../../styles/utils/mixins/styling-mixins.scss' as *;
+
+.profile {
+  padding-inline: 16px;
+  margin-top: 88px;
+
+  @include tablet-grid;
+  @include desktop-grid;
+
+  &__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    @include on-tablet {
+      display: block;
+      grid-column: 2 / -2;
+    }
+
+    @include on-desktop {
+      grid-column: 4 / -4;
+    }
+
+    &-photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+
+      &-input {
+        display: none;
+      }
+
+      &-label {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transition: cursor .4s;
+      }
+
+      &-wrap {
+        position: relative;
+        width: 112px;
+        height: 112px;
+        
+        &:hover {
+          .profile__info-photo-edit {
+            transition: transform .4s;
+            transform: scale(1.1);
+          }
+
+        }
+      }
+
+      &-edit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        width: 24px;
+        height: 24px;
+        padding: 8px;
+        border-radius: 50%;
+
+        background-image: url('/icons/pencil.svg');
+        background-size: 24px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: rgba($white, 0.7);
+      }
+    }
+
+    &-username {
+      margin-block: 16px 4px;
+    }
+
+    &-email {
+      margin: 0;
+    }
+  }
+
+  &__personal-details {
+    margin-block: 48px 24px;
+
+    @include on-tablet {
+      grid-column: 2 / -2;
+    }
+
+    @include on-desktop {
+      grid-column: 4 / -4;
+    }
+
+    &-title {
+      margin: 0;
+    }
+  }
+
+  &__manage-account {
+    margin-bottom: 56px;
+
+    @include on-tablet {
+      grid-column: 2 / -2;
+    }
+
+    @include on-desktop {
+      grid-column: 4 / -4;
+    }
+
+    &-title {
+      margin-block: 0 24px;
+    }
+  }
+}

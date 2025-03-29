@@ -1,0 +1,88 @@
+@use '../../styles/utils/colors' as *;
+@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.liked-it {
+  &__banner {
+    position: relative;
+    width: 100%;
+
+    &-title {
+      margin: 0;
+      color: $white;
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+
+      @include on-mobile {
+        font-size: 40px;
+      }
+
+      @include on-tablet {
+        left: 32px;
+        bottom: 32px;
+      }
+
+      @include on-desktop {
+        left: 80px;
+        bottom: 40px
+      }
+    }
+  }
+
+  &__products {
+    padding-inline: 16px;
+    margin-block: 24px 40px;
+
+    @include tablet-grid;
+    @include desktop-grid;
+
+    @include on-tablet {
+      margin-block: 32px 64px;
+    }
+
+    @include on-desktop {
+      margin-block: 48px 80px;
+    }
+  }
+
+  &__complete-order {
+    padding-inline: 16px;
+    margin-bottom: 56px;
+
+    @include tablet-grid;
+    @include desktop-grid;
+
+    &-text {
+      text-align: center;
+      margin-block: 0 16px;
+
+      @include on-mobile {
+        font-size: 28px;
+      }
+
+      @include on-tablet {
+        grid-column: 3 / -3;
+        margin-bottom: 8px;
+      }
+
+      @include on-desktop {
+        white-space: nowrap;
+        text-align: center;
+      }
+    }
+
+    &-btn-wrap {
+      > * {
+        width: 100%;
+      }
+
+      @include on-tablet {
+        grid-column: 4 / -4;
+      }
+
+      @include on-desktop {
+        grid-column: 5 / -5;
+      }
+    }
+  }
+}

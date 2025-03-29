@@ -1,0 +1,178 @@
+@use "../../styles/utils/colors" as *;
+@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.login {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+
+  padding: 0 16px 112px 16px;
+
+  @include on-tablet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-inline: 148px;
+  }
+
+  @include on-desktop {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  &__banner {
+    width: 50vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: right;
+  }
+
+  &__info-wrap {
+    @include on-desktop {
+      margin: 0 auto;
+    }
+  }
+
+  &__title {
+    font-size: 28px;
+    margin-block: 48px 0;
+
+    @include on-tablet {
+      font-size: 32px;
+    }
+  }
+
+  &__with {
+    width: 100%;
+    &-text {
+      font-size: 16px;
+      margin-block: 32px 8px;
+    }
+
+    &-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      
+      @include on-tablet {
+        flex-direction: row;
+
+        > * {
+          @include on-tablet {
+            min-width: 0; // Разрешает сжатие
+
+            width: 100%;
+            padding: 10px 20px;
+          }
+        }
+      }
+    }
+
+    &-divider {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin-block: 24px;
+
+      &::before,
+      &::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background-color: $gray-30;
+      }
+
+      &::before {
+        margin-right: 16px;
+      }
+
+      &::after {
+        margin-left: 16px;
+      }
+
+      &-text {
+        font-size: 17px;
+        font-weight: 600;
+        margin: 0;
+      }
+    }
+  }
+
+  &__form {
+    width: 100%;
+
+    // wrap for sign-in button
+    &-sign-in-btn-wrap {
+      @include on-tablet {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      // style for sign in button
+      > * {
+        width: 100%;
+      }
+    }
+
+    &-inputs-wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    &-forgot-password {
+      margin-block: 8px 24px;
+      text-align: right;
+
+      @include on-tablet {
+        font-size: 14px;
+      }
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+        text-decoration-line: underline;
+        text-decoration-style: solid;
+        text-decoration-skip-ink: auto;
+        text-decoration-thickness: auto;
+        text-underline-offset: auto;
+        text-underline-position: from-font;
+      }
+    }
+  }
+
+  &__dont-have-account {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    margin-top: 16px;
+
+    &-question {
+      margin: 0;
+    }
+
+    &-sign-up {
+      padding: 4px;
+      color: $gray-100;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+        text-decoration-style: solid;
+        text-decoration-skip-ink: auto;
+        text-decoration-thickness: auto;
+        text-underline-offset: auto;
+        text-underline-position: from-font;
+      }
+    }
+  }
+}

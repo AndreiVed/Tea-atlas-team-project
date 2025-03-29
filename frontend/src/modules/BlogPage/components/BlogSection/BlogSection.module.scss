@@ -1,0 +1,32 @@
+@use '../../../../styles/utils/colors' as *;
+@use '../../../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.blog-section {
+  border: 1px solid $gray-30;
+
+  @include on-tablet {
+    grid-column: span 6;
+  }
+
+  @include on-desktop {
+    grid-column: span 4;
+  }
+
+  &__info {
+    padding: 24px 16px 16px;
+
+    &-title {
+      margin: 0;
+    }
+
+    &-desc {
+      margin-block: 8px 24px;
+    }
+
+    &-btn-wrap {
+      > * {
+        width: 100%;
+      }
+    }
+  }
+}

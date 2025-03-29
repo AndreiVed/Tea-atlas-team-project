@@ -1,0 +1,37 @@
+@use '../../styles/utils/colors' as *;
+@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.blog {
+  min-height: 100vh;
+
+  &__banner {
+    width: 100%;
+    position: relative;
+
+    &-title {
+      color: $white;
+      margin: 0;
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+
+      @include on-tablet {
+        bottom: 32px;
+        left: 32px;
+      }
+
+      @include on-desktop {
+        bottom: 40px;
+        left: 80px;
+      }
+    }
+  }
+
+  &__sections {
+    margin-block: 32px 56px;
+    padding-inline: 16px;
+
+    @include tablet-grid;
+    @include desktop-grid;
+  }
+}

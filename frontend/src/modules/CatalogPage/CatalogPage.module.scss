@@ -1,5 +1,5 @@
-@use '../../styles/utils/colors' as *;
-@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+@use "../../styles/utils/colors" as *;
+@use "../../styles/utils/mixins/grid-mixins.scss" as *;
 
 .catalog {
   position: relative;
@@ -11,26 +11,33 @@
   &-wrap {
     min-height: 100vh;
     height: 100%;
-
     position: relative;
 
-    @include tablet-grid;
-    @include desktop-grid;
-
     @include on-mobile {
-      margin-bottom: 56px;
       padding-inline: 16px;
     }
 
     @include on-tablet {
-      margin-block: 48px 72px;
+      margin-top: 32px;
     }
+
+    @include on-desktop {
+      display: flex;
+      margin-top: 48px;
+    }
+
   }
 
-  &-products {
+  &__products {
+    @include tablet-grid;
+
     @include on-desktop {
       display: grid;
       grid-template-columns: repeat(9, 1fr);
+      row-gap: 16px;
+      column-gap: 16px;
+      padding: 0;
+      margin-right: 80px;
     }
   }
 
@@ -49,6 +56,24 @@
     @include on-desktop {
       bottom: 40px;
       left: 80px;
+    }
+  }
+
+  &__load-more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-inline: 16px;
+
+    margin-block: 40px 56px;
+
+    @include on-tablet {
+      margin-bottom: 72px;
+    }
+
+    @include on-desktop {
+      margin-block: 48px 88px;
     }
   }
 }

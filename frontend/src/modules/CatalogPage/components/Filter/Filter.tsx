@@ -1,28 +1,26 @@
+import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { FC, useEffect } from "react";
-import { desktopWidth } from "../../../../config";
-// import { useAppSelector } from "../../../../store/hooks";
+import { endpoints } from "../../../../config";
 import { setIsFilterOpened } from "../../../../features/filter/filterSlice";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import "../../../../styles/utils/mixins/font-mixins.scss";
 import { FilterPanel } from "../FilterPanel";
 import styles from "./Filter.module.scss";
 
-// type Props = {}
-
 export const Filter: FC = () => {
-  const isBelowDesktop = window.innerWidth <= desktopWidth;
+  const { width } = useWindowSize();
+  const isBelowDesktop = width ? width <= endpoints.desktop : undefined;
   const filtersCounter = 1;
   const dispatch = useAppDispatch();
   const isFilterOpened = useAppSelector((state) => state.filter.isFilterOpened);
 
   useEffect(() => {
     if (!isBelowDesktop) {
-      // if IS on desktop, always show panel
+      // always show panel always show panel on desktop
       dispatch(setIsFilterOpened(!isFilterOpened));
-      // setShowFilterPanel(true);
     }
-  }, [isBelowDesktop]);
+  }, [isBelowDesktop, dispatch, isFilterOpened]);
 
   return (
     <>
@@ -34,9 +32,7 @@ export const Filter: FC = () => {
         <div className={styles["filter__heading"]}>
           <button
             className={styles["filter__button"]}
-            onClick={() => {
-              dispatch(setIsFilterOpened(true));
-            }}
+            onClick={() => dispatch(setIsFilterOpened(true))}
           >
             <img
               src="/icons/filter.svg"

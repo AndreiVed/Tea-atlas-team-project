@@ -1,3 +1,4 @@
+@use '../../styles/utils/mixins/styling-mixins.scss' as *;
 @use "../../styles/utils/mixins/grid-mixins.scss" as *;
 @use "../../styles/utils/colors" as *;
 
@@ -42,6 +43,7 @@
   background-color: $gray-30;
   margin-block: 56px;
 
+  @include apply-appear-on-scroll;
   @include tablet-grid;
   @include desktop-grid;
 

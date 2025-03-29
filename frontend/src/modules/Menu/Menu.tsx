@@ -2,8 +2,8 @@ import cn from "classnames";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
+import { menuLinks } from "../../constants/links";
 import styles from "./Menu.module.scss";
-import { menuLinks } from "./config";
 
 export const Menu: FC = () => {
   const isLoggedIn = true;

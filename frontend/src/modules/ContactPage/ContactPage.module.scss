@@ -1,0 +1,105 @@
+@use "../../styles/utils/colors" as *;
+@use "../../styles/utils/mixins/grid-mixins.scss" as *;
+
+.contact-us {
+  &__top {
+    position: relative;
+
+    &-title {
+      margin: 0;
+
+      @include on-mobile {
+        font-size: 40px;
+      }
+    }
+
+    &-info-wrap {
+      display: flex;
+      gap: 16px;
+      flex-direction: column;
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+
+      @include on-tablet {
+        left: 32px;
+        bottom: 32px;
+      }
+    }
+
+    &-description-wrap {
+      @include on-mobile {
+        display: none;
+      }
+
+      @include on-tablet {
+        width: 60vw;
+      }
+
+      @include on-desktop {
+        width: 30vw;
+      }
+
+      @media (min-width: 1000px) {
+        width: 40vw;
+      }
+    }
+  }
+
+  &__main {
+    padding: 16px 16px 56px 16px;
+
+    &-text {
+      color: $gray-60;
+    }
+
+    &-description-wrap {
+      @include on-tablet {
+        display: none;
+      }
+    }
+  }
+}
+
+.form {
+  margin-top: 32px;
+
+  @include tablet-grid;
+  @include desktop-grid;
+
+  @include on-desktop {
+    margin-top: 64px;
+  }
+
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @include on-tablet {
+      grid-column: 4 / -4;
+    }
+
+    @include on-desktop {
+      grid-column: 5 / -5;
+    }
+  }
+
+  &__submit-btn-wrap {
+    margin-top: 24px;
+
+    @include on-tablet {
+      margin-top: 8px;
+      grid-column: 4 / -4;
+
+      > * {
+        width: 100%;
+      }
+    }
+
+    @include on-desktop {
+      grid-column: 5 / -5;
+    }
+  }
+}

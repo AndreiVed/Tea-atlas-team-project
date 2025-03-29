@@ -1,4 +1,5 @@
 @use '../../../../styles/utils/mixins/grid-mixins.scss' as *;
+@use '../../../../styles/utils/mixins/styling-mixins.scss' as *;
 
 .cart {
   position: relative;
@@ -11,7 +12,7 @@
   overflow: clip;
 
   &:hover {
-    cursor: pointer;
+    @include custom-cursor-pointer;
   
     .cart__photo {
       transform: scale(1.1);
