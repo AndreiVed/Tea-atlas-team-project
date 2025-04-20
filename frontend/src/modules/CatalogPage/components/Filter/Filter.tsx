@@ -1,7 +1,7 @@
 import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { FC, useEffect } from "react";
-import { endpoints } from "../../../../config";
+import { screenEndpoints } from "../../../../endpoints";
 import { setIsFilterOpened } from "../../../../features/filter/filterSlice";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import "../../../../styles/utils/mixins/font-mixins.scss";
@@ -10,7 +10,7 @@ import styles from "./Filter.module.scss";
 
 export const Filter: FC = () => {
   const { width } = useWindowSize();
-  const isBelowDesktop = width ? width <= endpoints.desktop : undefined;
+  const isBelowDesktop = width ? width <= screenEndpoints.desktop : undefined;
   const filtersCounter = 1;
   const dispatch = useAppDispatch();
   const isFilterOpened = useAppSelector((state) => state.filter.isFilterOpened);

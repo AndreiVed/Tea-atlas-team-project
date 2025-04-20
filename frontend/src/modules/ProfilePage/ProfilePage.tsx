@@ -1,6 +1,9 @@
-import { FC, useState } from "react";
+import cn from "classnames";
+import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCursorEffect } from "../../hooks/useCursorEffect";
 import { useScroll } from "../../hooks/useScroll";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import styles from "./ProfilePage.module.scss";
 import { DeleteAccount } from "./components/DeleteAccount/DeleteAccount";
 import { ManageOption } from "./components/ManageOption";
@@ -11,7 +14,16 @@ export const ProfilePage: FC = () => {
   useScroll({ options: { top: 0, behavior: "instant" } });
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const [showDeleteMsg, setShowDeleteMsg] = useState(false);
-  const [userAvatarSrc, setUserAvatarSrc] = useState<string | null>(null);
+  const { token, userInfo } = useAppSelector((state) => state.profile);
+  const { first_name, last_name, email, avatar } = userInfo;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (Object.values(userInfo).every(val => !val)) {
+      navigate('/');
+    }
+  }, [userInfo, navigate]);
 
   return (
     <section className={styles["profile"]}>
@@ -27,22 +39,22 @@ export const ProfilePage: FC = () => {
               className={styles["profile__info-photo-input"]}
               type="file"
               id="avatarInput"
-              onChange={(e) => handleFileSelect(e, setUserAvatarSrc)}
+              onChange={(e) => handleFileSelect(e, userInfo, token, dispatch)}
             />
             <img
-              className={styles["profile__info-photo"]}
-              src={userAvatarSrc ? userAvatarSrc : "/user/images.jpg"}
+              className={cn(styles["profile__info-photo"], {
+                [styles["profile__info-photo--empty"]]: !avatar,
+              })}
+              src={avatar ? avatar : "/icons/camera.svg"}
               alt="Profile photo"
             />
             <div className={styles["profile__info-photo-edit"]} />
           </label>
         </div>
         <h3 className={styles["profile__info-username"]}>
-          Volodymyr Zelenskyi
+          {first_name + " " + last_name}
         </h3>
-        <p className={styles["profile__info-email"]}>
-          volodymyr-zelenskyi@loves-tea.com
-        </p>
+        <p className={styles["profile__info-email"]}>{email}</p>
       </div>
       <div className={styles["profile__personal-details"]}>
         <h4 className={styles["profile__personal-details-title"]}>
@@ -51,12 +63,12 @@ export const ProfilePage: FC = () => {
         <PersonalDetail
           detailType="name"
           detailTitle="Name"
-          info="Volodymyr Zelenskyi"
+          info={`${first_name} ${last_name}`}
         />
         <PersonalDetail
           detailType="email"
           detailTitle="Email address"
-          info="volodymyr-zelenskyi@loves-tea.com"
+          info={email}
         />
         <PersonalDetail
           detailType="password"

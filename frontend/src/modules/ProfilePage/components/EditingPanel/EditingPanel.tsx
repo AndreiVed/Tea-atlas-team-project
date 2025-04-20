@@ -1,13 +1,23 @@
 import cn from "classnames";
-import { FC } from "react";
-import { Button } from "../../../../components/Button/Button";
-import { FormField } from "../../../../components/FormField";
-import { updateEditingDetails } from "../../../../features/profile/profileSlice";
+import { FC, useEffect } from "react";
+import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
+import { isEmailCorrect } from "../../../../components/GeneralInput/handlers";
+import { API_ENDPOINTS } from "../../../../endpoints";
+import { setError } from "../../../../features/products/productsSlice";
+import {
+  updateEditingDetails,
+  updateEditingForm,
+  updateEditingPassword,
+  updateUserInfo,
+} from "../../../../features/profile/profileSlice";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { DetailType } from "../../../../types/DetailType";
+import { EditingPassword } from "../../../../types/EditingPassword";
 import { PersonalDetail } from "../../../../types/PersonalDetail";
+import { UserInfo } from "../../../../types/UserInfo";
 import styles from "./EditingPanel.module.scss";
+import { EditingInput } from "./components/EditingInput";
 
 type Props = {
   detailType: DetailType;
@@ -18,39 +28,151 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const dispatch = useAppDispatch();
   const title = `Edit ${forDetail.toLowerCase()}`;
-  const { name, lastName, email } = useAppSelector(
-    (state) => state.profile.userInfo
+  const { editingForm, userInfo, editingPassword, token } = useAppSelector(
+    (state) => state.profile
   );
+  const { first_name, last_name, email } = editingForm;
+  const { new_password1, new_password2 } = editingPassword;
+
+  useEffect(() => {
+    console.log(editingForm);
+  }, [editingForm]);
 
   const addFormField = () => {
     switch (detailType) {
       case "name":
         return (
           <>
-            <FormField title="First name" type="text" placeholder={name} />
-            <FormField title="Last name" type="text" placeholder={lastName} />
+            <EditingInput
+              title="First name"
+              type="text"
+              placeholder={userInfo.first_name}
+              name="first_name"
+              value={editingForm.first_name}
+            />
+            <EditingInput
+              title="Last name"
+              type="text"
+              placeholder={userInfo.last_name}
+              name="last_name"
+              value={editingForm.last_name}
+            />
           </>
         );
       case "email":
         return (
-          <FormField title="Email address" type="email" placeholder={email} />
+          <EditingInput
+            title="Email address"
+            type="email"
+            placeholder={userInfo.email}
+            value={editingForm.email}
+            name="email"
+          />
         );
       case "password":
         return (
           <>
-            <FormField
+            <EditingInput
               title="New password"
-              type="text"
+              type="password"
               placeholder="Enter password"
+              name="new_password1"
+              value={editingPassword.new_password1}
+              showPasswordRequirements
             />
-            <FormField
+            <EditingInput
               title="Repeat password"
-              type="text"
+              type="password"
               placeholder="Repeat password"
+              name="new_password2"
+              value={editingPassword.new_password2}
             />
           </>
         );
     }
+  };
+
+  const parseTempUser = (): FormData => {
+    const formData = new FormData();
+
+    const fillFormData = (object: UserInfo | EditingPassword): void => {
+      Object.entries(object).forEach(([key, value]) => {
+        if (key === "avatar") return; // ignore avatar
+        formData.append(key, value);
+      });
+    };
+
+    switch (forDetail) {
+      case "Name":
+        fillFormData({ ...userInfo, first_name, last_name });
+        break;
+      case "Email address":
+        fillFormData({ ...userInfo, email });
+        break;
+      case "Password":
+        fillFormData({ new_password1, new_password2 });
+    }
+
+    return formData;
+  };
+
+  const cleanEditingState = () => {
+    switch (forDetail) {
+      case "Email address":
+        dispatch(updateEditingForm({ ...editingForm, email: "" }));
+        dispatch(updateEditingDetails({ field: "email", value: false }));
+        break;
+      case "Name":
+        dispatch(
+          updateEditingForm({ ...editingForm, first_name: "", last_name: "" })
+        );
+        dispatch(updateEditingDetails({ field: "name", value: false }));
+        break;
+      case "Password":
+        dispatch(
+          updateEditingPassword({ new_password1: "", new_password2: "" })
+        );
+        dispatch(updateEditingDetails({ field: "password", value: false }));
+    }
+  };
+
+  const isDisabled = () => {
+    switch (forDetail) {
+      case "Email address":
+        return !isEmailCorrect(email);
+      case "Name":
+        return !first_name.length && !last_name.length;
+      case "Password":
+        return !new_password1.length && new_password1 !== new_password2;
+    }
+  };
+
+  const handleSubmit = () => {
+    fetch(API_ENDPOINTS.auth.changeUserData, {
+      method: "PATCH",
+      body: parseTempUser(),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.log(token);
+          return;
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        dispatch(updateUserInfo(data));
+        localStorage.removeItem("user");
+        localStorage.setItem("user", JSON.stringify(data));
+        cleanEditingState();
+      })
+      .catch((error) => {
+        console.log(token);
+        setError(error);
+      });
   };
 
   return (
@@ -75,8 +197,11 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
         </button>
       </div>
       <div className={styles["editing-panel__inputs"]}>{addFormField()}</div>
-      <div className={styles["editing-panel__save-btn-wrap"]}>
-        <Button type="primary" text="save" />
+      <div
+        className={styles["editing-panel__save-btn-wrap"]}
+        onClick={() => handleSubmit()}
+      >
+        <GeneralButton type="primary" text="SAVE" isDisabled={isDisabled()} />
       </div>
     </div>
   );

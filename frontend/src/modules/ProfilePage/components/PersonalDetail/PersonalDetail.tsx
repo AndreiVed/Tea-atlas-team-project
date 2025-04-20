@@ -25,8 +25,6 @@ export const PersonalDetail: FC<Props> = ({
     (state) => state.profile.editingDetails[detailType]
   );
 
-  console.log(`DetailType: ${detailType}, isEditing:`, isEditing);
-
   return (
     <>
       {isEditing ? (

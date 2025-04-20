@@ -2,9 +2,9 @@ import cn from "classnames";
 import { FC, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Banner } from "../../components/Banner";
-import { Button } from "../../components/Button/Button";
+import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
 import { ProductCart } from "../../components/ProductCart";
-import { BASE_URL } from "../../config";
+import { API_ENDPOINTS } from "../../endpoints";
 import { setSearchParams as reduxSetSearchParams, setIsFilterOpened } from "../../features/filter/filterSlice";
 import { setError, setProducts } from "../../features/products/productsSlice";
 import { useScroll } from "../../hooks/useScroll";
@@ -33,9 +33,8 @@ export const CatalogPage: FC = () => {
 
   useEffect(() => {
     const controller = new AbortController();
-    const CATALOG_URL = BASE_URL + "/api/v1/catalog";
 
-    fetch(CATALOG_URL)
+    fetch(API_ENDPOINTS.catalog.loadProducts)
       .then((response) => {
         if (!response.ok) {
           dispatch(setError(response.statusText));
@@ -78,7 +77,7 @@ export const CatalogPage: FC = () => {
         </div>
       </div>
       <div className={styles["catalog__load-more-btn"]}>
-        <Button type="secondary" text="load more" />
+        <GeneralButton type="secondary" text="LOAD MORE" />
       </div>
     </div>
   );

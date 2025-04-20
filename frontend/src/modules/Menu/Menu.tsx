@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "../../components/Button/Button";
+import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
 import { menuLinks } from "../../constants/links";
 import styles from "./Menu.module.scss";
 
@@ -39,9 +39,9 @@ export const Menu: FC = () => {
         </ul>
       </nav>
       {isLoggedIn ? (
-        <Button type="text" text="log out" />
+        <GeneralButton type="text" text="LOG OUT" />
       ) : (
-        <Button type="primary" text="log in" />
+        <GeneralButton type="primary" text="LOG IN" />
       )}
     </div>
   );

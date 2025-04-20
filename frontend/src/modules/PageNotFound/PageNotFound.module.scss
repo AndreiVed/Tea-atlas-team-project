@@ -1,0 +1,99 @@
+@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+@use '../../styles/utils/colors' as *;
+
+.page-not-found {
+  margin-top: 56px;
+  padding-inline: 16px;
+  
+  @include tablet-grid;
+
+  @include on-tablet {
+    margin-top: 64px;
+  }
+
+  @include on-desktop {
+    margin-top: 72px;
+    min-height: 100vh;
+  }
+
+  @include desktop-grid;
+
+  &__banner {
+    box-sizing: border-box;
+    width: 100%;
+    padding-inline: 38px;
+
+    @include on-tablet {
+      margin-top: 64px;
+      padding: 0;
+      grid-row: 1;
+      grid-column: 4 / -4;
+    }
+
+    @include on-desktop {
+      align-self: center;
+      grid-column: -6 / -2;
+    }
+
+  }
+  
+  &__info {
+    @include on-tablet {
+      grid-row: 2;
+      grid-column: 4 / -4;
+      margin-bottom: 126px;
+    }
+
+    @include on-desktop {
+      align-self: center;
+      grid-row: initial;
+      grid-column: 2 / 6;
+    }
+  }
+
+  &__title {
+    color: $primary;
+    margin: 0;
+
+    @include on-mobile {
+      font-size: 40px;
+    }
+  }
+
+  &__subtitle {
+    margin-block: 8px 16px;
+  
+    @include on-mobile {
+      font-size: 32px;
+    }
+
+    @include on-tablet {
+      font-size: 40px;
+    }
+  }
+
+  &__desc {
+    color: $gray-60;
+    margin: 0;
+  }
+
+  &__cta-btn {
+    margin-block: 48px 84px;
+
+    @include on-tablet {
+      margin-block: 32px 0;
+
+      > * {
+        width: 100%;
+      }
+    }
+
+    @include on-desktop {
+      margin-top: 48px;
+
+      > * {
+        width: 75%;
+      }
+    }
+  }
+}

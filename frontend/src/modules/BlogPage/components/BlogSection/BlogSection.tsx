@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { FC } from "react";
 import { Banner } from "../../../../components/Banner";
-import { Button } from "../../../../components/Button/Button";
+import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
 import styles from "./BlogSection.module.scss";
 
 export const BlogSection: FC = () => {
@@ -20,9 +20,9 @@ export const BlogSection: FC = () => {
           of each tea type...
         </p>
         <div className={styles["blog-section__info-btn-wrap"]}>
-          <Button
+          <GeneralButton
             type="secondary"
-            text="read more"
+            text="READ MORE"
             to="/blog/tea-brewing-essentials"
           />
         </div>

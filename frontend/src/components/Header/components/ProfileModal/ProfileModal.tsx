@@ -1,7 +1,10 @@
 import cn from "classnames";
 import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { userInfoDefaults } from "../../../../constants/formsInitials";
+import { updateIsLoggedIn, updateUserInfo } from "../../../../features/profile/profileSlice";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import styles from "./ProfileModal.module.scss";
 
 type Props = {
@@ -12,11 +15,26 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const modalRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { first_name, last_name, avatar } = useAppSelector(
+    (state) => state.profile.userInfo
+  );
+  const username =
+    first_name.length || last_name.length
+      ? `${first_name} ${last_name}`
+      : "user";
 
   const handleProfileClick = () => {
     navigate("/profile");
     setOpenProfileModal(false);
   };
+
+  const handleLogout = () => {
+    navigate("/");
+    dispatch(updateIsLoggedIn(false));
+    dispatch(updateUserInfo(userInfoDefaults));
+    localStorage.removeItem("user");
+  }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -38,12 +56,11 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
       <div className={styles["profile-modal__user-info"]}>
         <img
           className={styles["profile-modal__avatar"]}
-          src="/user/images.jpg"
           aria-label="Logotype"
-          alt="Logotype"
+          src={avatar ? avatar : "/icons/camera.svg"}
         />
         <p className={cn(styles["profile-modal__username"], "additional-text")}>
-          Volodymyr Zelensky
+          {username}
         </p>
       </div>
       <nav className={styles["profile-modal__nav"]}>
@@ -69,6 +86,7 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
             )}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onClick={handleLogout}
           >
             Log out
           </li>

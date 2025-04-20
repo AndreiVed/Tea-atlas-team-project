@@ -47,6 +47,8 @@
   }
 
   &__save-btn-wrap {
+    width: min-content;
+
     > * {
       @include on-tablet {
         width: min-content;

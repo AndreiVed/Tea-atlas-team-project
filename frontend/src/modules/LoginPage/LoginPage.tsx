@@ -1,29 +1,87 @@
 import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
-import { FC, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "../../components/Button/Button";
-import { FormField } from "../../components/FormField";
-import { endpoints } from "../../config";
+import { FC, FormEvent, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
+import { isEmailCorrect } from "../../components/GeneralInput/handlers";
+import { API_ENDPOINTS, screenEndpoints } from "../../endpoints";
 import { setLoginForm } from "../../features/forms/formsSlice";
+import {
+  updateLoginError,
+  updateLoginForm,
+} from "../../features/login/loginSlice";
+import {
+  updateIsLoggedIn,
+  updateToken,
+  updateUserInfo,
+} from "../../features/profile/profileSlice";
+import { useCursorEffect } from "../../hooks/useCursorEffect";
 import { useScroll } from "../../hooks/useScroll";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { LoginResponseData } from "../../types/LoginResponseData";
 import styles from "./LoginPage.module.scss";
+import { LoginInput } from "./components/LoginInput";
 
 export const LoginPage: FC = () => {
   const { width } = useWindowSize();
-  const isOnDesktop = width ? width >= endpoints.desktop : undefined;
   const dispatch = useAppDispatch();
-  const { email, password } = useAppSelector((state) => state.forms.loginForm);
-  const isFormFilled = email?.length > 5 && password?.length > 8;
+  const navigate = useNavigate();
+  const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
 
-  useScroll({ options: { top: 0, behavior: "smooth" }});
+  const { loginForm, loginError } = useAppSelector((state) => state.login);
+  const { email, password } = loginForm;
+
+  const isOnDesktop = width ? width >= screenEndpoints.desktop : undefined;
+  const isSubmitDisabled = !isEmailCorrect(email) || password.length < 8;
+
+  useScroll({ options: { top: 0, behavior: "smooth" } });
 
   useEffect(() => {
     return () => {
-      dispatch(setLoginForm({ email: "", password: "" }));
+      dispatch(
+        setLoginForm({
+          email: "",
+          password: "",
+        })
+      );
+      dispatch(updateLoginError(""));
     };
   }, [dispatch]);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    fetch(API_ENDPOINTS.auth.login, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginForm),
+    })
+      .then((response) => {
+        if (response.status === 400) {
+          dispatch(updateLoginError("Email or password is incorrect"));
+          dispatch(updateLoginForm({ email: "", password: "" }));
+
+          return;
+        }
+
+        return response.json();
+      })
+      .then((data: LoginResponseData) => {
+        const { access, user, refresh } = data;
+
+        document.cookie = `refresh=${refresh}`;
+
+        dispatch(updateToken(access));
+        dispatch(updateUserInfo(user));
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("token", access);
+        dispatch(updateIsLoggedIn(true));
+        dispatch(updateLoginForm({ email: "", password: "" }));
+        navigate("/");
+      });
+  };
 
   return (
     <section className={styles["login"]}>
@@ -39,23 +97,20 @@ export const LoginPage: FC = () => {
         <div className={styles["login__with"]}>
           <p className={styles["login__with-text"]}>Sign in with:</p>
           <div className={styles["login__with-buttons"]}>
-            <Button
+            <GeneralButton
               type="secondary"
-              text="google"
+              text="Google"
               icon="/icons/socials/google.svg"
-              alt="google"
             />
-            <Button
+            <GeneralButton
               type="secondary"
-              text="apple"
+              text="Apple"
               icon="/icons/socials/apple.svg"
-              alt="apple"
             />
-            <Button
+            <GeneralButton
               type="secondary"
-              text="facebook"
+              text="Facebook"
               icon="/icons/socials/facebook.svg"
-              alt="facebook"
             />
           </div>
           <div className={styles["login__with-divider"]}>
@@ -63,31 +118,40 @@ export const LoginPage: FC = () => {
           </div>
         </div>
 
-        <form className={styles["login__form"]} action="">
+        <form
+          className={styles["login__form"]}
+          action=""
+          onSubmit={handleSubmit}
+          noValidate
+        >
           <div className={styles["login__form-inputs-wrap"]}>
-            <FormField
+            <LoginInput
               type="email"
               placeholder="Enter your email"
               title="Email"
+              name="email"
+              value={email}
             />
-            <FormField
-              type="text"
+            <LoginInput
+              type="password"
               placeholder="Enter your password"
               title="Password"
+              name="password"
+              value={password}
             />
           </div>
-          <p
-            className={cn(
-              styles["login__form-forgot-password"],
-              styles["additional-text"]
-            )}
-          >
-            Forgot your password?
-          </p>
+          {loginError ? (
+            <h4 className={styles["login__form-error-message"]}>
+              {loginError.toString()}
+            </h4>
+          ) : null}
+
           <div className={styles["login__form-sign-in-btn-wrap"]}>
-            <Button
-              type={isFormFilled ? "primary" : "secondary"}
-              text="sign in"
+            <GeneralButton
+              isSubmit
+              type={"secondary"}
+              text="SIGN IN"
+              isDisabled={isSubmitDisabled}
             />
           </div>
         </form>
@@ -106,6 +170,8 @@ export const LoginPage: FC = () => {
               styles["login__dont-have-account-sign-up"],
               "small-text"
             )}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
             Sign up
           </Link>

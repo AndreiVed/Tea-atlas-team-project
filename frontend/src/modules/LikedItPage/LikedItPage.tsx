@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Banner } from "../../components/Banner";
-import { Button } from "../../components/Button/Button";
+import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
 import { ProductCart } from "../../components/ProductCart";
 import styles from "./LikedItPage.module.scss";
 
@@ -24,7 +24,7 @@ export const LikedItPage: FC = () => {
           Complete the list of your favorite teas
         </h3>
         <div className={styles["liked-it__complete-order-btn-wrap"]}>
-          <Button type="primary" text="tea catalog" to="/catalog" />
+          <GeneralButton type="primary" text="TEA CATALOG" to="/catalog" />
         </div>
       </div>
     </section>
