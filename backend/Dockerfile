@@ -1,0 +1,31 @@
+FROM python:3.12.3-alpine3.18
+
+LABEL maintrainer="vidernykov.a.e@gmail.com"
+
+# Встановлюємо змінні середовища
+ENV PYTHONUNBUFFERED=1
+
+# Встановлюємо робочий каталог
+WORKDIR /app
+
+# Копіюємо залежності і встановлюємо їх
+COPY requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
+
+# Копіюємо всі файли проекту
+COPY . /app/
+# Створюємо папки для медія навіть якщо цих папок не існує (-р)
+RUN mkdir -p /files/media
+# Створюємо користувача та даємо йому права на редагування "media"
+RUN adduser \
+    --disabled-password\
+    --no-create-home \
+    my_user
+RUN chown -R my_user /files/media
+RUN chmod -R 755 /files/media
+# Копіюємо скрипт entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Встановлюємо entrypoint
+ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
