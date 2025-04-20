@@ -2,8 +2,8 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { FC, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { endpoints } from "../../config";
 import { headerTopBarLinks } from "../../constants/links";
+import { screenEndpoints } from "../../endpoints";
 import { changeShowSearch } from "../../features/search/searchSlice";
 import { shouldHideComponent } from "../../handlers/shouldHideComponent";
 import { useCursorEffect } from "../../hooks/useCursorEffect";
@@ -20,10 +20,10 @@ export const Header: FC = () => {
   const dispatch = useAppDispatch();
   const showSearch = useAppSelector((state) => state.search.showSearch);
   const [openProfileModal, setOpenProfileModal] = useState(false);
+  const { isLoggedIn } = useAppSelector(state => state.profile);
 
-  const isNotOnMobile = width ? width >= endpoints.tablet : undefined;
-  const isLoggedIn = true;
-  const pagesPathsWithoutHeader = ["/login", "/sign-up"];
+  const isNotOnMobile = width ? width >= screenEndpoints.tablet : undefined;
+  const pagesPathsWithoutHeader = ["/login", "/sign-up", "/sign-up/confirmation-sent"];
 
   if (shouldHideComponent(pagesPathsWithoutHeader, pathname)) {
     return null;
@@ -100,7 +100,7 @@ export const Header: FC = () => {
           ></button>
         ) : null}
 
-        {isNotOnMobile ? (
+        {isLoggedIn && isNotOnMobile ? (
           <div className={styles["header__profile"]}>
             <button
               className={cn(styles["header__profile-open"], {

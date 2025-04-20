@@ -1,8 +1,8 @@
 import cn from "classnames";
 import { FC } from "react";
 import { Banner } from "../../components/Banner";
-import { Button } from "../../components/Button/Button";
-import { FormField } from "../../components/FormField";
+import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
+import { FormField } from "../../components/GeneralInput";
 import { useScroll } from "../../hooks/useScroll";
 import styles from "./ContactPage.module.scss";
 import { Description } from "./components/Description";
@@ -58,7 +58,7 @@ export const ContactPage: FC = () => {
             />
           </div>
           <div className={styles["form__submit-btn-wrap"]}>
-            <Button type="primary" text="send message" />
+            <GeneralButton type="primary" text="SEND MESSAGE" />
           </div>
         </form>
       </div>

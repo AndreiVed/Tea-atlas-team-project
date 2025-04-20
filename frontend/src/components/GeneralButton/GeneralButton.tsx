@@ -2,7 +2,8 @@ import cn from "classnames";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCursorEffect } from "../../hooks/useCursorEffect";
-import styles from "./Button.module.scss";
+import { Loader } from "../Loader";
+import styles from "./GeneralButton.module.scss";
 
 type Props = {
   type: "primary" | "secondary" | "text";
@@ -10,9 +11,21 @@ type Props = {
   text: string;
   icon?: string;
   to?: string;
+  isSubmit?: boolean;
+  isLoading?: boolean;
+  isDisabled?: boolean;
 };
 
-export const Button: FC<Props> = ({ type, text, icon, isDanger, to }) => {
+export const GeneralButton: FC<Props> = ({
+  type,
+  text,
+  icon,
+  isDanger,
+  to,
+  isSubmit,
+  isLoading,
+  isDisabled,
+}) => {
   const navigate = useNavigate();
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
 
@@ -32,9 +45,11 @@ export const Button: FC<Props> = ({ type, text, icon, isDanger, to }) => {
       onClick={handleBtnClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      type={isSubmit ? "submit" : "button"}
+      disabled={isDisabled}
     >
       {icon ? <img src={icon} alt={text} /> : null}
-      {text}
+      {isLoading ? <Loader /> : text}
     </button>
   );
 };

@@ -8,15 +8,15 @@
 
   padding: 0 16px 112px 16px;
 
+  @include tablet-grid;
+
   @include on-tablet {
+    min-height: 100vh;
+  }
+  
+  @include on-desktop {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding-inline: 148px;
-  }
-
-  @include on-desktop {
     flex-direction: row;
     justify-content: space-between;
     padding: 0;
@@ -30,7 +30,13 @@
   }
 
   &__info-wrap {
+    @include on-tablet {
+      margin: auto 0;
+      grid-column: 3 / -3;
+    }
+
     @include on-desktop {
+      width: auto;
       margin: 0 auto;
     }
   }
@@ -107,11 +113,17 @@
 
     // wrap for sign-in button
     &-sign-in-btn-wrap {
+      margin-top: 24px;
+
       @include on-tablet {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+
+      @include on-desktop {
+        margin-top: 32px;
       }
 
       // style for sign in button
@@ -120,31 +132,17 @@
       }
     }
 
+    &-error-message {
+      font-size: 16px;
+      margin-block: 4px 0;
+      color: $error;
+    }
+
     &-inputs-wrap {
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: 16px;
-    }
-
-    &-forgot-password {
-      margin-block: 8px 24px;
-      text-align: right;
-
-      @include on-tablet {
-        font-size: 14px;
-      }
-
-      &:hover {
-        cursor: pointer;
-        text-decoration: underline;
-        text-decoration-line: underline;
-        text-decoration-style: solid;
-        text-decoration-skip-ink: auto;
-        text-decoration-thickness: auto;
-        text-underline-offset: auto;
-        text-underline-position: from-font;
-      }
     }
   }
 

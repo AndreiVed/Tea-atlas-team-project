@@ -1,6 +1,13 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { Button } from "../../../../components/Button/Button";
+import { useNavigate } from "react-router-dom";
+import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
+import { userInfoInitials } from "../../../../constants/user";
+import {
+  updateIsLoggedIn,
+  updateUserInfo,
+} from "../../../../features/profile/profileSlice";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
+import { useAppDispatch } from "../../../../store/hooks";
 import styles from "./DeleteAccount.module.scss";
 
 type Props = {
@@ -9,6 +16,15 @@ type Props = {
 
 export const DeleteAccount: FC<Props> = ({ setShowDeleteMsg }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  // should add fetch
+  const handleAccountDeletion = () => {
+    dispatch(updateIsLoggedIn(false));
+    dispatch(updateUserInfo(userInfoInitials));
+    navigate('/');
+  };
 
   return (
     <section className={styles["delete-account"]}>
@@ -40,9 +56,14 @@ export const DeleteAccount: FC<Props> = ({ setShowDeleteMsg }) => {
           className={styles["delete-account__buttons-cancel-wrap"]}
           onClick={() => setShowDeleteMsg(false)}
         >
-          <Button type="secondary" text="cancel" />
+          <GeneralButton type="secondary" text="CANCEL" />
         </div>
-        <Button type="primary" text="delete" isDanger />
+        <div
+          className={styles["delete-account__buttons-delete-wrap"]}
+          onClick={handleAccountDeletion}
+        >
+          <GeneralButton type="primary" text="DELETE" isDanger />
+        </div>
       </div>
     </section>
   );

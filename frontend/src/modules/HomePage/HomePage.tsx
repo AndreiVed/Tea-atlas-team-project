@@ -1,5 +1,5 @@
 import { Banner } from "../../components/Banner";
-import { Button } from "../../components/Button/Button";
+import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
 import { useScroll } from "../../hooks/useScroll";
 import { Carousel } from "./components/Carousel";
 import styles from "./HomePage.module.scss";
@@ -19,7 +19,7 @@ export const HomePage = () => {
             Discover the <br />
             world of Tea
           </h2>
-          <Button type="secondary" text="tea catalog" to="/catalog" />
+          <GeneralButton type="secondary" text="TEA CATALOG" to="/catalog" />
         </div>
       </section>
       <section className={styles["tea-catalog"]}>
@@ -34,7 +34,7 @@ export const HomePage = () => {
             unique flavor profile and history. Use filters to find the perfect
             tea for your taste
           </p>
-          <Button type="secondary" text="tea catalog" to="/catalog" />
+          <GeneralButton type="secondary" text="TEA CATALOG" to="/catalog" />
         </div>
       </section>
       <section className={styles["carousel"]}>
@@ -54,9 +54,9 @@ export const HomePage = () => {
             instructions to unlock the full aroma and taste of your favorite
             teas
           </p>
-          <Button
+          <GeneralButton
             type="secondary"
-            text="brewing guide"
+            text="BREWING GUIDE"
             to="/blog/tea-brewing-essentials"
           />
         </div>
@@ -69,7 +69,7 @@ export const HomePage = () => {
           unique flavor profile and history. Use filters to find the perfect tea
           for your taste
         </p>
-        <Button type="secondary" text="blog" to="/blog" />
+        <GeneralButton type="secondary" text="BLOG" to="/blog" />
       </section>
     </>
   );

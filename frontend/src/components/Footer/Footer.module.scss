@@ -4,7 +4,7 @@
 .footer {
   box-sizing: border-box;
   width: 100%;
-  background-color: $gray-60;
+  background-color: $gray-30;
   padding: 24px 16px;
 
   @include on-tablet {
@@ -51,7 +51,7 @@
   &__link {
     position: relative;
     font-family: "Montserrat", sans-serif;
-    color: $white;
+    color: $gray-80;
     font-size: 12px;
     font-weight: 600;
     line-height: 150%;
@@ -66,7 +66,7 @@
       bottom: 0;
       width: 0;
       height: 1px;
-      background-color: $white;
+      background-color: $gray-80;
       border-radius: 8px;
 
       transition: width 0.3s ease-in-out;
@@ -86,7 +86,7 @@
     height: 56px;
     margin: 24px auto 40px auto;
 
-    background-image: url('/icons/logo-white.svg');
+    background-image: url('/icons/logo.svg');
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -110,12 +110,12 @@
     justify-content: center;
 
     &-brand-name {
-      color: $gray-40;
+      color: $gray-60;
       margin-inline: 2px 8px;
     }
     
     &-text {
-      color: $gray-40;
+      color: $gray-60;
     }
   }
 }

@@ -6,7 +6,7 @@ import styles from "./SpecificBlogPage.module.scss";
 
 /*
   this page's routing and code is hardcoded,
-  because my team and I decided to not implement backend
+  because my team and I decided not to implement backend
 */
 
 export const SpecificBlogPage: FC = () => {

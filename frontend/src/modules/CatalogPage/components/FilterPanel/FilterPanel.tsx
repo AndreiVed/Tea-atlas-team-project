@@ -1,7 +1,7 @@
 import { useThrottle, useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { FC, useEffect, useState } from "react";
-import { endpoints } from "../../../../config";
+import { screenEndpoints } from "../../../../endpoints";
 import { setIsFilterOpened } from "../../../../features/filter/filterSlice";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
@@ -18,7 +18,7 @@ export const FilterPanel: FC = () => {
   );
   const [hasSelectedFilters, setHasSelectedFilters] = useState(false);
   const throttledWidth = useThrottle(width, 200);
-  const isDesktop = throttledWidth ? throttledWidth > endpoints.desktop : false;
+  const isDesktop = throttledWidth ? throttledWidth > screenEndpoints.desktop : false;
 
   useEffect(() => {
     setHasSelectedFilters(

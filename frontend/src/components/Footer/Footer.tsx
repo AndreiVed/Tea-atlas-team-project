@@ -9,7 +9,12 @@ import styles from "./Footer.module.scss";
 export const Footer: FC = () => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const { pathname } = useLocation();
-  const pagesPathsWithoutFooter = ["/menu", "/login", "/sign-up"];
+  const pagesPathsWithoutFooter = [
+    "/menu",
+    "/login",
+    "/sign-up",
+    "/sign-up/confirmation-sent",
+  ];
 
   if (shouldHideComponent(pagesPathsWithoutFooter, pathname)) {
     return null;
@@ -44,7 +49,7 @@ export const Footer: FC = () => {
       <div className={styles["footer__rights-container"]}>
         <img
           className={styles["footer__rights-container-photo"]}
-          src="/icons/c.svg"
+          src="/icons/rights.svg"
           alt="C"
         />
         <span

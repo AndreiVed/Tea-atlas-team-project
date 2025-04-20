@@ -1,0 +1,63 @@
+@use "../../../../styles/utils/colors" as *;
+@use "../../../../styles/utils/mixins/grid-mixins.scss" as *;
+
+.email-sent {
+  position: relative;
+  padding-inline: 16px;
+  height: 100%;
+
+  padding-bottom: 120px;
+
+  &__info {
+    @include tablet-grid;
+    @include desktop-grid;
+
+    @include on-tablet {
+      row-gap: 0;
+    }
+  }
+
+  &__banner {
+    padding-top: 120px;
+
+    @include on-tablet {
+      padding: 0;
+      margin-top: 148px;
+      grid-column: 3 / -3;
+    }
+  }
+
+  &__title {
+    margin-block: 32px 0;
+    font-size: 32px;
+
+    @include on-tablet {
+      font-size: 40px;
+      grid-column: 3 / -3;
+    }
+  }
+
+  &__instructions {
+    @include on-tablet {
+      font-size: 40px;
+      grid-column: 3 / -3;
+    }
+  }
+
+  &__user-email {
+    font-weight: 600;
+    color: $primary;
+  }
+
+  &__confirmation {
+    margin-block: 16px;
+  }
+
+  &__check-inbox {
+    margin: 0;
+  }
+
+  &__havent-received {
+    margin-block: 24px 0;
+  }
+}

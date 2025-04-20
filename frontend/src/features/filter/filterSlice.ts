@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { endpoints } from "../../config";
+import { screenEndpoints } from "../../endpoints";
 import { SelectedFilters } from "../../types/SelectedFilters";
 
 export const filterSlice = createSlice({
@@ -15,7 +15,7 @@ export const filterSlice = createSlice({
   },
   reducers: {
     setIsFilterOpened(state, action) {
-      if (state.isFilterOpened && window.innerWidth > endpoints.desktop) {
+      if (state.isFilterOpened && window.innerWidth > screenEndpoints.desktop) {
         return;
       }
 

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { endpoints } from "../../config";
+import { screenEndpoints } from "../../endpoints";
 import styles from "./Banner.module.scss";
 
 type Device = "mobile" | "tablet" | "desktop";
@@ -22,7 +22,7 @@ baseSrc: '/banners/homepage/banner.jpg''
 */
 
 export const Banner: FC<Props> = ({ className, baseSrc }) => {
-  const { desktop, tablet } = endpoints;
+  const { desktop, tablet } = screenEndpoints;
 
   const insertImageSrc = (device: Device) => {
     const imageFormatIndex = baseSrc.indexOf(".");

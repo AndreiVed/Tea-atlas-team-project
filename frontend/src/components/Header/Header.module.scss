@@ -206,6 +206,9 @@
 
   &__profile {
     position: relative;
+    padding: 8px;
+
+    max-height: 40px;
 
     &-open {
       width: 24px;

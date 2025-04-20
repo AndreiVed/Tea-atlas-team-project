@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
-import { carouselCountry } from "../../../../types/CarouselCountry";
+import { CarouselCountry } from "../../../../types/CarouselCountry";
 import styles from "./CountryCart.module.scss";
 
 type Props = {
-  country: carouselCountry;
+  country: CarouselCountry;
 };
 
 export const CountryCart: FC<Props> = ({ country }) => {

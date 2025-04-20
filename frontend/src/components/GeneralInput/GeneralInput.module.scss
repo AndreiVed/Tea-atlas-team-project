@@ -1,0 +1,73 @@
+@use "../../styles/utils/mixins/font-mixins.scss" as *;
+@use "../../styles/utils/colors" as *;
+
+.input {
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  border: 1px solid $gray-60;
+  border-radius: 4px;
+  position: relative;
+  outline: none;
+  padding-right: 40px;
+
+  padding-right: 40px;
+
+  &:focus {
+    border: 1px solid $primary;
+  }
+
+  &:disabled {
+    background-color: $gray-background;
+    border-color: $gray-40;
+  }
+
+  &::placeholder {
+    font-family: Montserrat, sans-serif;
+    color: $gray-40;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px rgba(40, 167, 69, 0.10) inset !important;
+    transition: background-color 999999s ease-in-out 0s;
+  }
+
+  &--error {
+    background-color: rgba(217, 53, 69, 0.1);
+    border-color: $error !important;
+  }
+
+  &--success {
+    background-color: rgba(40, 167, 69, 0.10);
+    border-color: $success;
+
+    &:not(:-webkit-autofill) {
+      background-color: rgba(40, 167, 69, 0.10);
+      border-color: $success;
+    }
+  }
+
+  &-wrapper {
+    width: 100%;
+    position: relative;
+    display: inline-block;
+  }
+
+  &-label {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    color: $gray-60;
+
+    &__star {
+      color: $error;
+    }
+  }
+
+  &-error {
+    display: block;
+    color: $error;
+  }
+}
