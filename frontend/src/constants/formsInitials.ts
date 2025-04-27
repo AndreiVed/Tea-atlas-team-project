@@ -1,5 +1,6 @@
 import { PasswordRequirements } from "../types/PasswordRequirements";
 import { RegistrationForm } from "../types/RegistrationForm";
+import { SelectedFilters } from "../types/SelectedFilters";
 import { UserInfo } from "../types/UserInfo";
 
 export const registrationFormDefaults: RegistrationForm = {
@@ -13,7 +14,7 @@ export const registrationFormDefaults: RegistrationForm = {
 export const registrationFormErrorDefaults = registrationFormDefaults;
 
 export const passwordRequirementsDefaults: PasswordRequirements = {
-  isLetterTyped: false,
+  isLettersTyped: false,
   isMinLength: false,
   isNumberTyped: false,
 };
@@ -24,4 +25,11 @@ export const userInfoDefaults: UserInfo = {
   last_name: "",
   email: "",
   avatar: "",
-}
+};
+
+export const selectedFiltersDefaults: SelectedFilters = {
+  country: [],
+  impact: [],
+  fermentation: [],
+  type: [],
+};

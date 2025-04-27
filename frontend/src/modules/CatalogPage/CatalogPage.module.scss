@@ -38,6 +38,14 @@
       column-gap: 16px;
       padding: 0;
       margin-right: 80px;
+      margin-bottom: 56px;
+    }
+
+    &--empty {
+      width: 100%;
+      display: flex;
+      // align-items: center;
+      justify-content: center;
     }
   }
 
@@ -66,14 +74,14 @@
 
     padding-inline: 16px;
 
-    margin-block: 40px 56px;
+    margin-bottom: 56px;
 
     @include on-tablet {
       margin-bottom: 72px;
     }
 
     @include on-desktop {
-      margin-block: 48px 88px;
+      margin-bottom: 88px;
     }
   }
 }

@@ -120,13 +120,14 @@
 import { FC } from "react";
 import { GeneralInput } from "../../../../../../components/GeneralInput";
 import { isEmailCorrect } from "../../../../../../components/GeneralInput/handlers";
+import { updatePasswordRequirements } from "../../../../../../features/password/passwordSlice";
 import {
-  updatePasswordRequirements,
   updateRegistrationErrors,
   updateRegistrationForm,
   updateSignUpError,
 } from "../../../../../../features/registration/registrationSlice";
 import { allPasswordRequirementsCorrect } from "../../../../../../handlers/allPasswordRequirementsCorrect";
+import { validatePasswordRequirements } from "../../../../../../handlers/validatePasswordRequirements";
 import { useAppDispatch, useAppSelector } from "../../../../../../store/hooks";
 import { GeneralInput as GeneralInputType } from "../../../../../../types/GeneralInput";
 import { RegistrationForm } from "../../../../../../types/RegistrationForm";
@@ -135,8 +136,10 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
   props
 ) => {
   const dispatch = useAppDispatch();
-  const { registrationForm, passwordRequirements, registrationErrors, signUpError } =
-    useAppSelector((state) => state.registration);
+  const { registrationForm, registrationErrors, signUpError } = useAppSelector(
+    (state) => state.registration
+  );
+  const { passwordRequirements } = useAppSelector((state) => state.password);
 
   // const isPassword2Disabled = Object.values(passwordRequirements).some(
   //   (req) => !req
@@ -148,13 +151,7 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
     dispatch(updateRegistrationForm({ [name]: value }));
 
     if (name === "password1") {
-      dispatch(
-        updatePasswordRequirements({
-          isLetterTyped: /[A-Za-z]/.test(value),
-          isMinLength: value.length >= 8,
-          isNumberTyped: /[0-9]/.test(value),
-        })
-      );
+      dispatch(updatePasswordRequirements(validatePasswordRequirements(value)));
     }
   };
 

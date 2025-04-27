@@ -71,8 +71,7 @@ export const LoginPage: FC = () => {
       .then((data: LoginResponseData) => {
         const { access, user, refresh } = data;
 
-        document.cookie = `refresh=${refresh}`;
-
+        localStorage.setItem("refresh", refresh);
         dispatch(updateToken(access));
         dispatch(updateUserInfo(user));
         localStorage.setItem("user", JSON.stringify(user));

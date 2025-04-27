@@ -3,56 +3,56 @@ import { FC, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Banner } from "../../components/Banner";
 import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
-import { ProductCart } from "../../components/ProductCart";
-import { API_ENDPOINTS } from "../../endpoints";
-import { setSearchParams as reduxSetSearchParams, setIsFilterOpened } from "../../features/filter/filterSlice";
-import { setError, setProducts } from "../../features/products/productsSlice";
+import { selectedFiltersDefaults } from "../../constants/formsInitials";
+import {
+  updateIsFilterOpened,
+  updateSelectedFilters,
+  updateSubmittedFilters,
+} from "../../features/filter/filterSlice";
+import { useLoadSelectedProducts } from "../../hooks/useLoadSelectedProducts";
 import { useScroll } from "../../hooks/useScroll";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { SelectedFilters } from "../../types/SelectedFilters";
 import styles from "./CatalogPage.module.scss";
 import { Filter } from "./components/Filter";
+import { Products } from "./components/Products";
 
 export const CatalogPage: FC = () => {
   const [searchParams] = useSearchParams();
-  // const reduxSearchParams = useAppSelector(
-  //   (state) => state.filter.searchParams
-  // );
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(reduxSetSearchParams(searchParams.toString()));
-  }, [searchParams, dispatch]);
-
-  // useEffect(() => {
-  //   setSearchParams(reduxSearchParams);
-  // }, [reduxSearchParams, setSearchParams]);
-
-  const isFilterOpened = useAppSelector((state) => state.filter.isFilterOpened);
+  const { isFilterOpened } = useAppSelector((state) => state.filter);
+  const { products } = useAppSelector((state) => state.products);
+  const productsPerPage = 20;
+  const { loadSelectedProducts } = useLoadSelectedProducts();
 
   useScroll({ options: { top: 0, behavior: "instant" } });
 
   useEffect(() => {
-    const controller = new AbortController();
+    const urlFilters: SelectedFilters = {
+      country: [],
+      impact: [],
+      fermentation: [],
+      type: [],
+    };
 
-    fetch(API_ENDPOINTS.catalog.loadProducts)
-      .then((response) => {
-        if (!response.ok) {
-          dispatch(setError(response.statusText));
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        dispatch(setProducts(data));
-      })
-      .catch(setError);
+    searchParams.forEach((value, key) => {
+      if (Object.keys(urlFilters).includes(key)) {
+        urlFilters[key as keyof SelectedFilters] = value.split(",");
+      }
+    });
 
-      return () => controller.abort();
+    loadSelectedProducts(urlFilters);
+    dispatch(updateSubmittedFilters(urlFilters));
+    dispatch(updateSelectedFilters(urlFilters));
+
+    return () => {
+      dispatch(updateSelectedFilters(selectedFiltersDefaults));
+      dispatch(updateSubmittedFilters(selectedFiltersDefaults));
+    };
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(setIsFilterOpened(false));
+    dispatch(updateIsFilterOpened(false));
   }, [dispatch]);
 
   return (
@@ -70,15 +70,19 @@ export const CatalogPage: FC = () => {
       </div>
       <div className={styles["catalog-wrap"]}>
         <Filter />
-        <div className={styles["catalog__products"]}>
-          {Array.from({ length: 24 }).map(() => (
-            <ProductCart key={Math.random()} />
-          ))}
+        <div
+          className={cn(styles["catalog__products"], {
+            [styles["catalog__products--empty"]]: !products.length,
+          })}
+        >
+          <Products />
         </div>
       </div>
-      <div className={styles["catalog__load-more-btn"]}>
-        <GeneralButton type="secondary" text="LOAD MORE" />
-      </div>
+      {products.length > productsPerPage ? (
+        <div className={styles["catalog__load-more-btn"]}>
+          <GeneralButton type="secondary" text="LOAD MORE" />
+        </div>
+      ) : null}
     </div>
   );
 };

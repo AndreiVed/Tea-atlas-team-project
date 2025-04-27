@@ -8,9 +8,9 @@ import {
   registrationFormDefaults,
 } from "../../../../constants/formsInitials";
 import { API_ENDPOINTS } from "../../../../endpoints";
+import { updatePasswordRequirements } from "../../../../features/password/passwordSlice";
 import {
   updateConfirmationEmail,
-  updatePasswordRequirements,
   updateRegistrationErrors,
   updateRegistrationForm,
   updateSignUpError,
@@ -28,8 +28,10 @@ export const SignUpForm: FC = () => {
   const [isPending, setIsPending] = useState(false);
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
 
-  const { registrationForm, passwordRequirements, signUpError } =
-    useAppSelector((state) => state.registration);
+  const { registrationForm, signUpError, registrationErrors } = useAppSelector(
+    (state) => state.registration
+  );
+  const { passwordRequirements } = useAppSelector((state) => state.password);
 
   const { password1, password2, email, first_name, last_name } =
     registrationForm;
@@ -43,6 +45,7 @@ export const SignUpForm: FC = () => {
     return () => {
       dispatch(updateRegistrationForm(registrationFormDefaults));
       dispatch(updateRegistrationErrors({}));
+      dispatch(updatePasswordRequirements(passwordRequirementsDefaults));
     };
   }, []);
 
@@ -59,12 +62,21 @@ export const SignUpForm: FC = () => {
       body: JSON.stringify(registrationForm),
     })
       .then((response) => {
-        if(!response.ok) {
-
-          response.json()
+        if (!response.ok) {
+          return response.json().then((res) => {
+            dispatch(updateRegistrationErrors(res));
+          });
         }
+
+        return response.json();
       })
       .then(() => {
+        if (Object.values(registrationErrors).some((error) => !error)) {
+          setIsPending(false);
+
+          return;
+        }
+
         navigate("/sign-up/confirmation-sent");
         dispatch(updatePasswordRequirements(passwordRequirementsDefaults));
         dispatch(updateConfirmationEmail(email));

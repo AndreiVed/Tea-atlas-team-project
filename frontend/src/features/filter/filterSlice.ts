@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { selectedFiltersDefaults } from "../../constants/formsInitials";
 import { screenEndpoints } from "../../endpoints";
 import { SelectedFilters } from "../../types/SelectedFilters";
 
@@ -6,15 +7,11 @@ export const filterSlice = createSlice({
   name: "filter",
   initialState: {
     isFilterOpened: false,
-    searchParams: "",
-    selectedFilters: {
-      country: [],
-      impact: [],
-      fermentation: [],
-    } as SelectedFilters,
+    selectedFilters: selectedFiltersDefaults,
+    submittedFilters: selectedFiltersDefaults,
   },
   reducers: {
-    setIsFilterOpened(state, action) {
+    updateIsFilterOpened(state, action: PayloadAction<boolean>) {
       if (state.isFilterOpened && window.innerWidth > screenEndpoints.desktop) {
         return;
       }
@@ -22,17 +19,20 @@ export const filterSlice = createSlice({
       state.isFilterOpened = action.payload;
     },
 
-    setSelectedFilters(state, action) {
+    updateSelectedFilters(state, action: PayloadAction<SelectedFilters>) {
       state.selectedFilters = action.payload;
     },
 
-    setSearchParams(state, action: PayloadAction<string>) {
-      state.searchParams = action.payload.toString();
+    updateSubmittedFilters(state, action: PayloadAction<SelectedFilters>) {
+      state.submittedFilters = action.payload;
     },
   },
 });
 
-export const { setIsFilterOpened, setSelectedFilters, setSearchParams } =
-  filterSlice.actions;
+export const {
+  updateIsFilterOpened,
+  updateSelectedFilters,
+  updateSubmittedFilters,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;

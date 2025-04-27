@@ -1,15 +1,15 @@
 import cn from "classnames";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
 import { isEmailCorrect } from "../../../../components/GeneralInput/handlers";
 import { API_ENDPOINTS } from "../../../../endpoints";
-import { setError } from "../../../../features/products/productsSlice";
 import {
   updateEditingDetails,
   updateEditingForm,
   updateEditingPassword,
   updateUserInfo,
 } from "../../../../features/profile/profileSlice";
+import { fetchWithAuth } from "../../../../handlers/fetchWithToken";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { DetailType } from "../../../../types/DetailType";
@@ -33,6 +33,7 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
   );
   const { first_name, last_name, email } = editingForm;
   const { new_password1, new_password2 } = editingPassword;
+  const [error, setError] = useState("");
 
   useEffect(() => {
     console.log(editingForm);
@@ -46,14 +47,14 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
             <EditingInput
               title="First name"
               type="text"
-              placeholder={userInfo.first_name}
+              placeholder={userInfo.first_name || "Jenny"}
               name="first_name"
               value={editingForm.first_name}
             />
             <EditingInput
               title="Last name"
               type="text"
-              placeholder={userInfo.last_name}
+              placeholder={userInfo.last_name || "Wilson"}
               name="last_name"
               value={editingForm.last_name}
             />
@@ -143,35 +144,23 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
       case "Name":
         return !first_name.length && !last_name.length;
       case "Password":
-        return !new_password1.length && new_password1 !== new_password2;
+        return !new_password1.length || new_password1 !== new_password2;
     }
   };
 
   const handleSubmit = () => {
-    fetch(API_ENDPOINTS.auth.changeUserData, {
+    fetchWithAuth(API_ENDPOINTS.auth.changeUserData, {
       method: "PATCH",
       body: parseTempUser(),
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.log(token);
-          return;
-        }
-
-        return response.json();
-      })
+    }, token)
       .then((data) => {
-        dispatch(updateUserInfo(data));
+        dispatch(updateUserInfo(data as UserInfo));
         localStorage.removeItem("user");
         localStorage.setItem("user", JSON.stringify(data));
         cleanEditingState();
       })
-      .catch((error) => {
-        console.log(token);
-        setError(error);
+      .catch((err) => {
+        setError(err.message || 'Something went wrong');
       });
   };
 
@@ -203,6 +192,7 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
       >
         <GeneralButton type="primary" text="SAVE" isDisabled={isDisabled()} />
       </div>
+      {error && (<p className="main-text">{error}</p>)}
     </div>
   );
 };

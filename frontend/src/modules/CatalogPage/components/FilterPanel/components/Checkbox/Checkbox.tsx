@@ -1,6 +1,7 @@
 import cn from "classnames";
 import { FC } from "react";
-import { setSelectedFilters } from "../../../../../../features/filter/filterSlice";
+import { updateSelectedFilters } from "../../../../../../features/filter/filterSlice";
+import { useCursorEffect } from "../../../../../../hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "../../../../../../store/hooks";
 import { FilterOption } from "../../../../../../types/FilterOption";
 import { FilterSection } from "../../../../../../types/FilterSection";
@@ -12,8 +13,11 @@ type Props = {
 };
 
 export const CheckBox: FC<Props> = ({ option, usedForSection }) => {
+  const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const dispatch = useAppDispatch();
-  const { selectedFilters } = useAppSelector((state) => state.filter);
+  const { selectedFilters } = useAppSelector(
+    (state) => state.filter
+  );
 
   const { id, title, value } = option;
   const normalizedId = id.toString();
@@ -23,14 +27,14 @@ export const CheckBox: FC<Props> = ({ option, usedForSection }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       dispatch(
-        setSelectedFilters({
+        updateSelectedFilters({
           ...selectedFilters,
           [usedForSection]: [...selectedFilters[usedForSection], value],
         })
       );
     } else {
       dispatch(
-        setSelectedFilters({
+        updateSelectedFilters({
           ...selectedFilters,
           [usedForSection]: selectedFilters[usedForSection].filter(
             (selectedFilter) => selectedFilter !== value
@@ -50,6 +54,8 @@ export const CheckBox: FC<Props> = ({ option, usedForSection }) => {
           checked={isChecked}
           className={styles["checkbox__input"]}
           onChange={handleChange}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         />
         <span className={cn(styles["checkbox__text"], "main-text")}>
           {title}

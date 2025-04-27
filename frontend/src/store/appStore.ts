@@ -3,6 +3,7 @@ import cursorReducer from '../features/cursor/cursorSlice';
 import filterReducer from '../features/filter/filterSlice';
 import formsReducer from '../features/forms/formsSlice';
 import loginReducer from '../features/login/loginSlice';
+import passwordReducer from '../features/password/passwordSlice';
 import productsReducer from '../features/products/productsSlice';
 import profileReducer from '../features/profile/profileSlice';
 import registrationReducer from '../features/registration/registrationSlice';
@@ -18,6 +19,7 @@ export const appStore = configureStore({
     search: searchReducer,
     registration: registrationReducer,
     login: loginReducer,
+    password: passwordReducer,
   },
 });
 

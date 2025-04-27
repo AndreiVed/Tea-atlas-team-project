@@ -13,7 +13,7 @@ export const refreshToken = () => {
       return response.json();
     })
     .then((data) => {
-      document.cookie = `refresh=${data.refresh}`;
+      document.cookie = `refresh=${data.access}`;
     })
     .catch((error) => {
       return error;

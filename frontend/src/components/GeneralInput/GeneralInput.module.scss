@@ -30,21 +30,25 @@
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px rgba(40, 167, 69, 0.10) inset !important;
+    -webkit-box-shadow: 0 0 0 1000px rgba(40, 167, 69, 0.1) inset !important;
     transition: background-color 999999s ease-in-out 0s;
   }
 
   &--error {
-    background-color: rgba(217, 53, 69, 0.1);
+    background-color: rgba(217, 53, 69, 0.1) !important;
     border-color: $error !important;
+
+    :-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px rgba(217, 53, 69, 0.1) inset !important;
+    }
   }
 
   &--success {
-    background-color: rgba(40, 167, 69, 0.10);
+    background-color: rgba(40, 167, 69, 0.1);
     border-color: $success;
 
     &:not(:-webkit-autofill) {
-      background-color: rgba(40, 167, 69, 0.10);
+      background-color: rgba(40, 167, 69, 0.1);
       border-color: $success;
     }
   }

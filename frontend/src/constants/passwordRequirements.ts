@@ -11,8 +11,8 @@ export const PASSWORD_REQUIREMENTS: ConfigPasswordRequirement[] = [
     message: "Must be at least 8 characters long",
   },
   {
-    key: "isLetterTyped",
-    message: "Must include at least 1 letter",
+    key: "isLettersTyped",
+    message: "Must include at least 2 letters",
   },
   {
     key: "isNumberTyped",

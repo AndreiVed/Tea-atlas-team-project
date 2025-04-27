@@ -1,5 +1,5 @@
 export type PasswordRequirements = {
   isMinLength: boolean;
-  isLetterTyped: boolean;
+  isLettersTyped: boolean;
   isNumberTyped: boolean;
 }

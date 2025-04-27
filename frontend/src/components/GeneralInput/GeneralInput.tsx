@@ -23,17 +23,15 @@ export const GeneralInput: FC<GeneralInputProps> = ({
   showPasswordRequirements = false,
   disabled,
 }) => {
+  const { passwordRequirements } = useAppSelector((state) => state.password);
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const [isPasswordReqsDefault, setIsPasswordReqsDefault] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [localError, setLocalError] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const [keepPasswordRequirements, setKeepPasswordRequirements] =
     useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { passwordRequirements } = useAppSelector(
-    (state) => state.registration
-  );
 
   const isPasswordField = type === "password";
 
@@ -63,9 +61,10 @@ export const GeneralInput: FC<GeneralInputProps> = ({
     }
 
     if (
-      name === "password1" &&
-      !allPasswordRequirementsCorrect(passwordRequirements) &&
-      value.length
+      name === "password1" ||
+      (name === "new_password1" &&
+        !allPasswordRequirementsCorrect(passwordRequirements) &&
+        value.length)
     ) {
       setKeepPasswordRequirements(true);
     } else {
@@ -122,6 +121,7 @@ export const GeneralInput: FC<GeneralInputProps> = ({
           name={name}
           id={name}
           disabled={disabled}
+          // autoComplete="off"
         />
 
         {isPasswordField && value.length > 0 && (

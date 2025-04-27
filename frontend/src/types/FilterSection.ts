@@ -1,1 +1,1 @@
-export type FilterSection = 'country' | 'impact' | 'fermentation';
+export type FilterSection = 'country' | 'impact' | 'fermentation' | 'type';

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PasswordRequirements } from "../../types/PasswordRequirements";
 import { RegistrationForm } from "../../types/RegistrationForm";
 
 export const registrationSlice = createSlice({
@@ -20,12 +19,6 @@ export const registrationSlice = createSlice({
       first_name: "",
       last_name: "",
     } as RegistrationForm,
-
-    passwordRequirements: {
-      isMinLength: false,
-      isLetterTyped: false,
-      isNumberTyped: false,
-    } as PasswordRequirements,
 
     signUpError: "",
 
@@ -52,13 +45,6 @@ export const registrationSlice = createSlice({
       };
     },
 
-    updatePasswordRequirements(
-      state,
-      action: PayloadAction<PasswordRequirements>
-    ) {
-      state.passwordRequirements = action.payload;
-    },
-
     updateSignUpError(state, action: PayloadAction<string>) {
       state.signUpError = action.payload;
     },
@@ -74,7 +60,6 @@ export default registrationSlice.reducer;
 export const {
   updateRegistrationForm,
   updateRegistrationErrors,
-  updatePasswordRequirements,
   updateSignUpError,
   updateConfirmationEmail,
 } = registrationSlice.actions;

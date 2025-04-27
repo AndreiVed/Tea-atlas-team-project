@@ -30,7 +30,7 @@ export const App: FC = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/catalog" element={<CatalogPage />} />
-          <Route path="/product" element={<ProductPage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/liked-it" element={<LikedItPage />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/login" element={<LoginPage />} />
@@ -45,7 +45,8 @@ export const App: FC = () => {
             element={<SpecificBlogPage />}
           />
           {/* <Route path="/contact" element={<ContactPage />} /> */}
-          <Route path="*" element={<PageNotFound />} />
+          {/* <Route path="*" element={<Navigate to="/page-not-found" replace/>}/> */}
+          <Route path="/page-not-found" element={<PageNotFound />}/>
         </Routes>
       </main>
       <Footer />
