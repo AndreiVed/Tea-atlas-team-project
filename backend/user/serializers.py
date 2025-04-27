@@ -8,8 +8,8 @@ from rest_framework import serializers
 
 class UserSerializer(RegisterSerializer):
     username = None
-    first_name = serializers.CharField(required=False)
-    last_name = serializers.CharField(required=False)
+    first_name = serializers.CharField(required=False, allow_blank=True)
+    last_name = serializers.CharField(required=False, allow_blank=True)
 
     class Meta:
         model = get_user_model()
