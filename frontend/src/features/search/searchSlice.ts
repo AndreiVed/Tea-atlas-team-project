@@ -6,11 +6,11 @@ export const searchSlice = createSlice({
     showSearch: false,
   },
   reducers: {
-    changeShowSearch(state, action: PayloadAction<boolean>) {
+    updateShowSearch(state, action: PayloadAction<boolean>) {
       state.showSearch = action.payload;
     }
   }
 });
 
 export default searchSlice.reducer;
-export const { changeShowSearch } = searchSlice.actions;
+export const { updateShowSearch } = searchSlice.actions;

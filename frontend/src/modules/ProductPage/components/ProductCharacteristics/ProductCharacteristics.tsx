@@ -1,9 +1,41 @@
 import { FC } from "react";
-import { characteristics } from "../../../../constants/product";
+import { ProductCategoryExtended } from "../../../../types/ProductCategory";
 import { ProductCharacteristic } from "../ProductCharacteristic/ProductCharacteristic";
 import styles from "./ProductCharacteristics.module.scss";
 
-export const ProductCharacteristics: FC = () => {
+type Props = {
+  category: ProductCategoryExtended;
+  impact: string;
+  descriptors: string[];
+};
+
+export const ProductCharacteristics: FC<Props> = ({
+  category,
+  impact,
+  descriptors,
+}) => {
+  const { fermentation, region } = category;
+
+  const { country, province } = region;
+
+  const characteristics = [
+    {
+      title: "Country",
+      badges: [`${country} · ${province}`],
+    },
+    {
+      title: "Impact",
+      badges: [impact],
+    },
+    {
+      title: "Fermentation",
+      badges: [fermentation],
+    },
+    {
+      title: "Tasting notes",
+      badges: descriptors,
+    },
+  ];
   return (
     <div className={styles["product__characteristics"]}>
       {characteristics.map((characteristic, index) => {

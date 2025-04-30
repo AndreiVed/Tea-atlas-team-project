@@ -12,11 +12,11 @@ export const ProductCart: FC<Props> = ({ product }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const navigate = useNavigate();
 
-  const isMoreThanThreeCategories = descriptors.length > 3;
-  const howMuchMore = isMoreThanThreeCategories ? descriptors.length - 3 : 0;
+  const isMoreThanTwoCategories = descriptors.length > 2;
+  const howMuchMore = isMoreThanTwoCategories ? descriptors.length - 2 : 0;
 
-  const showedDescriptors = isMoreThanThreeCategories
-    ? descriptors.slice(0, 3)
+  const showedDescriptors = isMoreThanTwoCategories
+    ? descriptors.slice(0, 2)
     : descriptors;
 
   const handleCartClick = () => {
@@ -43,14 +43,15 @@ export const ProductCart: FC<Props> = ({ product }) => {
               {descriptor}
             </p>
           ))}
-          {isMoreThanThreeCategories ? (
-            <p className="additional-text">{`+${howMuchMore} more`}</p>
+          {isMoreThanTwoCategories ? (
+            <p
+              className={styles["product__info-categories-more"]}
+            >{`+${howMuchMore} more`}</p>
           ) : null}
-          {/* <p className={styles["product__info-categories-category"]}>Sweet</p>
-          <p className={styles["product__info-categories-category"]}>Creamy</p>
-          <p className={styles["product__info-categories-category"]}>Spicy</p> */}
         </div>
       </div>
     </article>
   );
 };
+
+

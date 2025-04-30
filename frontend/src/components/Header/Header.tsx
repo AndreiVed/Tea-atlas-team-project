@@ -4,7 +4,7 @@ import { FC, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { headerTopBarLinks } from "../../constants/links";
 import { screenEndpoints } from "../../endpoints";
-import { changeShowSearch } from "../../features/search/searchSlice";
+import { updateShowSearch } from "../../features/search/searchSlice";
 import { shouldHideComponent } from "../../handlers/shouldHideComponent";
 import { useCursorEffect } from "../../hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -83,7 +83,7 @@ export const Header: FC = () => {
           })}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          onClick={() => dispatch(changeShowSearch(true))}
+          onClick={() => dispatch(updateShowSearch(true))}
         ></button>
         <button
           className={cn(styles["header__favorites"], {

@@ -8,17 +8,20 @@ import { fetchWithAuth } from "../../handlers/fetchWithToken";
 import { useCursorEffect } from "../../hooks/useCursorEffect";
 import { useScroll } from "../../hooks/useScroll";
 import { useAppSelector } from "../../store/hooks";
-import { Product } from "../../types/Product";
+import { ProductExtended } from "../../types/ProductExtended";
 import styles from "./ProductPage.module.scss";
 import { ProductCharacteristics } from "./components/ProductCharacteristics";
 import { SteepingInstructions } from "./components/SteepingInstructions";
 
+type CurrentProduct = ProductExtended | null;
+
 export const ProductPage: FC = () => {
-  const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
+  useScroll({ options: { top: 0, behavior: "instant" } });
+
+  const [currentProduct, setCurrentProduct] = useState<CurrentProduct>(null);
   const { token, isLoggedIn } = useAppSelector((state) => state.profile);
   const navigate = useNavigate();
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
-  useScroll({ options: { top: 0, behavior: "instant" } });
   const { id } = useParams();
   const [isInFavs, setIsInFavs] = useState(false);
 
@@ -61,7 +64,8 @@ export const ProductPage: FC = () => {
     ).then(() => setIsInFavs(true));
   };
 
-  const { name, description, image } = currentProduct;
+  const { name, description, image, category, impact, descriptors } =
+    currentProduct;
 
   return (
     <section className={styles["product"]}>
@@ -82,9 +86,13 @@ export const ProductPage: FC = () => {
               onClick={handleManipulatingFavList}
             />
           </div>
-          <h3 className={styles["product__tea-type"]}>Green Tea</h3>
+          <h3 className={styles["product__tea-type"]}>{category.name}</h3>
           <div className={styles["product__chars-wrap"]}>
-            <ProductCharacteristics />
+            <ProductCharacteristics
+              category={category}
+              impact={impact}
+              descriptors={descriptors}
+            />
             <SteepingInstructions />
           </div>
         </div>

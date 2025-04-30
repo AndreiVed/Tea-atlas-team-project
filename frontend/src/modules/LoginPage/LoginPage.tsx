@@ -82,6 +82,10 @@ export const LoginPage: FC = () => {
       });
   };
 
+  const handleGoogleClick = () => {
+    window.location.href = "http://127.0.0.1:8000/api/v1/google_auth/redirect/";
+  };
+
   return (
     <section className={styles["login"]}>
       {isOnDesktop ? (
@@ -96,11 +100,16 @@ export const LoginPage: FC = () => {
         <div className={styles["login__with"]}>
           <p className={styles["login__with-text"]}>Sign in with:</p>
           <div className={styles["login__with-buttons"]}>
-            <GeneralButton
-              type="secondary"
-              text="Google"
-              icon="/icons/socials/google.svg"
-            />
+            <div
+              className={styles["login__google"]}
+              onClick={handleGoogleClick}
+            >
+              <GeneralButton
+                type="secondary"
+                text="Google"
+                icon="/icons/socials/google.svg"
+              />
+            </div>
             <GeneralButton
               type="secondary"
               text="Apple"

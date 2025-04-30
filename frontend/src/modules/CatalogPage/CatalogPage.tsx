@@ -28,11 +28,12 @@ export const CatalogPage: FC = () => {
   useScroll({ options: { top: 0, behavior: "instant" } });
 
   useEffect(() => {
-    const urlFilters: SelectedFilters = {
+    const urlFilters: SelectedFilters & { name: string } = {
       country: [],
       impact: [],
       fermentation: [],
       type: [],
+      name: "",
     };
 
     searchParams.forEach((value, key) => {

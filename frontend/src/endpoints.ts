@@ -19,12 +19,15 @@ export const API_ENDPOINTS = {
     changePassword: getEndpoint("/auth/password/change/"),
     changeUserData: getEndpoint("/auth/user/"),
   },
-
   catalog: {
     loadProducts: getEndpoint("/catalog/"),
     loadProductPage: (id: string) => getEndpoint(`/catalog/${id}/`),
     favoritesOperations: (id: string) =>
       getEndpoint(`/catalog/${id}/add_favorite/`),
     applyFilters: (filters: string) => getEndpoint(`/catalog?${filters}`),
+  },
+  google_auth: {
+    callback: getEndpoint("/google_auth/callback/"),
+    redirect: getEndpoint("/google_auth/redirect/"),
   },
 };

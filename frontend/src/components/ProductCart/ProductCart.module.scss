@@ -61,10 +61,17 @@
 
     &-categories {
       display: flex;
+      align-items: center;
       gap: 4px;
+      margin-block: 16px;
+
+      &-more {
+        font-size: 16px;
+        margin: 0;
+      }
 
       &-category {
-        margin-block: 16px 0;
+        margin: 0;
         padding: 4px 8px;
         border: 1px solid $gray-60;
       }

@@ -67,13 +67,17 @@
 
         > * {
           @include on-tablet {
-            min-width: 0; // Разрешает сжатие
+            min-width: 0;
 
             width: 100%;
             padding: 10px 20px;
           }
         }
       }
+    }
+
+    &__google {
+      display: block;
     }
 
     &-divider {
