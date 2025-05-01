@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { CustomCursor } from "./components/CustomCursor";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
@@ -8,6 +8,7 @@ import "./index.scss";
 import { BlogPage } from "./modules/BlogPage";
 import { CatalogPage } from "./modules/CatalogPage";
 // import { ContactPage } from "./modules/ContactPage";
+import { ContactPage } from "./modules/ContactPage";
 import { HomePage } from "./modules/HomePage";
 import { LikedItPage } from "./modules/LikedItPage";
 import { LoginPage } from "./modules/LoginPage";
@@ -44,8 +45,8 @@ export const App: FC = () => {
             path="/blog/tea-brewing-essentials"
             element={<SpecificBlogPage />}
           />
-          {/* <Route path="/contact" element={<ContactPage />} /> */}
-          {/* <Route path="*" element={<Navigate to="/page-not-found" replace/>}/> */}
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<Navigate to="/page-not-found" replace/>}/>
           <Route path="/page-not-found" element={<PageNotFound />}/>
         </Routes>
       </main>

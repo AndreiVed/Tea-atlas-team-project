@@ -2,7 +2,7 @@ import cn from "classnames";
 import { FC } from "react";
 import { Banner } from "../../components/Banner";
 import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
-import { FormField } from "../../components/GeneralInput";
+import { GeneralInput } from "../../components/GeneralInput";
 import { useScroll } from "../../hooks/useScroll";
 import styles from "./ContactPage.module.scss";
 import { Description } from "./components/Description";
@@ -33,24 +33,24 @@ export const ContactPage: FC = () => {
           action=""
         >
           <div className={styles["form__inputs"]}>
-            <FormField
+            <GeneralInput
               title="Name"
               placeholder="John Doe"
               type="text"
               required
             />
-            <FormField
+            <GeneralInput
               title="Phone Number"
               placeholder="+1 234 567 8900"
               type="text"
             />
-            <FormField
+            <GeneralInput
               title="Email"
               placeholder="name@example.com"
               type="email"
               required
             />
-            <FormField
+            <GeneralInput
               title="Message"
               placeholder="Write your message here..."
               type="text"
