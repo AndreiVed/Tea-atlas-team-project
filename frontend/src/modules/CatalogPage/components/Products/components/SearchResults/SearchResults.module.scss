@@ -1,0 +1,12 @@
+@use '../../../../../../styles/utils/mixins/grid-mixins.scss' as *;
+@use '../../../../../../styles/utils/vars' as *;
+
+.search-results {
+  @include on-tablet {
+    padding-inline: $page-padding-inline-tablet;
+  }
+
+  &__title {
+    margin-block: 0 16px;
+  }
+}

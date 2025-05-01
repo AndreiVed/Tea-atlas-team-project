@@ -9,6 +9,7 @@ import {
   updateSelectedFilters,
   updateSubmittedFilters,
 } from "../../features/filter/filterSlice";
+import { updateShowSearch } from "../../features/search/searchSlice";
 import { useLoadSelectedProducts } from "../../hooks/useLoadSelectedProducts";
 import { useScroll } from "../../hooks/useScroll";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -49,8 +50,9 @@ export const CatalogPage: FC = () => {
     return () => {
       dispatch(updateSelectedFilters(selectedFiltersDefaults));
       dispatch(updateSubmittedFilters(selectedFiltersDefaults));
+      dispatch(updateShowSearch(false));
     };
-  }, [dispatch]);
+  }, [dispatch, searchParams]);
 
   useEffect(() => {
     dispatch(updateIsFilterOpened(false));
@@ -71,13 +73,7 @@ export const CatalogPage: FC = () => {
       </div>
       <div className={styles["catalog-wrap"]}>
         <Filter />
-        <div
-          className={cn(styles["catalog__products"], {
-            [styles["catalog__products--empty"]]: !products.length,
-          })}
-        >
-          <Products />
-        </div>
+        <Products />
       </div>
       {products.length > productsPerPage ? (
         <div className={styles["catalog__load-more-btn"]}>
