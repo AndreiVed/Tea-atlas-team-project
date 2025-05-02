@@ -12,8 +12,14 @@ export const Filter: FC = () => {
   const { width } = useWindowSize();
   const isBelowDesktop = width ? width <= screenEndpoints.desktop : undefined;
   const dispatch = useAppDispatch();
-  const { isFilterOpened, selectedFilters } = useAppSelector((state) => state.filter);
-  const filtersCounter = Object.values(selectedFilters).length;
+  const { isFilterOpened, selectedFilters } = useAppSelector(
+    (state) => state.filter
+  );
+  const filtersCounter = Object.values(selectedFilters).flat().length;
+
+  useEffect(() => {
+    
+  }, []);
 
   useEffect(() => {
     if (!isBelowDesktop) {

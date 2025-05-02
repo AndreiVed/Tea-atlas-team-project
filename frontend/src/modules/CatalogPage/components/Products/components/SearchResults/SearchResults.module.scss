@@ -1,12 +1,18 @@
 @use '../../../../../../styles/utils/mixins/grid-mixins.scss' as *;
 @use '../../../../../../styles/utils/vars' as *;
+@use '../../../../../../styles/utils/colors' as *;
 
 .search-results {
   @include on-tablet {
     padding-inline: $page-padding-inline-tablet;
   }
 
+  &__param {
+    color: $gray-100;
+  }
+
   &__title {
     margin-block: 0 16px;
+    color: $gray-80;
   }
 }

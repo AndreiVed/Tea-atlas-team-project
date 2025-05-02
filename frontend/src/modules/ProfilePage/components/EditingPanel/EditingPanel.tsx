@@ -148,11 +148,20 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
     }
   };
 
+  const currentEndpoint =
+    forDetail === "Password"
+      ? API_ENDPOINTS.auth.changePassword
+      : API_ENDPOINTS.auth.changeUserData;
+
   const handleSubmit = () => {
-    fetchWithAuth(API_ENDPOINTS.auth.changeUserData, {
-      method: "PATCH",
-      body: parseTempUser(),
-    }, token)
+    fetchWithAuth(
+      currentEndpoint,
+      {
+        method: forDetail === "Password" ? "POST" : "PATCH",
+        body: parseTempUser(),
+      },
+      token
+    )
       .then((data) => {
         dispatch(updateUserInfo(data as UserInfo));
         localStorage.removeItem("user");
@@ -160,7 +169,7 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
         cleanEditingState();
       })
       .catch((err) => {
-        setError(err.message || 'Something went wrong');
+        setError(err.message || "Something went wrong");
       });
   };
 
@@ -192,7 +201,7 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
       >
         <GeneralButton type="primary" text="SAVE" isDisabled={isDisabled()} />
       </div>
-      {error && (<p className="main-text">{error}</p>)}
+      {error && <p className="main-text">{error}</p>}
     </div>
   );
 };

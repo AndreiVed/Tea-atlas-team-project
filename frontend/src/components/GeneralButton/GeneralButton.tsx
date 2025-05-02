@@ -14,6 +14,7 @@ type Props = {
   isSubmit?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
+  onClick?: () => void;
 };
 
 export const GeneralButton: FC<Props> = ({
@@ -25,6 +26,7 @@ export const GeneralButton: FC<Props> = ({
   isSubmit,
   isLoading,
   isDisabled,
+  onClick,
 }) => {
   const navigate = useNavigate();
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
@@ -32,6 +34,10 @@ export const GeneralButton: FC<Props> = ({
   const handleBtnClick = () => {
     if (to) {
       navigate(to);
+    }
+
+    if (onClick) {
+      onClick();
     }
 
     handleMouseLeave();

@@ -6,6 +6,7 @@ export const productsSlice = createSlice({
   initialState: {
     products: [] as Product[],
     chosenProduct: {} as Product,
+    likedProducts: localStorage.getItem("likedProducts") || ([] as Product[]),
   },
 
   reducers: {
@@ -16,9 +17,14 @@ export const productsSlice = createSlice({
     updateChosenProduct(state, action: PayloadAction<Product>) {
       state.chosenProduct = action.payload;
     },
+
+    updateLikedProducts(state, action: PayloadAction<Product[]>) {
+      state.likedProducts = action.payload;
+    },
   },
 });
 
 export default productsSlice.reducer;
 
-export const { updateChosenProduct, updateProducts } = productsSlice.actions;
+export const { updateChosenProduct, updateProducts, updateLikedProducts } =
+  productsSlice.actions;

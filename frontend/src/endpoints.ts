@@ -18,6 +18,7 @@ export const API_ENDPOINTS = {
     verifyToken: getEndpoint("/auth/token/verify/"),
     changePassword: getEndpoint("/auth/password/change/"),
     changeUserData: getEndpoint("/auth/user/"),
+    favoriteList: getEndpoint("/auth/user/favorite_list/"),
   },
   catalog: {
     loadProducts: getEndpoint("/catalog/"),

@@ -10,6 +10,7 @@ import {
   updateLoginError,
   updateLoginForm,
 } from "../../features/login/loginSlice";
+import { updateLikedProducts } from "../../features/products/productsSlice";
 import {
   updateIsLoggedIn,
   updateToken,
@@ -75,10 +76,28 @@ export const LoginPage: FC = () => {
         dispatch(updateToken(access));
         dispatch(updateUserInfo(user));
         localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("token", access);
+        localStorage.setItem("access_token", access);
         dispatch(updateIsLoggedIn(true));
         dispatch(updateLoginForm({ email: "", password: "" }));
         navigate("/");
+
+        fetch(API_ENDPOINTS.auth.favoriteList, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${access}`,
+          }
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Something went wrong.");
+            }
+
+            return response.json();
+          })
+          .then((data) => {
+            dispatch(updateLikedProducts(data));
+            localStorage.setItem("likedProducts", data);
+          });
       });
   };
 
@@ -110,16 +129,6 @@ export const LoginPage: FC = () => {
                 icon="/icons/socials/google.svg"
               />
             </div>
-            <GeneralButton
-              type="secondary"
-              text="Apple"
-              icon="/icons/socials/apple.svg"
-            />
-            <GeneralButton
-              type="secondary"
-              text="Facebook"
-              icon="/icons/socials/facebook.svg"
-            />
           </div>
           <div className={styles["login__with-divider"]}>
             <p className={styles["login__with-divider-text"]}>or</p>

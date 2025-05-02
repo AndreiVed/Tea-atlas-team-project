@@ -1,7 +1,6 @@
 import { useThrottle, useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
-import { some } from "lodash";
-import isEqual from "lodash/isEqual";
+import { isEqual, some } from "lodash-es";
 import { FC, FormEvent, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Loader } from "../../../../components/Loader";

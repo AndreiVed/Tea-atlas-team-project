@@ -2,9 +2,14 @@ import { FC } from "react";
 import { Banner } from "../../components/Banner";
 import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
 import { ProductCart } from "../../components/ProductCart";
+import { useScroll } from "../../hooks/useScroll";
+import { useAppSelector } from "../../store/hooks";
 import styles from "./LikedItPage.module.scss";
 
 export const LikedItPage: FC = () => {
+  useScroll({ options: { top: 0, behavior: "instant" } });
+  const { likedProducts } = useAppSelector((state) => state.products);
+
   return (
     <section className={styles["liked-it"]}>
       <div className={styles["liked-it__banner"]}>
@@ -15,9 +20,11 @@ export const LikedItPage: FC = () => {
         <h1 className={styles["liked-it__banner-title"]}>Liked it</h1>
       </div>
       <div className={styles["liked-it__products"]}>
-        {Array.from({ length: 8 }).map(() => (
-          <ProductCart key={Math.random()} />
-        ))}
+        {Array.isArray(likedProducts)
+          ? likedProducts.map((product) => (
+              <ProductCart product={product} key={Math.random()} />
+            ))
+          : null}
       </div>
       <div className={styles["liked-it__complete-order"]}>
         <h3 className={styles["liked-it__complete-order-text"]}>

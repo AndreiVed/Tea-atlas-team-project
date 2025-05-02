@@ -20,8 +20,8 @@ export const ProfilePage: FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (Object.values(userInfo).every(val => !val)) {
-      navigate('/');
+    if (Object.values(userInfo).every((val) => !val)) {
+      navigate("/");
     }
   }, [userInfo, navigate]);
 
@@ -89,7 +89,9 @@ export const ProfilePage: FC = () => {
       </div>
 
       {showDeleteMsg ? (
-        <DeleteAccount setShowDeleteMsg={setShowDeleteMsg} />
+        <div className={styles["modal-overlay"]}>
+          <DeleteAccount setShowDeleteMsg={setShowDeleteMsg} />
+        </div>
       ) : null}
     </section>
   );

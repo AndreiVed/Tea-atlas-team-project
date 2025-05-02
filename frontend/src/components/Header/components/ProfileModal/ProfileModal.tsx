@@ -3,6 +3,7 @@ import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { userInfoDefaults } from "../../../../constants/formsInitials";
 import { updateIsLoggedIn, updateUserInfo } from "../../../../features/profile/profileSlice";
+import { clearTokens } from "../../../../handlers/clearTokens";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import styles from "./ProfileModal.module.scss";
@@ -34,7 +35,9 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
     dispatch(updateIsLoggedIn(false));
     dispatch(updateUserInfo(userInfoDefaults));
     localStorage.removeItem("user");
-  }
+
+    clearTokens();
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
