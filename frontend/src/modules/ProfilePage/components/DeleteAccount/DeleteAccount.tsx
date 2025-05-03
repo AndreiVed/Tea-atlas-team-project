@@ -1,13 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { useNavigate } from "react-router-dom";
 import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
-import { userInfoInitials } from "../../../../constants/user";
-import {
-  updateIsLoggedIn,
-  updateUserInfo,
-} from "../../../../features/profile/profileSlice";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
-import { useAppDispatch } from "../../../../store/hooks";
 import styles from "./DeleteAccount.module.scss";
 
 type Props = {
@@ -16,15 +9,6 @@ type Props = {
 
 export const DeleteAccount: FC<Props> = ({ setShowDeleteMsg }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  // should add fetch
-  const handleAccountDeletion = () => {
-    dispatch(updateIsLoggedIn(false));
-    dispatch(updateUserInfo(userInfoInitials));
-    navigate('/');
-  };
 
   return (
     <section className={styles["delete-account"]}>
@@ -45,25 +29,19 @@ export const DeleteAccount: FC<Props> = ({ setShowDeleteMsg }) => {
         />
       </div>
       <div className={styles["delete-account__info"]}>
-        <h3 className={styles["delete-account__info-title"]}>Delete Account</h3>
+        <h3 className={styles["delete-account__info-title"]}>
+          This feature is currently unavailable
+        </h3>
         <p className={styles["delete-account__info-desc"]}>
-          Are you sure you want to delete your account? This action is
-          irreversible, and all your data will be permanently lost
+          We're working on making it available soon. Thank you for your
+          patience!
         </p>
       </div>
-      <div className={styles["delete-account__buttons"]}>
-        <div
-          className={styles["delete-account__buttons-cancel-wrap"]}
-          onClick={() => setShowDeleteMsg(false)}
-        >
-          <GeneralButton type="secondary" text="CANCEL" />
-        </div>
-        <div
-          className={styles["delete-account__buttons-delete-wrap"]}
-          onClick={handleAccountDeletion}
-        >
-          <GeneralButton type="primary" text="DELETE" isDanger />
-        </div>
+      <div
+        className={styles["delete-account__back-to-account"]}
+        onClick={() => setShowDeleteMsg(false)}
+      >
+        <GeneralButton type="secondary" text="BACK TO ACCOUNT" />
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
 import { isEmailCorrect } from "../../../../components/GeneralInput/handlers";
 import { API_ENDPOINTS } from "../../../../endpoints";
@@ -34,10 +34,6 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
   const { first_name, last_name, email } = editingForm;
   const { new_password1, new_password2 } = editingPassword;
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    console.log(editingForm);
-  }, [editingForm]);
 
   const addFormField = () => {
     switch (detailType) {
@@ -98,7 +94,10 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
 
     const fillFormData = (object: UserInfo | EditingPassword): void => {
       Object.entries(object).forEach(([key, value]) => {
-        if (key === "avatar") return; // ignore avatar
+        if (key === "avatar") {
+          return; // ignore avatar
+        }
+
         formData.append(key, value);
       });
     };
@@ -148,19 +147,32 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
     }
   };
 
+  const currentEndpoint =
+    forDetail === "Password"
+      ? API_ENDPOINTS.auth.changePassword
+      : API_ENDPOINTS.auth.changeUserData;
+
   const handleSubmit = () => {
-    fetchWithAuth(API_ENDPOINTS.auth.changeUserData, {
-      method: "PATCH",
-      body: parseTempUser(),
-    }, token)
+    fetchWithAuth(
+      currentEndpoint,
+      {
+        method: forDetail === "Password" ? "POST" : "PATCH",
+        body: parseTempUser(),
+      },
+      token
+    )
       .then((data) => {
-        dispatch(updateUserInfo(data as UserInfo));
-        localStorage.removeItem("user");
-        localStorage.setItem("user", JSON.stringify(data));
+        // only password form doesn't send back updated user
+        if (forDetail !== "Password") {
+          dispatch(updateUserInfo(data as UserInfo));
+          localStorage.removeItem("user");
+          localStorage.setItem("user", JSON.stringify(data));
+        }
+
         cleanEditingState();
       })
       .catch((err) => {
-        setError(err.message || 'Something went wrong');
+        setError(err.message || "Something went wrong");
       });
   };
 
@@ -185,14 +197,21 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
           Cancel
         </button>
       </div>
-      <div className={styles["editing-panel__inputs"]}>{addFormField()}</div>
+      <div
+        className={cn(styles["editing-panel__inputs"], {
+          [styles["editing-panel__inputs--with-single"]]:
+            forDetail === "Email address",
+        })}
+      >
+        {addFormField()}
+      </div>
       <div
         className={styles["editing-panel__save-btn-wrap"]}
         onClick={() => handleSubmit()}
       >
         <GeneralButton type="primary" text="SAVE" isDisabled={isDisabled()} />
       </div>
-      {error && (<p className="main-text">{error}</p>)}
+      {error && <p className="main-text">{error}</p>}
     </div>
   );
 };

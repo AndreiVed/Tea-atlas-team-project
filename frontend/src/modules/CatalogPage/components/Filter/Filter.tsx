@@ -11,9 +11,15 @@ import styles from "./Filter.module.scss";
 export const Filter: FC = () => {
   const { width } = useWindowSize();
   const isBelowDesktop = width ? width <= screenEndpoints.desktop : undefined;
-  const filtersCounter = 1;
   const dispatch = useAppDispatch();
-  const isFilterOpened = useAppSelector((state) => state.filter.isFilterOpened);
+  const { isFilterOpened, selectedFilters } = useAppSelector(
+    (state) => state.filter
+  );
+  const filtersCounter = Object.values(selectedFilters).flat().length;
+
+  useEffect(() => {
+    
+  }, []);
 
   useEffect(() => {
     if (!isBelowDesktop) {

@@ -16,11 +16,11 @@ export const FilterSection: FC<Props> = ({ title, icon, options }) => {
   const listRef = useRef<HTMLUListElement>(null);
 
   return (
-    <fieldset className={styles["filter-section"]}>
-      <div
-        className={styles["filter-section__heading"]}
-        onClick={() => setIsListOpened((prev) => !prev)}
-      >
+    <fieldset
+      className={styles["filter-section"]}
+      onClick={() => setIsListOpened((prev) => !prev)}
+    >
+      <div className={styles["filter-section__heading"]}>
         <img
           className={styles["filter-section__heading-logo"]}
           src={icon}

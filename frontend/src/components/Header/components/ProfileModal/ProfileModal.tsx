@@ -3,8 +3,10 @@ import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { userInfoDefaults } from "../../../../constants/formsInitials";
 import { updateIsLoggedIn, updateUserInfo } from "../../../../features/profile/profileSlice";
+import { clearTokens } from "../../../../handlers/clearTokens";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { UserAvatar } from "../../../UserAvatar";
 import styles from "./ProfileModal.module.scss";
 
 type Props = {
@@ -16,7 +18,7 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { first_name, last_name, avatar } = useAppSelector(
+  const { first_name, last_name } = useAppSelector(
     (state) => state.profile.userInfo
   );
   const username =
@@ -34,7 +36,9 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
     dispatch(updateIsLoggedIn(false));
     dispatch(updateUserInfo(userInfoDefaults));
     localStorage.removeItem("user");
-  }
+
+    clearTokens();
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -54,11 +58,7 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
   return (
     <div className={styles["profile-modal"]} ref={modalRef}>
       <div className={styles["profile-modal__user-info"]}>
-        <img
-          className={styles["profile-modal__avatar"]}
-          aria-label="Logotype"
-          src={avatar ? avatar : "/icons/camera.svg"}
-        />
+        <UserAvatar usedIn="modal" />
         <p className={cn(styles["profile-modal__username"], "additional-text")}>
           {username}
         </p>

@@ -31,12 +31,15 @@
 
   &__info-wrap {
     @include on-tablet {
-      margin: auto 0;
+      width: 60vw;
+      margin: auto;
       grid-column: 3 / -3;
+      max-width: 600px;
     }
 
     @include on-desktop {
-      width: auto;
+      width: 30vw;
+      max-width: 550px;
       margin: 0 auto;
     }
   }
@@ -50,34 +53,22 @@
     }
   }
 
+  &__google {
+    display: block;
+    width: 100%;
+
+    > * {
+      width: 100%;
+    }
+  }
+
+
   &__with {
     width: 100%;
+
     &-text {
       font-size: 16px;
       margin-block: 32px 8px;
-    }
-
-    &-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      
-      @include on-tablet {
-        flex-direction: row;
-
-        > * {
-          @include on-tablet {
-            min-width: 0;
-
-            width: 100%;
-            padding: 10px 20px;
-          }
-        }
-      }
-    }
-
-    &__google {
-      display: block;
     }
 
     &-divider {
@@ -105,7 +96,7 @@
       }
 
       &-text {
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 600;
         margin: 0;
       }
@@ -169,11 +160,6 @@
 
       &:hover {
         text-decoration: underline;
-        text-decoration-style: solid;
-        text-decoration-skip-ink: auto;
-        text-decoration-thickness: auto;
-        text-underline-offset: auto;
-        text-underline-position: from-font;
       }
     }
   }

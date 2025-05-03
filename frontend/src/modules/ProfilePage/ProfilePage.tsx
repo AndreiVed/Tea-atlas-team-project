@@ -1,6 +1,6 @@
-import cn from "classnames";
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserAvatar } from "../../components/UserAvatar";
 import { useCursorEffect } from "../../hooks/useCursorEffect";
 import { useScroll } from "../../hooks/useScroll";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -15,13 +15,13 @@ export const ProfilePage: FC = () => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const [showDeleteMsg, setShowDeleteMsg] = useState(false);
   const { token, userInfo } = useAppSelector((state) => state.profile);
-  const { first_name, last_name, email, avatar } = userInfo;
+  const { first_name, last_name, email } = userInfo;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (Object.values(userInfo).every(val => !val)) {
-      navigate('/');
+    if (Object.values(userInfo).every((val) => !val)) {
+      navigate("/");
     }
   }, [userInfo, navigate]);
 
@@ -41,13 +41,7 @@ export const ProfilePage: FC = () => {
               id="avatarInput"
               onChange={(e) => handleFileSelect(e, userInfo, token, dispatch)}
             />
-            <img
-              className={cn(styles["profile__info-photo"], {
-                [styles["profile__info-photo--empty"]]: !avatar,
-              })}
-              src={avatar ? avatar : "/icons/camera.svg"}
-              alt="Profile photo"
-            />
+            <UserAvatar usedIn="profile" />
             <div className={styles["profile__info-photo-edit"]} />
           </label>
         </div>
@@ -89,7 +83,9 @@ export const ProfilePage: FC = () => {
       </div>
 
       {showDeleteMsg ? (
-        <DeleteAccount setShowDeleteMsg={setShowDeleteMsg} />
+        <div className={styles["modal-overlay"]}>
+          <DeleteAccount setShowDeleteMsg={setShowDeleteMsg} />
+        </div>
       ) : null}
     </section>
   );

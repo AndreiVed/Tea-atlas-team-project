@@ -1,12 +1,30 @@
 import cn from "classnames";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
+import { userInfoDefaults } from "../../constants/formsInitials";
 import { menuLinks } from "../../constants/links";
+import {
+  updateIsLoggedIn,
+  updateUserInfo,
+} from "../../features/profile/profileSlice";
+import { clearTokens } from "../../handlers/clearTokens";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import styles from "./Menu.module.scss";
 
 export const Menu: FC = () => {
-  const isLoggedIn = true;
+  const { isLoggedIn } = useAppSelector((state) => state.profile);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    navigate("/");
+    dispatch(updateIsLoggedIn(false));
+    dispatch(updateUserInfo(userInfoDefaults));
+    localStorage.removeItem("user");
+    clearTokens();
+
+  };
 
   return (
     <div className={styles["menu"]}>
@@ -39,9 +57,9 @@ export const Menu: FC = () => {
         </ul>
       </nav>
       {isLoggedIn ? (
-        <GeneralButton type="text" text="LOG OUT" />
+        <GeneralButton type="text" text="LOG OUT" onClick={handleLogout} />
       ) : (
-        <GeneralButton type="primary" text="LOG IN" />
+        <GeneralButton type="primary" text="LOG IN" to="/login" />
       )}
     </div>
   );
