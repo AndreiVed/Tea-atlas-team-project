@@ -10,6 +10,7 @@ import {
   updateLoginError,
   updateLoginForm,
 } from "../../features/login/loginSlice";
+import { updateLikedProducts } from "../../features/products/productsSlice";
 import {
   updateIsLoggedIn,
   updateToken,
@@ -79,6 +80,24 @@ export const LoginPage: FC = () => {
         dispatch(updateIsLoggedIn(true));
         dispatch(updateLoginForm({ email: "", password: "" }));
         navigate("/");
+
+        fetch(API_ENDPOINTS.auth.favoriteList, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${access}`,
+          }
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Something went wrong.");
+            }
+
+            return response.json();
+          })
+          .then((data) => {
+            dispatch(updateLikedProducts(data));
+            localStorage.setItem("likedProducts", data);
+          });
       });
   };
 
