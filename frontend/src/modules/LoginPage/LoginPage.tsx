@@ -1,11 +1,18 @@
 import { useWindowSize } from "@uidotdev/usehooks";
-import cn from "classnames";
 import { FC, FormEvent, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
+
+import { useCursorEffect } from "../../hooks/useCursorEffect";
+import { useScroll } from "../../hooks/useScroll";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+
+import { GeneralButton } from "../../components/GeneralButton";
+import { LoginInput } from "./components/LoginInput";
+
+import cn from "classnames";
 import { isEmailCorrect } from "../../components/GeneralInput/handlers";
 import { API_ENDPOINTS, screenEndpoints } from "../../endpoints";
-import { setLoginForm } from "../../features/forms/formsSlice";
+
 import {
   updateLoginError,
   updateLoginForm,
@@ -16,12 +23,10 @@ import {
   updateToken,
   updateUserInfo,
 } from "../../features/profile/profileSlice";
-import { useCursorEffect } from "../../hooks/useCursorEffect";
-import { useScroll } from "../../hooks/useScroll";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+
 import { LoginResponseData } from "../../types/LoginResponseData";
+
 import styles from "./LoginPage.module.scss";
-import { LoginInput } from "./components/LoginInput";
 
 export const LoginPage: FC = () => {
   const { width } = useWindowSize();
@@ -40,7 +45,7 @@ export const LoginPage: FC = () => {
   useEffect(() => {
     return () => {
       dispatch(
-        setLoginForm({
+        updateLoginForm({
           email: "",
           password: "",
         })
@@ -85,7 +90,7 @@ export const LoginPage: FC = () => {
           method: "GET",
           headers: {
             Authorization: `Bearer ${access}`,
-          }
+          },
         })
           .then((response) => {
             if (!response.ok) {
@@ -101,7 +106,7 @@ export const LoginPage: FC = () => {
       });
   };
 
-  const handleGoogleClick = () => {
+  const handleGoogleAuth = () => {
     window.location.href = "http://127.0.0.1:8000/api/v1/google_auth/redirect/";
   };
 
@@ -118,17 +123,12 @@ export const LoginPage: FC = () => {
         <h3 className={styles["login__title"]}>Sign In to Atlas Tea</h3>
         <div className={styles["login__with"]}>
           <p className={styles["login__with-text"]}>Sign in with:</p>
-          <div className={styles["login__with-buttons"]}>
-            <div
-              className={styles["login__google"]}
-              onClick={handleGoogleClick}
-            >
-              <GeneralButton
-                type="secondary"
-                text="Google"
-                icon="/icons/socials/google.svg"
-              />
-            </div>
+          <div className={styles["login__google"]} onClick={handleGoogleAuth}>
+            <GeneralButton
+              type="secondary"
+              text="Google"
+              icon="/icons/socials/google.svg"
+            />
           </div>
           <div className={styles["login__with-divider"]}>
             <p className={styles["login__with-divider-text"]}>or</p>
