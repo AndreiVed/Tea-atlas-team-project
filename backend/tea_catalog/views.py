@@ -36,18 +36,20 @@ class TeaViewSet(
             queryset = queryset.filter(name__icontains=name)
 
         if category:
-            queryset = queryset.filter(category__name__icontains=category)
+            category = category.split(",")
+            queryset = queryset.filter(category__name__in=category)
 
         if country:
-            queryset = queryset.filter(
-                category__region__country__name__icontains=country
-            )
+            country = country.split(",")
+            queryset = queryset.filter(category__region__country__name__in=country)
 
         if fermentation:
-            queryset = queryset.filter(category__fermentation__icontains=fermentation)
+            fermentation = fermentation.split(",")
+            queryset = queryset.filter(category__fermentation__in=fermentation)
 
         if impact:
-            queryset = queryset.filter(impact__icontains=impact)
+            impact = impact.split(",")
+            queryset = queryset.filter(impact__in=impact)
 
         return queryset
 
@@ -66,7 +68,7 @@ class TeaViewSet(
             OpenApiParameter(
                 name="type",
                 type=str,
-                description="Filter by tea category (e.g. 'Oolong', 'Green Tea')",
+                description="Filter by tea category (e.g. 'Oolong', 'GreenTea')",
             ),
             OpenApiParameter(
                 name="country",
