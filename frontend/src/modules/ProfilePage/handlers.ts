@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import { API_ENDPOINTS } from "../../endpoints";
 import { updateUserInfo } from "../../features/profile/profileSlice";
+import { fetchWithAuth } from "../../handlers/fetchWithToken";
 import { AppDispatch } from "../../store/appStore";
 import { UserInfo } from "../../types/UserInfo";
 
@@ -8,7 +9,7 @@ export const handleFileSelect = (
   e: ChangeEvent<HTMLInputElement>,
   userInfo: UserInfo,
   token: string,
-  dispatch: AppDispatch,
+  dispatch: AppDispatch
 ) => {
   const formData = new FormData();
 
@@ -20,27 +21,16 @@ export const handleFileSelect = (
     formData.append(key, value);
   });
 
-  fetch(API_ENDPOINTS.auth.changeUserData, {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${token}`,
+  fetchWithAuth(
+    API_ENDPOINTS.auth.changeUserData,
+    {
+      method: "PATCH",
+      body: formData,
     },
-    body: formData,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        return;
-      }
-
-      return response.json();
-    })
-    .then((data: UserInfo) => {
-      dispatch(updateUserInfo(data));
-      localStorage.removeItem("user");
-      localStorage.setItem("user", JSON.stringify(data));
-    })
-    .catch((error) => {
-      console.log(error);
-      return;
-    });
+    token
+  ).then((data) => {
+    dispatch(updateUserInfo(data as UserInfo));
+    localStorage.removeItem("user");
+    localStorage.setItem("user", JSON.stringify(data));
+  });
 };

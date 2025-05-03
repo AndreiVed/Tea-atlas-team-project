@@ -30,6 +30,13 @@
       border-radius: 50%;
 
       &--empty {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-image: url('/icons/camera.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 56px;
         background-color: $gray-40;
       }
 
@@ -126,7 +133,6 @@
   width: 100vw;
   height: 100vh;
   backdrop-filter: blur(2px);
-  // background: rgba(255, 255, 255, 0.4);
   background-color: rgba(0, 0, 0, 0.1);
   z-index: 1000;
   display: flex;

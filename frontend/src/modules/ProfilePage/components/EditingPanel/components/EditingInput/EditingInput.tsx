@@ -51,15 +51,6 @@ export const EditingInput: FC<Omit<GeneralInputType, "onChange">> = (props) => {
       setLocalError("Passwords do not match");
     }
 
-    // if (name === "new_password1") {
-    //   dispatch(
-    //     updateKeepPasswordRequirements(
-    //       !allPasswordRequirementsCorrect(passwordRequirements) &&
-    //         Boolean(value.length)
-    //     )
-    //   );
-    // }
-
     if (
       name === "new_password2" &&
       !allPasswordRequirementsCorrect(passwordRequirements) &&

@@ -1,5 +1,6 @@
 @use "../../../../styles/utils/colors" as *;
 @use "../../../../styles/utils/mixins/grid-mixins.scss" as *;
+@use '../../../../styles/utils/_vars.scss' as *;
 
 .delete-account {
   position: fixed;
@@ -8,9 +9,10 @@
   transform: translate(-50%, -50%);
   z-index: 100;
 
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   padding: 16px;
   background-color: $white;
@@ -21,8 +23,14 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   z-index: 1;
 
+  width: calc(100% - $page-padding-inline-mobile * 2);
+
   @include on-tablet {
-    width: 25vw;
+    width: 70vw;
+  }
+
+  @include on-desktop {
+    width: 30vw;
   }
 
   &__danger-icon {
