@@ -1,7 +1,6 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import cursorReducer from '../features/cursor/cursorSlice';
 import filterReducer from '../features/filter/filterSlice';
-import formsReducer from '../features/forms/formsSlice';
 import loginReducer from '../features/login/loginSlice';
 import passwordReducer from '../features/password/passwordSlice';
 import productsReducer from '../features/products/productsSlice';
@@ -13,7 +12,6 @@ export const appStore = configureStore({
   reducer: {
     filter: filterReducer,
     products: productsReducer,
-    forms: formsReducer,
     profile: profileReducer,
     cursor: cursorReducer,
     search: searchReducer,

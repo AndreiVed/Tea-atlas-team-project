@@ -12,7 +12,7 @@ class FavoriteListView(APIView):
         """
         user = self.request.user
         favorite_tea = user.favorite.all()
-        serializer = TeaListSerializer(favorite_tea, many=True)
+        serializer = TeaListSerializer(favorite_tea, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def get_object(self):
