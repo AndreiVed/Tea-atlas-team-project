@@ -1,4 +1,4 @@
 .venv
-docker-compose.yml
+docker-compose-backend.yml
 Dockerfile
 .idea
