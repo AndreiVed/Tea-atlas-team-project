@@ -17,7 +17,7 @@ export const ProductList: FC<Props> = ({ products, hasProducts }) => {
       })}
     >
       {products.map((product) => (
-        <ProductCart key={product.id} product={product} />
+        <ProductCart key={product.id} product={product} usedIn='catalog' />
       ))}
     </div>
   );

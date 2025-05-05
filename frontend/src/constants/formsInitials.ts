@@ -33,3 +33,10 @@ export const selectedFiltersDefaults: SelectedFilters = {
   fermentation: [],
   type: [],
 };
+
+export const contactFormDefaults = {
+  name: "",
+  phone: "",
+  email: "",
+  message: "",
+}

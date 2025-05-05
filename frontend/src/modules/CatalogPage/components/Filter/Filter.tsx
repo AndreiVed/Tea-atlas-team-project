@@ -1,8 +1,16 @@
 import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
+import { some } from "lodash-es";
 import { FC, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { selectedFiltersDefaults } from "../../../../constants/formsInitials";
 import { screenEndpoints } from "../../../../endpoints";
-import { updateIsFilterOpened } from "../../../../features/filter/filterSlice";
+import {
+  updateIsFilterOpened,
+  updateSelectedFilters,
+  updateSubmittedFilters,
+} from "../../../../features/filter/filterSlice";
+import { loadAllProducts } from "../../../../handlers/loadAllProducts";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import "../../../../styles/utils/mixins/font-mixins.scss";
 import { FilterPanel } from "../FilterPanel";
@@ -15,11 +23,18 @@ export const Filter: FC = () => {
   const { isFilterOpened, selectedFilters } = useAppSelector(
     (state) => state.filter
   );
-  const filtersCounter = Object.values(selectedFilters).flat().length;
+  const [, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    
-  }, []);
+  const filtersCounter = Object.values(selectedFilters).flatMap((value) =>
+    Array.isArray(value) ? value : value ? [value] : []
+  ).length;
+
+  const handleResettingAllFilters = () => {
+    dispatch(updateSelectedFilters(selectedFiltersDefaults));
+    dispatch(updateSubmittedFilters(selectedFiltersDefaults));
+    loadAllProducts(dispatch);
+    setSearchParams();
+  };
 
   useEffect(() => {
     if (!isBelowDesktop) {
@@ -27,6 +42,8 @@ export const Filter: FC = () => {
       dispatch(updateIsFilterOpened(!isFilterOpened));
     }
   }, [isBelowDesktop, dispatch, isFilterOpened]);
+
+  const hasSelectedFilters = some(selectedFilters, (arr) => arr.length > 0);
 
   return (
     <>
@@ -50,11 +67,16 @@ export const Filter: FC = () => {
             </p>
             <p className={styles["filter__button-counter"]}>{filtersCounter}</p>
           </button>
-          <button className={cn(styles["filter__reset"])}>
-            <p className={cn("link-button", styles["reset-margins"])}>
-              reset all
-            </p>
-          </button>
+          {hasSelectedFilters ? (
+            <button
+              className={cn(styles["filter__reset"])}
+              onClick={handleResettingAllFilters}
+            >
+              <p className={cn("link-button", styles["reset-margins"])}>
+                reset all
+              </p>
+            </button>
+          ) : null}
         </div>
       </div>
 

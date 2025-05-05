@@ -76,21 +76,24 @@ export const LoginPage: FC = () => {
       })
       .then((data: LoginResponseData) => {
         const { access, user, refresh } = data;
-
-        localStorage.setItem("refresh", refresh);
+        
         dispatch(updateToken(access));
         dispatch(updateUserInfo(user));
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("access_token", access);
         dispatch(updateIsLoggedIn(true));
         dispatch(updateLoginForm({ email: "", password: "" }));
+
+        localStorage.setItem("refresh", refresh);
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("access_token", access);
+        localStorage.removeItem("confirmationEmail");
+        
         navigate("/");
 
         fetch(API_ENDPOINTS.auth.favoriteList, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${access}`,
-          }
+          },
         })
           .then((response) => {
             if (!response.ok) {
@@ -101,7 +104,7 @@ export const LoginPage: FC = () => {
           })
           .then((data) => {
             dispatch(updateLikedProducts(data));
-            localStorage.setItem("likedProducts", data);
+            localStorage.setItem("likedProducts", JSON.stringify(data));
           });
       });
   };

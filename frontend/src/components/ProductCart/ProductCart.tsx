@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useCursorEffect } from "../../hooks/useCursorEffect";
 import { Product } from "../../types/Product";
 import styles from "./ProductCart.module.scss";
+import { ToggleFavorite } from "./components/ToggleFavorite";
 
 type Props = {
   product: Product;
+  usedIn: "catalog" | "liked-it";
 };
-export const ProductCart: FC<Props> = ({ product }) => {
+export const ProductCart: FC<Props> = ({ product, usedIn }) => {
   const { id, name, descriptors, image, category } = product;
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const navigate = useNavigate();
@@ -27,10 +29,18 @@ export const ProductCart: FC<Props> = ({ product }) => {
     <article
       className={styles["product"]}
       onClick={handleCartClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => {
+        handleMouseEnter();
+      }}
+      onMouseLeave={() => {
+        handleMouseLeave();
+      }}
     >
       <img className={styles["product__photo"]} src={image} alt="Product" />
+      <ToggleFavorite
+        productId={id}
+        usedIn={usedIn}
+      />
       <div className={styles["product__info"]}>
         <h3 className={styles["product__info-title"]}>{name}</h3>
         <p className={styles["product__info-tea-type"]}>{category}</p>
@@ -53,5 +63,4 @@ export const ProductCart: FC<Props> = ({ product }) => {
     </article>
   );
 };
-
 

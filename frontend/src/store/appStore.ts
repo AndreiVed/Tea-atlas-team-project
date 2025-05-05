@@ -1,4 +1,5 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
+import contactReducer from '../features/contact/contactSlice';
 import cursorReducer from '../features/cursor/cursorSlice';
 import filterReducer from '../features/filter/filterSlice';
 import loginReducer from '../features/login/loginSlice';
@@ -18,6 +19,7 @@ export const appStore = configureStore({
     registration: registrationReducer,
     login: loginReducer,
     password: passwordReducer,
+    contact: contactReducer,
   },
 });
 

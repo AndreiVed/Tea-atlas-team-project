@@ -10,8 +10,7 @@ import {
   updateSubmittedFilters,
 } from "../../features/filter/filterSlice";
 import { updateShowSearch } from "../../features/search/searchSlice";
-import { useLoadSelectedProducts } from "../../hooks/useLoadSelectedProducts";
-import { useScroll } from "../../hooks/useScroll";
+import { useLoadSelectedProducts, useScroll } from "../../hooks";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { SelectedFilters } from "../../types/SelectedFilters";
 import styles from "./CatalogPage.module.scss";

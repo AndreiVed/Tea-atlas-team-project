@@ -20,7 +20,11 @@ export const LikedItPage: FC = () => {
       <div className={styles["liked-it__products"]}>
         {Array.isArray(likedProducts)
           ? likedProducts.map((product) => (
-              <ProductCart product={product} key={product.id} />
+              <ProductCart
+                product={product}
+                key={product.id}
+                usedIn="liked-it"
+              />
             ))
           : null}
       </div>

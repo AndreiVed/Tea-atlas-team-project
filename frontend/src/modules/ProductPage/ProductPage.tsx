@@ -3,11 +3,14 @@ import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Banner } from "../../components/Banner";
 // import { ProductCart } from "../../components/ProductCart";
+import { ProductCart } from "../../components/ProductCart";
 import { API_ENDPOINTS } from "../../endpoints";
+import { updateLikedProducts } from "../../features/products/productsSlice";
 import { fetchWithAuth } from "../../handlers/fetchWithToken";
 import { useCursorEffect } from "../../hooks/useCursorEffect";
 import { useScroll } from "../../hooks/useScroll";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { Product } from "../../types/Product";
 import { ProductExtended } from "../../types/ProductExtended";
 import styles from "./ProductPage.module.scss";
 import { ProductCharacteristics } from "./components/ProductCharacteristics";
@@ -20,10 +23,20 @@ export const ProductPage: FC = () => {
 
   const [currentProduct, setCurrentProduct] = useState<CurrentProduct>(null);
   const { token, isLoggedIn } = useAppSelector((state) => state.profile);
+  const { likedProducts, products } = useAppSelector((state) => state.products);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const { id } = useParams();
-  const [isInFavs, setIsInFavs] = useState(false);
+
+  const isInFavorites = Array.isArray(likedProducts)
+    ? likedProducts.find((product) => product.id === currentProduct?.id)
+    : undefined;
+
+  const handleViewAllBtnClick = () => {
+    navigate("/catalog");
+    handleMouseLeave();
+  }
 
   useEffect(() => {
     if (!id) {
@@ -54,14 +67,29 @@ export const ProductPage: FC = () => {
   }
 
   const handleManipulatingFavList = () => {
+    if (!id) {
+      return;
+    }
+
     fetchWithAuth(
-      API_ENDPOINTS.catalog.favoritesOperations(id ? id : ""),
+      API_ENDPOINTS.catalog.favoritesOperations(id),
       {
         method: "POST",
-        body: id,
       },
       token
-    ).then(() => setIsInFavs(true));
+    ).then(() => {
+      fetchWithAuth(
+        API_ENDPOINTS.auth.favoriteList,
+        {
+          method: "GET",
+        },
+        token
+      ).then((data) => {
+        dispatch(updateLikedProducts(data as Product[]));
+        localStorage.removeItem("likedProducts");
+        localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
+      });
+    });
   };
 
   const { name, description, image, category, impact, descriptors } =
@@ -80,7 +108,7 @@ export const ProductPage: FC = () => {
             <h2 className={styles["product__title"]}>{name}</h2>
             <button
               className={cn(styles["product__add-to-fav"], {
-                [styles["product__add-to-fav--filled"]]: isInFavs,
+                [styles["product__add-to-fav--filled"]]: isInFavorites,
               })}
               disabled={!isLoggedIn}
               onClick={handleManipulatingFavList}
@@ -112,14 +140,17 @@ export const ProductPage: FC = () => {
               styles["product__you-may-like-view-btn"],
               "link-button"
             )}
+            onClick={handleViewAllBtnClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
             view all
           </button>
         </div>
         <div className={styles["product__recommended-products"]}>
-          {/* {Array.from({ length: 4 }).map(() => (
-            <ProductCart key={Math.random()} />
-          ))} */}
+          {products.slice(0, 4).map((product) => (
+            <ProductCart product={product} usedIn="catalog" />
+          ))}
         </div>
       </div>
 

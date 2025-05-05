@@ -1,27 +1,40 @@
+// libraries
 import { useThrottle, useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { isEqual, some } from "lodash-es";
 import { FC, FormEvent, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+
+// components
 import { Loader } from "../../../../components/Loader";
+import { FilterSection } from "./components/FilterSection";
+
+// constants
 import {
   countriesOptions,
   fermentationOptions,
   impactOptions,
+  selectedFiltersDefaults,
   typeOptions,
-} from "../../../../constants/filterOptions";
-import { selectedFiltersDefaults } from "../../../../constants/formsInitials";
+} from "../../../../constants";
+
+// ednpoints
 import { screenEndpoints } from "../../../../endpoints";
+
+// redux slice / actions
 import {
   updateIsFilterOpened,
   updateSelectedFilters,
   updateSubmittedFilters,
 } from "../../../../features/filter/filterSlice";
+
+// handlers
 import { loadAllProducts } from "../../../../handlers/loadAllProducts";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
-import { useLoadSelectedProducts } from "../../../../hooks/useLoadSelectedProducts";
+
+//hooks
+import { useCursorEffect, useLoadSelectedProducts } from "../../../../hooks";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-import { FilterSection } from "./components/FilterSection";
+
 import styles from "./FilterPanel.module.scss";
 
 export const FilterPanel: FC = () => {
@@ -55,11 +68,11 @@ export const FilterPanel: FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
 
     setLoadingApply(true);
     loadSelectedProducts(selectedFilters);
     setLoadingApply(false);
+    dispatch(updateIsFilterOpened(false));
   };
 
   const handleResettingFilters = () => {
@@ -69,7 +82,8 @@ export const FilterPanel: FC = () => {
     setSearchParams();
   };
 
-  const isApplyDisabled = isEqual(submittedFilters, selectedFilters);
+  const isApplyDisabled =
+    isEqual(submittedFilters, selectedFilters) || !hasSelectedFilters;
 
   return isFilterOpened || isDesktop ? (
     <section className={styles["filter"]}>

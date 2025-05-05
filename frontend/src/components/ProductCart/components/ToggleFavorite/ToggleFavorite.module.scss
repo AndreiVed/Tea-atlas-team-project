@@ -1,0 +1,31 @@
+// not liked behavior is calculated in default class
+
+.toggle-favorite {
+  box-sizing: border-box;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(2px);
+  border: none;
+  background-image: url('/icons/heart-green-empty.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  transition: all .4s;
+
+  &:hover {
+    background-size: 30px;
+    transition: background-size .4s;
+  }
+
+  &--liked {
+    background-image: url('/icons/heart-green-filled.svg');
+  }
+
+  &--favorites-page {
+    background-image: url('/icons/exit.svg');
+  }
+}

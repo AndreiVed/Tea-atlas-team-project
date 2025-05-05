@@ -7,6 +7,12 @@ type Props = {
 };
 
 export const SearchResults: FC<Props> = ({ nameParam, hasProducts }) => {
+  if (!nameParam && !hasProducts) {
+    return (
+      <h2 className={styles["no-products-found"]}>Oops! No products found</h2>
+    );
+  }
+
   if (!nameParam) {
     return null;
   }

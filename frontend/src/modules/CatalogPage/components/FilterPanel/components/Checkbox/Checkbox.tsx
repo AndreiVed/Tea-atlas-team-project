@@ -64,16 +64,3 @@ export const CheckBox: FC<Props> = ({ option, usedForSection }) => {
     </li>
   );
 };
-
-// working setter for selecting Filters
-
-/*dispatch(
-  setSelectedFilters({
-    ...selectedFilters,
-    [usedForSection]: e.target.checked
-      ? [...selectedFilters[usedForSection], e.target.value]
-      : selectedFilters[usedForSection].filter(
-          (item) => item !== e.target.value
-        ),
-  })
-) */

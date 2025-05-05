@@ -6,7 +6,9 @@ export const productsSlice = createSlice({
   initialState: {
     products: [] as Product[],
     chosenProduct: {} as Product,
-    likedProducts: localStorage.getItem("likedProducts") || ([] as Product[]),
+    likedProducts: JSON.parse(
+      localStorage.getItem("likedProducts") || "[]"
+    ) as Product[],
   },
 
   reducers: {

@@ -36,6 +36,7 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
     dispatch(updateIsLoggedIn(false));
     dispatch(updateUserInfo(userInfoDefaults));
     localStorage.removeItem("user");
+    localStorage.removeItem("likedProducts");
 
     clearTokens();
   };

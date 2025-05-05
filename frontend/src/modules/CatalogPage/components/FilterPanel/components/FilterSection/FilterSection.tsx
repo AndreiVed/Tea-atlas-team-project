@@ -18,9 +18,20 @@ export const FilterSection: FC<Props> = ({ title, icon, options }) => {
   return (
     <fieldset
       className={styles["filter-section"]}
-      onClick={() => setIsListOpened((prev) => !prev)}
+      onClick={() => {
+        if (!isListOpened) {
+          setIsListOpened(true);
+        }
+      }}
     >
-      <div className={styles["filter-section__heading"]}>
+      <div
+        className={styles["filter-section__heading"]}
+        onClick={() => {
+          if (isListOpened) {
+            setIsListOpened(false);
+          }
+        }}
+      >
         <img
           className={styles["filter-section__heading-logo"]}
           src={icon}
