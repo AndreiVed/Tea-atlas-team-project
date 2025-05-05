@@ -207,7 +207,7 @@ EMAIL_HOST_PASSWORD = "ujzu rkou zrtu hllu"  # Використовуйте па
 
 EMAIL_USE_SSL = True  # Використовуємо SSL
 
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # або "optional"
+ACCOUNT_EMAIL_VERIFICATION = "none"  # або "optional"
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_LOGIN_METHODS = ["email"]
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
