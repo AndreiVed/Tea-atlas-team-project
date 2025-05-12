@@ -1,0 +1,93 @@
+@use "../../styles/utils/colors" as *;
+@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  gap: 8px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  color: $white;
+  height: 48px;
+  transition: background-color .4s;
+
+  &:hover {
+    transition: background-color .4s;
+  }
+
+  
+  @include on-tablet {
+    width: 216px;
+  }
+  
+  @include on-desktop {
+    width: 308px;
+  }
+  
+  &--primary {
+    background-color: $primary;
+
+    &:hover {
+      border: none;
+      color: $white;
+      background-color: $primary-70;
+    }
+  
+    &:focus {
+      background-color: $accent;
+    }
+  
+    &:disabled {
+      background-color: $primary-30;
+    }
+  }
+
+  &--secondary {
+    background-color: inherit;
+    border: 1px solid $primary;
+    color: $primary;
+
+    &:hover {
+      border: 1px solid $primary-70;
+      background-color: $primary-10;
+      color: $primary-70;
+    }
+
+    &:focus {
+      color: $primary-70;
+      background-color: $primary-30;
+      border-color: $primary;
+    }
+
+    &:disabled {
+      color: $primary-30;
+      background-color: $white;
+      border-color: $primary-50;
+    }
+  }
+
+  &--text {
+    color: $primary;
+    background-color: $white;
+  }
+
+  &--danger {
+    background-color: $error;
+
+    &:hover {
+      background-color: #EA6975;
+    }
+
+    &:focus {
+      background-color: #AD1B29;
+    }
+
+    &:disabled {
+      background-color: #FFD7DA;
+    }
+  }
+}

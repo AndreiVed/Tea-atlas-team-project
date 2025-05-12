@@ -1,0 +1,37 @@
+@use "../../styles/utils/colors" as *;
+
+.loader {
+  width: 24px;
+  height: 24px;
+  border: 2px solid;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+
+  &--primary {
+    border-color: $white;
+  }
+
+  &--secondary {
+    border-color: $primary;
+
+    &:hover {
+      border-color: $primary-70;
+    }
+
+    &:disabled {
+      border-color: $primary-30;
+    }
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

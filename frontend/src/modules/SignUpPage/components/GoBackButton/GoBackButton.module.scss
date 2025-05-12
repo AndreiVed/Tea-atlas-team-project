@@ -1,0 +1,44 @@
+@use "../../../../styles/utils/colors" as *;
+@use "../../../../styles/utils/mixins/grid-mixins.scss" as *;
+
+.go-back-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  border: none;
+  background-color: $gray-30;
+  background-image: url("/icons/left-arrow.svg");
+  background-repeat: no-repeat;
+  background-size: 24px;
+  background-position: center;
+
+  @include on-tablet {
+    position: absolute;
+    top: 56px;
+    left: 32px;
+  }
+
+  @include on-desktop {
+    left: 16px;
+  }
+
+  &:hover {
+    background-color: $gray-40;
+  }
+
+  &--on-confirmation {
+    position: absolute;
+    left: 16px;
+    top: 40px;
+
+    @include on-tablet {
+      left: 32px;
+      top: 56px;
+    }
+
+    @include on-desktop {
+      left: 16px;
+      top: 56px;
+    }
+  }
+}
