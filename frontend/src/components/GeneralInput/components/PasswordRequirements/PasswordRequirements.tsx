@@ -1,9 +1,5 @@
 import cn from "classnames";
-<<<<<<< HEAD
-import { FC, useEffect } from "react";
-=======
 import { FC } from "react";
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
 import { PASSWORD_REQUIREMENTS } from "../../../../constants/passwordRequirements";
 import { useAppSelector } from "../../../../store/hooks";
 import styles from "./PasswordRequirements.module.scss";
@@ -17,17 +13,7 @@ export const PasswordRequirements: FC<Props> = ({
   isPasswordReqsDefault,
   isBlured,
 }) => {
-<<<<<<< HEAD
-  const { passwordRequirements } = useAppSelector(
-    (state) => state.registration
-  );
-
-  useEffect(() => {
-    console.log(passwordRequirements);
-  }, [passwordRequirements]);
-=======
   const { passwordRequirements } = useAppSelector((state) => state.password);
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
 
   return (
     <ul className={styles["password-requirements-list"]}>

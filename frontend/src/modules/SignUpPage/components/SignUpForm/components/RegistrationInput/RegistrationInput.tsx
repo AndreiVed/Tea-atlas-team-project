@@ -1,141 +1,14 @@
-// import { FC, useEffect, useState } from "react";
-// import { GeneralInput } from "../../../../../../components/GeneralInput";
-// import { isEmailCorrect } from "../../../../../../components/GeneralInput/handlers";
-// import {
-//   updateInputErrors,
-//   updatePasswordRequirements,
-//   updateRegistrationForm,
-// } from "../../../../../../features/registration/registrationSlice";
-// import { allPasswordRequirementsCorrect } from "../../../../../../handlers/allPasswordRequirementsCorrect";
-// import { useAppDispatch, useAppSelector } from "../../../../../../store/hooks";
-// import { GeneralInput as GeneralInputType } from "../../../../../../types/GeneralInput";
-// import { RegistrationForm } from "../../../../../../types/RegistrationForm";
-
-// export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
-//   props
-// ) => {
-//   const [localError, setLocalError] = useState("");
-//   const dispatch = useAppDispatch();
-//   const { form, passwordRequirements, inputErrors } = useAppSelector(
-//     (state) => state.registration
-//   );
-//   const isPassword2Disabled = Object.values(passwordRequirements).some(
-//     (req) => !req
-//   );
-//   const value = form[props.name as keyof RegistrationForm];
-
-//   const { type } = props;
-
-//   useEffect(() => {
-//     if (inputErrors[props.name as keyof typeof inputErrors]) {
-//       setLocalError(inputErrors[props.name as keyof typeof inputErrors]);
-//     } else {
-//       setLocalError("");
-//     }
-//   }, [inputErrors, props.name]);
-
-//   // we clean password2 value if it is disabled
-//   useEffect(() => {
-//     if (isPassword2Disabled && localError) {
-//       setLocalError("");
-//     }
-
-//     if (isPassword2Disabled && form.password2.length) {
-//       dispatch(updateRegistrationForm({ password2: "" }));
-//     }
-//   }, [form.password1]);
-
-//   const handleChange = (name: string, value: string) => {
-//     dispatch(updateRegistrationForm({ [name]: value }));
-//     const { length } = value;
-
-//     // if (type === "email" && length > 3 && !isEmailCorrect(value)) {
-//     //   setLocalError("Please, type correct e-mail");
-//     // } else {
-//     //   setLocalError("");
-//     // }
-
-//     if (name === "password1") {
-//       dispatch(
-//         updatePasswordRequirements({
-//           isLetterTyped: /[A-Za-z]/.test(value),
-//           isMinLength: length >= 8,
-//           isNumberTyped: /[0-9]/.test(value),
-//         })
-//       );
-//     }
-//   };
-
-//   const handleBlur = () => {
-//     if (
-//       props.name === "password2" &&
-//       allPasswordRequirementsCorrect(passwordRequirements) &&
-//       form.password1 !== value &&
-//       value.length
-//     ) {
-//       setLocalError("Passwords do not match");
-//     } else {
-//       setLocalError("");
-//     }
-
-//     if (type === "email" && !isEmailCorrect(value)) {
-//       setLocalError("Please, type correct e-mail");
-//     } else {
-//       setLocalError("");
-//     }
-//   };
-
-//   const hasInputError = (propertyName: keyof RegistrationForm): boolean => {
-//     return inputErrors[propertyName].length > 0;
-//   };
-
-//   const handleFocus = () => {
-//     if (props.name === "password1" && hasInputError("password1")) {
-//       dispatch(updateInputErrors({ password1: "" }));
-//     }
-
-//     if (props.name === "email" && hasInputError("email")) {
-//       setLocalError("");
-//       dispatch(updateInputErrors({ email: "" }));
-//     }
-//   };
-
-//   const isDisabled =
-//     !allPasswordRequirementsCorrect(passwordRequirements) &&
-//     props.name === "password2";
-
-//   return (
-//     <GeneralInput
-//       {...props}
-//       error={localError}
-//       value={value}
-//       disabled={isDisabled}
-//       onChange={handleChange}
-//       onFocus={handleFocus}
-//       onBlur={handleBlur}
-//     />
-//   );
-// };
-
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { GeneralInput } from "../../../../../../components/GeneralInput";
 import { isEmailCorrect } from "../../../../../../components/GeneralInput/handlers";
-<<<<<<< HEAD
-import {
-  updatePasswordRequirements,
-=======
 import { updatePasswordRequirements } from "../../../../../../features/password/passwordSlice";
 import {
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
   updateRegistrationErrors,
   updateRegistrationForm,
   updateSignUpError,
 } from "../../../../../../features/registration/registrationSlice";
 import { allPasswordRequirementsCorrect } from "../../../../../../handlers/allPasswordRequirementsCorrect";
-<<<<<<< HEAD
-=======
 import { validatePasswordRequirements } from "../../../../../../handlers/validatePasswordRequirements";
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
 import { useAppDispatch, useAppSelector } from "../../../../../../store/hooks";
 import { GeneralInput as GeneralInputType } from "../../../../../../types/GeneralInput";
 import { RegistrationForm } from "../../../../../../types/RegistrationForm";
@@ -144,37 +17,34 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
   props
 ) => {
   const dispatch = useAppDispatch();
-<<<<<<< HEAD
-  const { registrationForm, passwordRequirements, registrationErrors, signUpError } =
-    useAppSelector((state) => state.registration);
-=======
   const { registrationForm, registrationErrors, signUpError } = useAppSelector(
     (state) => state.registration
   );
-  const { passwordRequirements } = useAppSelector((state) => state.password);
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
-
-  // const isPassword2Disabled = Object.values(passwordRequirements).some(
-  //   (req) => !req
-  // );
+  const { passwordRequirements } = useAppSelector(
+    (state) => state.password
+  );
   const value = registrationForm[props.name as keyof RegistrationForm];
   const { type } = props;
+
+  const isPassword2Disabled = Object.values(passwordRequirements).some(
+    (req) => !req
+  );
+
+  // Clean password2 value if requirements aren't met
+  useEffect(() => {
+    if (isPassword2Disabled && registrationForm.password2.length) {
+      dispatch(updateRegistrationForm({ password2: "" }));
+      dispatch(updateRegistrationErrors({ password2: "" }));
+    }
+  }, [registrationForm.password1]);
 
   const handleChange = (name: string, value: string) => {
     dispatch(updateRegistrationForm({ [name]: value }));
 
     if (name === "password1") {
-<<<<<<< HEAD
       dispatch(
-        updatePasswordRequirements({
-          isLetterTyped: /[A-Za-z]/.test(value),
-          isMinLength: value.length >= 8,
-          isNumberTyped: /[0-9]/.test(value),
-        })
+        updatePasswordRequirements(validatePasswordRequirements(value))
       );
-=======
-      dispatch(updatePasswordRequirements(validatePasswordRequirements(value)));
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
     }
   };
 
@@ -188,32 +58,18 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
       dispatch(
         updateRegistrationErrors({ password2: "Passwords do not match" })
       );
-    } else if (props.name === "password2") {
-      dispatch(updateRegistrationErrors({ password2: "" }));
     }
 
-    if (type === "email") {
-      if (!isEmailCorrect(value)) {
-        dispatch(
-          updateRegistrationErrors({ email: "Please, type correct e-mail" })
-        );
-      } else {
-        dispatch(updateRegistrationErrors({ email: "" }));
-      }
+    if (type === "email" && !isEmailCorrect(value)) {
+      dispatch(
+        updateRegistrationErrors({ email: "Please, type correct e-mail" })
+      );
     }
   };
 
   const handleFocus = () => {
-    if (props.name === "password1" && registrationErrors.password1) {
-      dispatch(updateRegistrationErrors({ password1: "" }));
-    }
-
-    if (props.name === "email" && registrationErrors.email) {
-      dispatch(updateRegistrationErrors({ email: "" }));
-    }
-
-    if (props.name === "password2" && registrationErrors.password2) {
-      dispatch(updateRegistrationErrors({ password2: "" }));
+    if (registrationErrors[props.name as keyof typeof registrationErrors]) {
+      dispatch(updateRegistrationErrors({ [props.name]: "" }));
     }
 
     if (signUpError) {
@@ -225,13 +81,10 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
     !allPasswordRequirementsCorrect(passwordRequirements) &&
     props.name === "password2";
 
-  const error =
-    registrationErrors[props.name as keyof typeof registrationErrors] || "";
-
   return (
     <GeneralInput
       {...props}
-      error={error}
+      error={registrationErrors[props.name as keyof typeof registrationErrors] || ""}
       value={value}
       disabled={isDisabled}
       onChange={handleChange}

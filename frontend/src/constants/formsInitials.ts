@@ -1,9 +1,6 @@
 import { PasswordRequirements } from "../types/PasswordRequirements";
 import { RegistrationForm } from "../types/RegistrationForm";
-<<<<<<< HEAD
-=======
 import { SelectedFilters } from "../types/SelectedFilters";
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
 import { UserInfo } from "../types/UserInfo";
 
 export const registrationFormDefaults: RegistrationForm = {
@@ -17,11 +14,7 @@ export const registrationFormDefaults: RegistrationForm = {
 export const registrationFormErrorDefaults = registrationFormDefaults;
 
 export const passwordRequirementsDefaults: PasswordRequirements = {
-<<<<<<< HEAD
-  isLetterTyped: false,
-=======
   isLettersTyped: false,
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
   isMinLength: false,
   isNumberTyped: false,
 };
@@ -32,8 +25,6 @@ export const userInfoDefaults: UserInfo = {
   last_name: "",
   email: "",
   avatar: "",
-<<<<<<< HEAD
-=======
 };
 
 export const selectedFiltersDefaults: SelectedFilters = {
@@ -48,5 +39,4 @@ export const contactFormDefaults = {
   phone: "",
   email: "",
   message: "",
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
 }

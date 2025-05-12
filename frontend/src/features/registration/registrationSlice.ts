@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-<<<<<<< HEAD
 import { PasswordRequirements } from "../../types/PasswordRequirements";
-=======
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
 import { RegistrationForm } from "../../types/RegistrationForm";
 
 export const registrationSlice = createSlice({
@@ -24,15 +21,12 @@ export const registrationSlice = createSlice({
       last_name: "",
     } as RegistrationForm,
 
-<<<<<<< HEAD
     passwordRequirements: {
       isMinLength: false,
-      isLetterTyped: false,
+      isLettersTyped: false,
       isNumberTyped: false,
     } as PasswordRequirements,
 
-=======
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
     signUpError: "",
 
     confirmationEmail: localStorage.getItem("confirmationEmail") || "",
@@ -58,7 +52,6 @@ export const registrationSlice = createSlice({
       };
     },
 
-<<<<<<< HEAD
     updatePasswordRequirements(
       state,
       action: PayloadAction<PasswordRequirements>
@@ -66,8 +59,6 @@ export const registrationSlice = createSlice({
       state.passwordRequirements = action.payload;
     },
 
-=======
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
     updateSignUpError(state, action: PayloadAction<string>) {
       state.signUpError = action.payload;
     },
@@ -83,10 +74,7 @@ export default registrationSlice.reducer;
 export const {
   updateRegistrationForm,
   updateRegistrationErrors,
-<<<<<<< HEAD
   updatePasswordRequirements,
-=======
->>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
   updateSignUpError,
   updateConfirmationEmail,
 } = registrationSlice.actions;
