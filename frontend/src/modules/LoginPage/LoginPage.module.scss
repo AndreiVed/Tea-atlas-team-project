@@ -1,0 +1,166 @@
+@use "../../styles/utils/colors" as *;
+@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+
+.login {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+
+  padding: 0 16px 112px 16px;
+
+  @include tablet-grid;
+
+  @include on-tablet {
+    min-height: 100vh;
+  }
+  
+  @include on-desktop {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  &__banner {
+    width: 50vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: right;
+  }
+
+  &__info-wrap {
+    @include on-tablet {
+      width: 60vw;
+      margin: auto;
+      grid-column: 3 / -3;
+      max-width: 600px;
+    }
+
+    @include on-desktop {
+      width: 30vw;
+      max-width: 550px;
+      margin: 0 auto;
+    }
+  }
+
+  &__title {
+    font-size: 28px;
+    margin-block: 48px 0;
+
+    @include on-tablet {
+      font-size: 32px;
+    }
+  }
+
+  &__google {
+    display: block;
+    width: 100%;
+
+    > * {
+      width: 100%;
+    }
+  }
+
+
+  &__with {
+    width: 100%;
+
+    &-text {
+      font-size: 16px;
+      margin-block: 32px 8px;
+    }
+
+    &-divider {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin-block: 24px;
+
+      &::before,
+      &::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background-color: $gray-30;
+      }
+
+      &::before {
+        margin-right: 16px;
+      }
+
+      &::after {
+        margin-left: 16px;
+      }
+
+      &-text {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+      }
+    }
+  }
+
+  &__form {
+    width: 100%;
+
+    // wrap for sign-in button
+    &-sign-in-btn-wrap {
+      margin-top: 24px;
+
+      @include on-tablet {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @include on-desktop {
+        margin-top: 32px;
+      }
+
+      // style for sign in button
+      > * {
+        width: 100%;
+      }
+    }
+
+    &-error-message {
+      font-size: 16px;
+      margin-block: 4px 0;
+      color: $error;
+    }
+
+    &-inputs-wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+
+  &__dont-have-account {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    margin-top: 16px;
+
+    &-question {
+      margin: 0;
+    }
+
+    &-sign-up {
+      padding: 4px;
+      color: $gray-100;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

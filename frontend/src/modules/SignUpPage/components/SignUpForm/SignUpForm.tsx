@@ -8,9 +8,15 @@ import {
   registrationFormDefaults,
 } from "../../../../constants/formsInitials";
 import { API_ENDPOINTS } from "../../../../endpoints";
+<<<<<<< HEAD
 import {
   updateConfirmationEmail,
   updatePasswordRequirements,
+=======
+import { updatePasswordRequirements } from "../../../../features/password/passwordSlice";
+import {
+  updateConfirmationEmail,
+>>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
   updateRegistrationErrors,
   updateRegistrationForm,
   updateSignUpError,
@@ -28,8 +34,15 @@ export const SignUpForm: FC = () => {
   const [isPending, setIsPending] = useState(false);
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
 
+<<<<<<< HEAD
   const { registrationForm, passwordRequirements, signUpError } =
     useAppSelector((state) => state.registration);
+=======
+  const { registrationForm, signUpError, registrationErrors } = useAppSelector(
+    (state) => state.registration
+  );
+  const { passwordRequirements } = useAppSelector((state) => state.password);
+>>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
 
   const { password1, password2, email, first_name, last_name } =
     registrationForm;
@@ -43,6 +56,10 @@ export const SignUpForm: FC = () => {
     return () => {
       dispatch(updateRegistrationForm(registrationFormDefaults));
       dispatch(updateRegistrationErrors({}));
+<<<<<<< HEAD
+=======
+      dispatch(updatePasswordRequirements(passwordRequirementsDefaults));
+>>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
     };
   }, []);
 
@@ -59,12 +76,30 @@ export const SignUpForm: FC = () => {
       body: JSON.stringify(registrationForm),
     })
       .then((response) => {
+<<<<<<< HEAD
         if(!response.ok) {
 
           response.json()
         }
       })
       .then(() => {
+=======
+        if (!response.ok) {
+          return response.json().then((res) => {
+            dispatch(updateRegistrationErrors(res));
+          });
+        }
+
+        return response.json();
+      })
+      .then(() => {
+        if (Object.values(registrationErrors).some((error) => !error)) {
+          setIsPending(false);
+
+          return;
+        }
+
+>>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
         navigate("/sign-up/confirmation-sent");
         dispatch(updatePasswordRequirements(passwordRequirementsDefaults));
         dispatch(updateConfirmationEmail(email));

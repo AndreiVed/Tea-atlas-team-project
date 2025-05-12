@@ -1,0 +1,62 @@
+@use '../../../../styles/utils/mixins/grid-mixins.scss' as *;
+@use '../../../../styles/utils/mixins/styling-mixins.scss' as *;
+
+.cart {
+  position: relative;
+
+  display: block;
+  scroll-snap-align: start;
+  width: 40vw;
+  aspect-ratio: 8 / 9;
+  transition: transform .4s;
+  overflow: clip;
+
+  &:hover {
+    @include custom-cursor-pointer;
+  
+    .cart__photo {
+      transform: scale(1.1);
+      transition: transform .4s;
+    }
+  }
+
+  @include on-desktop {
+    aspect-ratio: 12 / 9;
+  }
+
+  &-photo-wrap {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__photo {
+    box-sizing: border-box;
+
+    width: 40vw;
+    aspect-ratio: 8 / 9;
+    object-fit: cover;
+
+    transition: transform 0.4s;
+
+    @include on-desktop {
+      aspect-ratio: 12 / 9;
+    }
+  }
+
+  &__title {
+    position: absolute;
+
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 16px;
+    margin: 0;
+    bottom: 0;
+  
+    background-color: rgba(255, 255, 255, 0.7);
+
+    @include on-tablet {
+      padding: 28px 0 28px 40px;
+    }
+  }
+}

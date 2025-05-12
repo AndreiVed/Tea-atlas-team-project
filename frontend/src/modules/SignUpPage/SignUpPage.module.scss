@@ -1,0 +1,44 @@
+@use "../../styles/utils/colors" as *;
+@use "../../styles/utils/mixins/grid-mixins.scss" as *;
+
+.sign-up {
+  box-sizing: border-box;
+  padding-inline: 16px;
+
+  @include on-mobile {
+    padding-block: 40px 52px;
+  }
+
+  @include on-tablet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-block: 204px 448px;
+  }
+
+  @include on-desktop {
+    padding: 0;
+    margin: 0;
+    justify-content: space-between;
+  }
+
+  &--confirmation-sent {
+    height: 100%;
+    align-items: normal;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__banner {
+    display: none;
+
+    @include on-desktop {
+      display: block;
+      width: 50vw;
+      height: 100vh;
+      object-fit: cover;
+      object-position: right;
+    }
+  }
+}

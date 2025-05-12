@@ -1,0 +1,131 @@
+@use "../../../../styles/utils/mixins/grid-mixins.scss" as *;
+@use "../../../../styles/utils/colors" as *;
+
+$grid-padding: 80px;
+
+.filter {
+  width: 100vw;
+  height: 100vh;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  z-index: 4;
+  background-color: $white;
+  padding-inline: 16px;
+
+  
+  @include on-tablet {
+    width: 50vw;
+  }
+
+  @include on-desktop {
+    height: calc(100vh - 72px);
+    z-index: 2;
+    margin-inline: 16px;
+    padding-bottom: 24px;
+  
+    position: sticky;
+
+    width: calc(25vw - 80px);
+
+    flex-shrink: 0;
+
+    top: 76px;
+    bottom: 0;
+
+    margin-left: 80px;
+
+    margin-top: 0;
+  }
+
+  &__header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include on-desktop {
+      height: auto;
+    }
+
+    &-text {
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    &-close-btn {
+      width: 24px;
+      height: 24px;
+      padding: 8px;
+
+      border: none;
+
+      background-image: url("/icons/close.svg");
+      background-color: inherit;
+    }
+  }
+
+  &__top-buttons {
+    display: flex;
+    gap: 8px;
+    margin-block: 24px 32px;
+
+    @include on-tablet {
+      margin-block: 24px 16px;
+    }
+
+    @include on-desktop {
+      margin-block: 32px;
+    }
+
+    &-apply {
+      width: 100%;
+      height: 40px;
+      border: none;
+      background-color: $primary;
+      color: $white;
+
+      transition: background-color 0.4s;
+
+      &:disabled {
+        background-color: $primary-30;
+        color: $primary-50;
+      }
+    }
+
+    &-clear-all-filters {
+      width: 40px;
+      height: 40px;
+      background-image: url("/icons/filter-x-active.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: inherit;
+      border: 1px solid $primary;
+      transition: border-color 0.4s;
+      transition: background-image 0.4s;
+
+      &:hover {
+        transform: background-size scale(1.1);
+      }
+
+      &:disabled {
+        border-color: $primary-50;
+
+        background-image: url("/icons/filter-x-inactive.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: inherit;
+      }
+    }
+  }
+
+  &__form-sections {
+    min-width: 100%;
+    padding-top: 8px;
+  }
+}

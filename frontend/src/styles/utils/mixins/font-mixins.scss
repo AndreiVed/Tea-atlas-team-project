@@ -1,0 +1,118 @@
+@use "./grid-mixins.scss" as *;
+
+@mixin heading(
+  $size,
+  $line-height,
+  $letter-spacing,
+  $isLetterSpacingInPx: false,
+  $weight: 300,
+  $font: "Cormorant"
+) {
+  font-family: $font;
+  font-weight: $weight;
+  font-size: $size * 1px;
+  line-height: $line-height;
+  letter-spacing: if(
+    $isLetterSpacingInPx,
+    $letter-spacing,
+    calc($letter-spacing * $size / 100) * 1px
+  );
+}
+
+@mixin text(
+  $size,
+  $line-height,
+  $letter-spacing,
+  $weight: 400,
+  $uppercase: false
+) {
+  font-family: "Montserrat";
+  font-weight: $weight;
+  font-size: $size * 1px;
+  line-height: $line-height;
+  letter-spacing: calc($letter-spacing * $size / 100) * 1px;
+
+  @if $uppercase {
+    text-transform: uppercase;
+  }
+}
+
+h1 {
+  @include heading(55, 120%, -2);
+}
+
+h2 {
+  @include heading(40, 120%, -2);
+}
+
+h3 {
+  @include heading(32, 120%, -2);
+}
+
+h4 {
+  @include text(28, 120%, -2);
+}
+
+.large-text {
+  @include text(20, 150%, 0);
+}
+
+.main-text {
+  @include text(16, 150%, 0);
+}
+
+.main-text-bold {
+  @include text(16, 150%, 0, 600);
+}
+
+.small-text {
+  @include text(12, 150%, 0);
+}
+
+.button-text {
+  @include text(16, 100%, 0, regular, true);
+}
+
+.navigation-text {
+  @include text(12, 150%, 0, 600, true);
+}
+
+.additional-text {
+  @include text(14, 150%, 0);
+}
+
+@include on-mobile {
+  h1 {
+    @include heading(55, 120%, -2);
+  }
+
+  h2 {
+    @include heading(40, 120%, -2);
+  }
+
+  h3 {
+    @include heading(32, 120%, -2);
+  }
+
+  p {
+    @include text(14, 150%, 0);
+  }
+
+  .link-button {
+    @include text(12, 100%, 0, regular, true);
+  }
+
+  // .navigation-text {
+  //   @include text(20, 150%, 0, semibold, true);
+  // }
+}
+
+@include on-tablet {
+  p {
+    @include text(16, 150%, 0);
+  }
+
+  h2 {
+    @include heading(55, 120%, -1.1px, true);
+  }
+}

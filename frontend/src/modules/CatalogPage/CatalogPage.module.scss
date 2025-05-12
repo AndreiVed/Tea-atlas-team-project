@@ -1,0 +1,66 @@
+@use "../../styles/utils/colors" as *;
+@use "../../styles/utils/mixins/grid-mixins.scss" as *;
+
+.catalog {
+  position: relative;
+
+  &-banner-wrap {
+    position: relative;
+  }
+
+  &-wrap {
+    min-height: 100vh;
+    height: 100%;
+    position: relative;
+
+    @include on-mobile {
+      padding-inline: 16px;
+    }
+
+    @include on-tablet {
+      margin-top: 32px;
+    }
+
+    @include on-desktop {
+      display: flex;
+      margin-top: 48px;
+    }
+
+  }
+
+  &__title {
+    position: absolute;
+    margin: 0;
+    color: $white;
+    bottom: 16px;
+    left: 16px;
+
+    @include on-tablet {
+      bottom: 32px;
+      left: 32px;
+    }
+
+    @include on-desktop {
+      bottom: 40px;
+      left: 80px;
+    }
+  }
+
+  &__load-more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-inline: 16px;
+
+    margin-bottom: 56px;
+
+    @include on-tablet {
+      margin-bottom: 72px;
+    }
+
+    @include on-desktop {
+      margin-bottom: 88px;
+    }
+  }
+}

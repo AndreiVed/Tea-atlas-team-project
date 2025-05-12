@@ -1,0 +1,54 @@
+@use '../vars' as *;
+
+@mixin on-mobile {
+  @media (max-width: $mobile-max-width) {
+    @content;
+  }
+}
+
+@mixin on-tablet {
+  @media (min-width: $tablet-min-width) {
+    @content;
+  }
+}
+
+@mixin on-desktop {
+  @media (min-width: $desktop-min-width) {
+    @content;
+  }
+}
+
+@mixin mobile-grid {
+  @media (max-width: $mobile-max-width) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding-inline: 16px;
+    column-gap: 16px;
+  }
+}
+
+@mixin tablet-grid {
+  @media (min-width: $tablet-min-width) {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    padding-inline: 32px;
+    column-gap: 16px;
+    row-gap: 16px;
+  }
+}
+
+@mixin desktop-grid {
+  @media (min-width: $desktop-min-width) {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    padding-inline: 80px;
+    column-gap: 16px;
+    row-gap: 16px;
+  }
+}
+
+@mixin all-grids {
+  @include mobile-grid;
+  @include tablet-grid;
+  @include desktop-grid;
+}

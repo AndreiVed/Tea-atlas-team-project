@@ -1,0 +1,70 @@
+@use "../../../../../../styles/utils/colors" as *;
+
+.filter-section {
+  width: 100%;
+  padding: 0;
+
+  border: none;
+
+  padding-block: 16px;
+  border-top: 1px solid $gray-30;
+
+  &:hover {
+    transition: background-color .4s;
+    background-color: $gray-background;
+  }
+
+  &:first-child {
+    padding-block: 0 16px;
+    border: none;
+  }
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 8px;
+
+    &-logo {
+      width: 24px;
+      height: 24px;
+    }
+
+    &-text {
+      text-transform: capitalize;
+      width: 100%;
+    }
+
+    &-arrow-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background-color: inherit;
+
+      background-image: url("/icons/arrow-down.svg");
+      background-position: center;
+
+      transition: transform 0.3s ease;
+
+      &--clicked {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__list-wrapper {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+
+    padding-left: 8px;
+  }
+}

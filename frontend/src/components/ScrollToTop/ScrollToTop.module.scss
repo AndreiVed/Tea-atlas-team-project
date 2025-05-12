@@ -1,0 +1,53 @@
+@use '../../styles/utils/mixins/grid-mixins.scss' as *;
+@use '../../styles/utils/colors' as *;
+
+.scroll-to-top {
+  position: fixed;
+
+  width: 32px;
+  height: 32px;
+
+  padding: 8px;
+
+  bottom: 16px;
+  right: 16px;
+
+  z-index: 10;
+
+  background: rgba(44, 44, 44, 0.15);
+  backdrop-filter: blur(2px);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  @include on-tablet {
+    bottom: 32px;
+    right: 32px;
+  }
+
+  @include on-desktop {
+    bottom: 80px;
+    right: 80px;
+  }
+
+  &:hover {
+    outline: 1px solid $gray-80;
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  &--active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &--fixed {
+    position: fixed;
+    bottom: 100px;
+  }
+
+  &__logo {
+    width: 32px;
+    height: 32px;
+  }
+}

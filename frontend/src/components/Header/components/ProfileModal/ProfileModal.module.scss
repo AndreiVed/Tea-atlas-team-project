@@ -1,0 +1,65 @@
+@use '../../../../styles/utils/colors' as *;
+@use '../../../../styles/utils/mixins/styling-mixins.scss' as *;
+
+.profile-modal {
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  position: absolute;
+  right: 0;
+  top: 100%;
+
+  gap: 24px;
+  padding: 24px;
+
+  background-color: $gray-background;
+
+  &__user-info {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+  }
+
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+
+    &--empty {
+      background-image: url('/icons/camera.svg');
+      background-size: 20px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: $gray-40;
+    }
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    
+    &-item {
+      width: fit-content;
+      position: relative;
+      @include text-hover;
+      padding-block: 4px;
+
+      &--profile {
+        margin-bottom: 8px;
+      }
+
+      &--logout {
+        margin-top: 8px;
+      }
+
+      &--border {
+        width: 100%;
+        border: 1px solid $gray-20;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,33 @@
+@use '../../../../../../styles/utils/mixins/font-mixins.scss' as *;
+@use '../../../../../../styles/utils/colors' as *;
+
+.checkbox {
+  list-style-type: none;
+  padding: 4px;
+  width: 100%;
+
+  &__label {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+  }
+
+  &__input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    outline: 1px solid $gray-100;
+    margin: 0;
+
+    &:checked {
+      background-image: url('/icons/checked.svg');
+      background-position: center;
+      outline: none;
+    }
+  }
+
+  &__text {
+    width: 100%;
+  }
+}

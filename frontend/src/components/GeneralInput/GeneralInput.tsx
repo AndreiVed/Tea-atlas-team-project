@@ -63,9 +63,10 @@ export const GeneralInput: FC<GeneralInputProps> = ({
     }
 
     if (
-      name === "password1" &&
-      !allPasswordRequirementsCorrect(passwordRequirements) &&
-      value.length
+      name === "password1" ||
+      (name === "new_password1" &&
+        !allPasswordRequirementsCorrect(passwordRequirements) &&
+        value.length)
     ) {
       setKeepPasswordRequirements(true);
     } else {

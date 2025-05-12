@@ -120,13 +120,22 @@
 import { FC } from "react";
 import { GeneralInput } from "../../../../../../components/GeneralInput";
 import { isEmailCorrect } from "../../../../../../components/GeneralInput/handlers";
+<<<<<<< HEAD
 import {
   updatePasswordRequirements,
+=======
+import { updatePasswordRequirements } from "../../../../../../features/password/passwordSlice";
+import {
+>>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
   updateRegistrationErrors,
   updateRegistrationForm,
   updateSignUpError,
 } from "../../../../../../features/registration/registrationSlice";
 import { allPasswordRequirementsCorrect } from "../../../../../../handlers/allPasswordRequirementsCorrect";
+<<<<<<< HEAD
+=======
+import { validatePasswordRequirements } from "../../../../../../handlers/validatePasswordRequirements";
+>>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
 import { useAppDispatch, useAppSelector } from "../../../../../../store/hooks";
 import { GeneralInput as GeneralInputType } from "../../../../../../types/GeneralInput";
 import { RegistrationForm } from "../../../../../../types/RegistrationForm";
@@ -135,8 +144,15 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
   props
 ) => {
   const dispatch = useAppDispatch();
+<<<<<<< HEAD
   const { registrationForm, passwordRequirements, registrationErrors, signUpError } =
     useAppSelector((state) => state.registration);
+=======
+  const { registrationForm, registrationErrors, signUpError } = useAppSelector(
+    (state) => state.registration
+  );
+  const { passwordRequirements } = useAppSelector((state) => state.password);
+>>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
 
   // const isPassword2Disabled = Object.values(passwordRequirements).some(
   //   (req) => !req
@@ -148,6 +164,7 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
     dispatch(updateRegistrationForm({ [name]: value }));
 
     if (name === "password1") {
+<<<<<<< HEAD
       dispatch(
         updatePasswordRequirements({
           isLetterTyped: /[A-Za-z]/.test(value),
@@ -155,6 +172,9 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
           isNumberTyped: /[0-9]/.test(value),
         })
       );
+=======
+      dispatch(updatePasswordRequirements(validatePasswordRequirements(value)));
+>>>>>>> 9097e19ed81b64e0788f0c94f5cf1ce56aecfc09
     }
   };
 

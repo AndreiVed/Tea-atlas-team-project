@@ -1,0 +1,1 @@
+export type OpenedPage = 'catalog' | 'blog' | 'contact' | 'home';

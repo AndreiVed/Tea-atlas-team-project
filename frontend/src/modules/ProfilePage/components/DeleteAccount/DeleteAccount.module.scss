@@ -1,0 +1,83 @@
+@use "../../../../styles/utils/colors" as *;
+@use "../../../../styles/utils/mixins/grid-mixins.scss" as *;
+@use '../../../../styles/utils/_vars.scss' as *;
+
+.delete-account {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  padding: 16px;
+  background-color: $white;
+
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+
+  width: calc(100% - $page-padding-inline-mobile * 2);
+
+  @include on-tablet {
+    width: 70vw;
+  }
+
+  @include on-desktop {
+    width: 30vw;
+  }
+
+  &__danger-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  &__close-btn {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: inherit;
+    background-image: url("/icons/close.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.4s ease-in-out;
+
+    &:hover {
+      transform: scale(1.1);
+      transition: transform 0.4s;
+    }
+  }
+
+  &__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__info {
+    margin-block: 32px;
+
+    &-title {
+      margin-block: 0 16px;
+    }
+
+    &-desc {
+      margin: 0;
+    }
+  }
+
+  &__back-to-account {
+    width: 100%;
+
+    & :first-child {
+      width: 100%;
+    }
+  }
+}

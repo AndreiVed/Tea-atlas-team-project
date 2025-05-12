@@ -1,0 +1,15 @@
+@use '../../../../styles/utils/colors' as *;
+
+.badge {
+  padding: 8px 12px;
+  border: 1px solid $primary-50;
+  box-sizing: border-box;
+
+  &--skip-border {
+    border: none;
+  }
+
+  &__text {
+    margin: 0;
+  }
+}

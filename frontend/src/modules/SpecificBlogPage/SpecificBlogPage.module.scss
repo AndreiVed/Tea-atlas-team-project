@@ -1,0 +1,242 @@
+@use "../../styles/utils/colors" as *;
+@use "../../styles/utils/mixins/grid-mixins.scss" as *;
+
+.specific-blog {
+  &__banner-wrap {
+    position: relative;
+  }
+
+  &__title {
+    font-size: 40px;
+    color: $white;
+    margin: 0;
+    position: absolute;
+
+    left: 16px;
+    bottom: 16px;
+
+    @include on-desktop {
+      left: 88px;
+      bottom: 40px;
+      font-size: 55px;
+    }
+  }
+
+  &__info {
+    padding-inline: 16px;
+
+    @include tablet-grid;
+    @include desktop-grid;
+
+    @include on-tablet {
+      > * {
+        grid-column: 3 / -3;
+      }
+    }
+
+    @include on-desktop {
+      grid-template-rows: repeat(4, auto);
+      margin-bottom: 88px;
+    }
+  }
+
+  &__intro {
+    margin-block: 32px;
+
+    @include on-desktop {
+      grid-column: span 6;
+      grid-row: 1;
+      margin-block: 52px 72px;
+    }
+  }
+
+  &__green-pot-banner {
+    @include on-desktop {
+      // margin-bottom: 120px;
+      grid-row: 2 / 4;
+      grid-column: span 6;
+    }
+  }
+
+  &__three-cups-banner {
+    @include on-desktop {
+      // margin-bottom: 120px;
+      grid-row: span 2;
+      grid-column: 7 / -1;
+    }
+  }
+
+  &__holding-cup-banner {
+    @include on-desktop {
+      grid-row: span 3;
+      grid-column: span 6;
+    }
+  }
+
+  &__first-point {
+    margin-block: 40px 32px;
+
+    @include on-desktop {
+      grid-column: 8 / -1;
+      grid-row: 2;
+      align-self: end;
+    }
+
+    &-title {
+      margin-block: 0 16px;
+
+      @include on-desktop {
+        font-size: 40px;
+        margin-block: 0 24px;
+      }
+    }
+
+    &-text {
+      margin: 0;
+    }
+  }
+
+  &__second-point {
+    margin-block: 32px;
+
+    @include on-desktop {
+      grid-column: 8 / -1;
+      grid-row: 3;
+    }
+
+    &-list {
+      padding-left: 20px;
+    }
+
+    &-title {
+      margin-block: 0 16px;
+
+      @include on-desktop {
+        font-size: 40px;
+        margin-block: 0 24px;
+      }
+    }
+
+    &-text {
+      margin: 0;
+    }
+  }
+
+  &__third-point {
+    margin-block: 32px;
+
+    @include on-desktop {
+      grid-row: 4;
+      grid-column: span 5;
+    }
+
+    &-title {
+      margin-block: 0 16px;
+
+      @include on-desktop {
+        font-size: 40px;
+        margin-block: 0 24px;
+      }
+    }
+
+    &-list {
+      padding-left: 20px;
+    }
+
+    &-text {
+      margin: 0;
+    }
+  }
+
+  &__fourth-point {
+    margin-block: 32px;
+
+    @include on-desktop {
+      grid-row: 5;
+      grid-column: span 5;
+    }
+
+    &-title {
+      margin-block: 0 16px;
+
+      @include on-desktop {
+        font-size: 40px;
+        margin-block: 0 24px;
+      }
+    }
+
+    &-list {
+      padding-left: 20px;
+    }
+
+    &-text {
+      margin: 0;
+    }
+  }
+
+  &__fifth-point {
+    margin-block: 32px;
+
+    @include on-desktop {
+      grid-column: 8 / -1;
+    }
+
+    &-title {
+      margin-block: 0 16px;
+
+      @include on-desktop {
+        font-size: 40px;
+        margin-block: 0 24px;
+      }
+    }
+
+    &-list {
+      padding-left: 20px;
+    }
+
+    &-text {
+      margin: 0;
+    }
+  }
+
+  &__sixth-point {
+    margin-block: 32px;
+
+    @include on-desktop {
+      grid-column: 8 / -1;
+    }
+
+    &-title {
+      margin-block: 0 16px;
+
+      @include on-desktop {
+        font-size: 40px;
+        margin-block: 0 24px;
+      }
+    }
+
+    &-text {
+      margin: 0;
+    }
+  }
+
+  &__conclusion {
+    margin-block: 32px 56px;
+
+    @include on-desktop {
+      grid-column: 8 / -1;
+    }
+
+    &-title {
+      margin-block: 0 16px;
+
+      @include on-desktop {
+        font-size: 40px;
+      }
+    }
+
+    &-text {
+      margin: 0;
+    }
+  }
+}

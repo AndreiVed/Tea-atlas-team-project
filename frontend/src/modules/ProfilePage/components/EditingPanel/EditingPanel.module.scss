@@ -1,0 +1,69 @@
+@use "../../../../styles/utils/colors" as *;
+@use "../../../../styles/utils/mixins/grid-mixins.scss" as *;
+@use '../../../../styles/utils/vars' as *;
+
+.editing-panel {
+  display: flex;
+  flex-direction: column;
+  padding-block: 32px;
+
+  @include on-tablet {
+    padding-block: 24px;
+  }
+
+  &--email {
+    border-block: 1px solid $gray-30;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__cancel-btn {
+    background-color: inherit;
+    border: none;
+    text-decoration: underline;
+  }
+
+  &__inputs {
+    margin-block: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: $margin-between-editing-inputs;
+
+    @include on-tablet {
+      flex-direction: row;
+
+      > * {
+        width: 100%;
+      }
+    }
+
+    &--with-single {
+      @include on-tablet {
+        > * {
+          width: calc(50% - $margin-between-editing-inputs);
+        }
+      }
+    }
+
+  }
+
+  &__save-btn-wrap {
+    width: 100%;
+
+    > * {
+      @include on-tablet {
+        width: min-content;
+        padding: 20px;
+      }
+    }
+  }
+}
