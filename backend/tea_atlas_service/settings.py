@@ -207,6 +207,7 @@ SIMPLE_JWT = {
 
 
 AUTH_USER_MODEL = "user.User"
+
 # dj-rest-auth
 REST_AUTH = {
     "USE_JWT": True,
@@ -216,6 +217,7 @@ REST_AUTH = {
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
     "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
 }
+
 # django.contrib.sites
 SITE_ID = 1
 REST_USE_JWT = True  # Використання JWT у dj-rest-auth
