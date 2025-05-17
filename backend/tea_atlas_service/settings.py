@@ -183,13 +183,31 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "TOKEN_USER_ID_CLAIM": "user_id",
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "JWT_COOKIE_SECURE": True,  # Передавати куки лише через HTTPS (рекомендовано для production)
+    "JWT_COOKIE_HTTPONLY": True,  # Заборонити доступ JavaScript до кук
+    "JWT_COOKIE_SAMESITE": "Strict",  # Захист від CSRF (може бути 'Lax' залежно від ваших потреб)
+    "JWT_COOKIE_PATH": "/",  # Шлях, для якого діє кука
+    "JWT_COOKIE_DOMAIN": None,  # Домен, для якого діє кука (за потреби)
+    "JWT_REFRESH_COOKIE": "refresh_token",  # Назва cookie для refresh token
+    "JWT_REFRESH_COOKIE_SECURE": True,
+    "JWT_REFRESH_COOKIE_HTTPONLY": True,
+    "JWT_REFRESH_COOKIE_SAMESITE": "Strict",
+    "JWT_REFRESH_COOKIE_PATH": "/",
+    "JWT_REFRESH_COOKIE_DOMAIN": None,
 }
 
 
 AUTH_USER_MODEL = "user.User"
+
 # dj-rest-auth
 REST_AUTH = {
     "USE_JWT": True,
@@ -199,12 +217,11 @@ REST_AUTH = {
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
     "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
 }
+
 # django.contrib.sites
 SITE_ID = 1
 REST_USE_JWT = True  # Використання JWT у dj-rest-auth
 JWT_ALLOW_REFRESH = True
-
-# ACCOUNT_EMAIL_VERIFICATION = "none"  # Не вимагати підтвердження електронною поштою
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
