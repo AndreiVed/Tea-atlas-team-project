@@ -31,7 +31,7 @@ export const GeneralButton: FC<Props> = ({
   const navigate = useNavigate();
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
 
-  const handleBtnClick = () => {
+  const handleBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (to) {
       navigate(to);
     }
@@ -40,6 +40,7 @@ export const GeneralButton: FC<Props> = ({
       onClick();
     }
 
+    e.currentTarget.blur();
     handleMouseLeave();
   };
 

@@ -1,12 +1,12 @@
 import { FC, useState } from "react";
 import { GeneralInput } from "../../../../../../components/GeneralInput";
-import { isEmailCorrect } from "../../../../../../components/GeneralInput/handlers";
 import { updatePasswordRequirements } from "../../../../../../features/password/passwordSlice";
 import {
   updateEditingForm,
   updateEditingPassword,
 } from "../../../../../../features/profile/profileSlice";
 import { allPasswordRequirementsCorrect } from "../../../../../../handlers/allPasswordRequirementsCorrect";
+import { isEmailCorrect } from "../../../../../../handlers/isEmailCorrect";
 import { validatePasswordRequirements } from "../../../../../../handlers/validatePasswordRequirements";
 import { useAppDispatch, useAppSelector } from "../../../../../../store/hooks";
 import { GeneralInput as GeneralInputType } from "../../../../../../types/GeneralInput";

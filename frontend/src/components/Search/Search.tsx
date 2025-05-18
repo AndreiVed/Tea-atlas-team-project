@@ -35,10 +35,12 @@ export const Search: FC = () => {
     }
   }
 
+  const handleSearchClick = () => inputRef.current?.focus();
+
   return (
     <div
       className={styles["search-container"]}
-      onClick={() => inputRef.current?.focus()}
+      onClick={handleSearchClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

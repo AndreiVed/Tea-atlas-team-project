@@ -8,7 +8,6 @@ export const ScrollToTop: FC = () => {
   const [isActive, setIsActive] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
   const scrollToTopRef = useRef<HTMLDivElement>(null);
-  // const [marginBetween, setMarginBetween] = useState(16);
 
   useEffect(() => {
     if (!scrollToTopRef.current) {
@@ -49,6 +48,8 @@ export const ScrollToTop: FC = () => {
     };
   }, [checkScroll]);
 
+  const handleScroll = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
   return (
     <div
       className={cn(styles["scroll-to-top"], {
@@ -57,7 +58,7 @@ export const ScrollToTop: FC = () => {
       })}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      onClick={handleScroll}
       ref={scrollToTopRef}
     >
       <img

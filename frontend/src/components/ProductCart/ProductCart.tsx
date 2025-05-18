@@ -8,8 +8,9 @@ import { ToggleFavorite } from "./components/ToggleFavorite";
 type Props = {
   product: Product;
   usedIn: "catalog" | "liked-it";
+  onClick?: () => void;
 };
-export const ProductCart: FC<Props> = ({ product, usedIn }) => {
+export const ProductCart: FC<Props> = ({ product, usedIn, onClick }) => {
   const { id, name, descriptors, image, category } = product;
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const navigate = useNavigate();
@@ -22,6 +23,11 @@ export const ProductCart: FC<Props> = ({ product, usedIn }) => {
     : descriptors;
 
   const handleCartClick = () => {
+    if (onClick) {
+      onClick();
+    }
+
+    handleMouseLeave();
     navigate(`/product/${id}`);
   };
 
@@ -29,18 +35,11 @@ export const ProductCart: FC<Props> = ({ product, usedIn }) => {
     <article
       className={styles["product"]}
       onClick={handleCartClick}
-      onMouseEnter={() => {
-        handleMouseEnter();
-      }}
-      onMouseLeave={() => {
-        handleMouseLeave();
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <img className={styles["product__photo"]} src={image} alt="Product" />
-      <ToggleFavorite
-        productId={id}
-        usedIn={usedIn}
-      />
+      <ToggleFavorite productId={id} usedIn={usedIn} />
       <div className={styles["product__info"]}>
         <h3 className={styles["product__info-title"]}>{name}</h3>
         <p className={styles["product__info-tea-type"]}>{category}</p>
@@ -63,4 +62,3 @@ export const ProductCart: FC<Props> = ({ product, usedIn }) => {
     </article>
   );
 };
-

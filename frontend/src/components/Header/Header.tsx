@@ -2,8 +2,9 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { FC, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { screenEndpoints } from "../../constants/endpoints";
 import { headerTopBarLinks } from "../../constants/links";
-import { screenEndpoints } from "../../endpoints";
+import { pagesPathsWithoutHeader } from "../../constants/pagesWithoutHeader";
 import { updateShowSearch } from "../../features/search/searchSlice";
 import { shouldHideComponent } from "../../handlers/shouldHideComponent";
 import { useCursorEffect } from "../../hooks/useCursorEffect";
@@ -23,7 +24,6 @@ export const Header: FC = () => {
   const { isLoggedIn } = useAppSelector(state => state.profile);
 
   const isNotOnMobile = width ? width >= screenEndpoints.tablet : undefined;
-  const pagesPathsWithoutHeader = ["/login", "/sign-up", "/sign-up/confirmation-sent"];
 
   if (shouldHideComponent(pagesPathsWithoutHeader, pathname)) {
     return null;

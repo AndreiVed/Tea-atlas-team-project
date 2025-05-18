@@ -5,6 +5,7 @@
 .profile {
   padding-inline: 16px;
   margin-top: 88px;
+  min-height: 90vh;
 
   @include tablet-grid;
   @include desktop-grid;

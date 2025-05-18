@@ -10,7 +10,11 @@
     column-gap: 16px;
     padding: 0;
     margin-right: 80px;
-    margin-bottom: 56px;
+    margin-bottom: 58px;
+  }
+
+  &--fully-loaded {
+    margin-bottom: 160px;
   }
 
   &--empty {

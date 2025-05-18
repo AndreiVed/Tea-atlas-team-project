@@ -1,5 +1,5 @@
 // libraries
-import { useThrottle, useWindowSize } from "@uidotdev/usehooks";
+import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { isEqual, some } from "lodash-es";
 import { FC, FormEvent, useEffect, useState } from "react";
@@ -19,7 +19,7 @@ import {
 } from "../../../../constants";
 
 // ednpoints
-import { screenEndpoints } from "../../../../endpoints";
+import { screenEndpoints } from "../../../../constants/endpoints";
 
 // redux slice / actions
 import {
@@ -47,11 +47,7 @@ export const FilterPanel: FC = () => {
   const [, setSearchParams] = useSearchParams();
   const { loadSelectedProducts } = useLoadSelectedProducts();
   const [loadingApply, setLoadingApply] = useState(false);
-  const throttledWidth = useThrottle(width, 200);
-  const isDesktop = throttledWidth
-    ? throttledWidth > screenEndpoints.desktop
-    : false;
-
+  const isDesktop = width && width >= screenEndpoints.desktop;
   const hasSelectedFilters = some(selectedFilters, (arr) => arr.length > 0);
 
   useEffect(() => {

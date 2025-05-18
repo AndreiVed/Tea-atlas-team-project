@@ -2,11 +2,11 @@ import cn from "classnames";
 import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Banner } from "../../components/Banner";
-// import { ProductCart } from "../../components/ProductCart";
 import { ProductCart } from "../../components/ProductCart";
-import { API_ENDPOINTS } from "../../endpoints";
+import { API_ENDPOINTS } from "../../constants/endpoints";
 import { updateLikedProducts } from "../../features/products/productsSlice";
 import { fetchWithAuth } from "../../handlers/fetchWithToken";
+import { loadAllProducts } from "../../handlers/loadAllProducts";
 import { useCursorEffect } from "../../hooks/useCursorEffect";
 import { useScroll } from "../../hooks/useScroll";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -21,6 +21,7 @@ type CurrentProduct = ProductExtended | null;
 export const ProductPage: FC = () => {
   useScroll({ options: { top: 0, behavior: "instant" } });
 
+  const [isTogglingFavorites, setIsTogglingFavorites] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<CurrentProduct>(null);
   const { token, isLoggedIn } = useAppSelector((state) => state.profile);
   const { likedProducts, products } = useAppSelector((state) => state.products);
@@ -29,6 +30,10 @@ export const ProductPage: FC = () => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const { id } = useParams();
 
+  if (!products.length) {
+    loadAllProducts(dispatch);
+  }
+
   const isInFavorites = Array.isArray(likedProducts)
     ? likedProducts.find((product) => product.id === currentProduct?.id)
     : undefined;
@@ -36,33 +41,37 @@ export const ProductPage: FC = () => {
   const handleViewAllBtnClick = () => {
     navigate("/catalog");
     handleMouseLeave();
-  }
+  };
 
   useEffect(() => {
     if (!id) {
+      navigate("/catalog");
       return;
     }
 
-    fetch(API_ENDPOINTS.catalog.loadProductPage(id.toString()), {
-      method: "GET",
-    })
-      .then((response) => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(API_ENDPOINTS.catalog.loadProductPage(id));
+
         if (!response.ok) {
-          throw new Error("Something went wrong.");
+          if (response.status === 404) {
+            throw new Error("Product not found");
+          }
+
+          throw new Error("Server error");
         }
 
-        return response.json();
-      })
-      .then((data) => {
+        const data = await response.json();
         setCurrentProduct(data);
-        navigate(`/product/${id}`);
-      })
-      .catch();
-  }, [navigate, id]);
+      } catch {
+        navigate("/page-not-found", { replace: true });
+      }
+    };
+
+    fetchProduct();
+  }, [id, navigate]);
 
   if (!currentProduct) {
-    navigate("/page-not-found");
-
     return;
   }
 
@@ -70,6 +79,8 @@ export const ProductPage: FC = () => {
     if (!id) {
       return;
     }
+
+    setIsTogglingFavorites(true);
 
     fetchWithAuth(
       API_ENDPOINTS.catalog.favoritesOperations(id),
@@ -84,16 +95,25 @@ export const ProductPage: FC = () => {
           method: "GET",
         },
         token
-      ).then((data) => {
-        dispatch(updateLikedProducts(data as Product[]));
-        localStorage.removeItem("likedProducts");
-        localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
-      });
+      )
+        .then((data) => {
+          dispatch(updateLikedProducts(data as Product[]));
+          localStorage.removeItem("likedProducts");
+          localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
+        })
+        .finally(() => {
+          setIsTogglingFavorites(false);
+        });
     });
   };
 
   const { name, description, image, category, impact, descriptors } =
     currentProduct;
+
+  const handleLearnMoreClick = () => {
+    navigate("/blog/tea-brewing-essentials");
+    handleMouseLeave();
+  };
 
   return (
     <section className={styles["product"]}>
@@ -110,8 +130,13 @@ export const ProductPage: FC = () => {
               className={cn(styles["product__add-to-fav"], {
                 [styles["product__add-to-fav--filled"]]: isInFavorites,
               })}
-              disabled={!isLoggedIn}
+              title={
+                isInFavorites ? "Remove from favorites" : "Add to favorites"
+              }
+              disabled={!isLoggedIn || isTogglingFavorites}
               onClick={handleManipulatingFavList}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             />
           </div>
           <h3 className={styles["product__tea-type"]}>{category.name}</h3>
@@ -149,7 +174,12 @@ export const ProductPage: FC = () => {
         </div>
         <div className={styles["product__recommended-products"]}>
           {products.slice(0, 4).map((product) => (
-            <ProductCart product={product} usedIn="catalog" />
+            <ProductCart
+              key={product.id}
+              product={product}
+              usedIn="catalog"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            />
           ))}
         </div>
       </div>
@@ -159,17 +189,14 @@ export const ProductPage: FC = () => {
           baseSrc="/banners/productpage/learn-more.jpg"
           className="product__learn-more-banner"
         />
-        <h4
-          className={styles["product__learn-more-text"]}
+        <button
+          className={styles["product__learn-more-btn"]}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          onClick={() => {
-            navigate("/blog/tea-brewing-essentials");
-            handleMouseLeave();
-          }}
+          onClick={handleLearnMoreClick}
         >
           Learn more about brewing tea
-        </h4>
+        </button>
       </div>
     </section>
   );

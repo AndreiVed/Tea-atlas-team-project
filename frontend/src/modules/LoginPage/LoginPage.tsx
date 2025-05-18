@@ -10,8 +10,8 @@ import { GeneralButton } from "../../components/GeneralButton";
 import { LoginInput } from "./components/LoginInput";
 
 import cn from "classnames";
-import { isEmailCorrect } from "../../components/GeneralInput/handlers";
-import { API_ENDPOINTS, screenEndpoints } from "../../endpoints";
+import { API_ENDPOINTS, screenEndpoints } from "../../constants/endpoints";
+import { isEmailCorrect } from "../../handlers/isEmailCorrect";
 
 import {
   updateLoginError,

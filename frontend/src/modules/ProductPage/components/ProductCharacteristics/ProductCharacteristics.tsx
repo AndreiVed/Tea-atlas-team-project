@@ -36,6 +36,7 @@ export const ProductCharacteristics: FC<Props> = ({
       badges: descriptors,
     },
   ];
+
   return (
     <div className={styles["product__characteristics"]}>
       {characteristics.map((characteristic, index) => {

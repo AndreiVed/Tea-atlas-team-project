@@ -1,4 +1,4 @@
-import { API_ENDPOINTS } from "../endpoints";
+import { API_ENDPOINTS } from "../constants/endpoints";
 import { updateProducts } from "../features/products/productsSlice";
 import { AppDispatch } from "../store/appStore";
 

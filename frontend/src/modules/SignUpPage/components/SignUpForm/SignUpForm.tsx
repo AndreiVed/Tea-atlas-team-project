@@ -2,12 +2,11 @@ import cn from "classnames";
 import { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
-import { isEmailCorrect } from "../../../../components/GeneralInput/handlers";
+import { API_ENDPOINTS } from "../../../../constants/endpoints";
 import {
   passwordRequirementsDefaults,
   registrationFormDefaults,
 } from "../../../../constants/formsInitials";
-import { API_ENDPOINTS } from "../../../../endpoints";
 import { updatePasswordRequirements } from "../../../../features/password/passwordSlice";
 import {
   updateConfirmationEmail,
@@ -16,6 +15,7 @@ import {
   updateSignUpError,
 } from "../../../../features/registration/registrationSlice";
 import { allPasswordRequirementsCorrect } from "../../../../handlers/allPasswordRequirementsCorrect";
+import { isEmailCorrect } from "../../../../handlers/isEmailCorrect";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { GoBackButton } from "../GoBackButton";

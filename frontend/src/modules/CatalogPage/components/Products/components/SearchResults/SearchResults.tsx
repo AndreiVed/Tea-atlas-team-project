@@ -1,4 +1,5 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { useAppSelector } from "../../../../../../store/hooks";
 import styles from "./SearchResults.module.scss";
 
 type Props = {
@@ -7,7 +8,13 @@ type Props = {
 };
 
 export const SearchResults: FC<Props> = ({ nameParam, hasProducts }) => {
-  if (!nameParam && !hasProducts) {
+  const { isProductsLoaded } = useAppSelector(state => state.products);
+
+  useEffect(() => {
+    console.log(isProductsLoaded);
+  }, [isProductsLoaded]);
+
+  if (!nameParam && !hasProducts && isProductsLoaded) {
     return (
       <h2 className={styles["no-products-found"]}>Oops! No products found</h2>
     );

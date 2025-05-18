@@ -3,8 +3,8 @@ import cn from "classnames";
 import { some } from "lodash-es";
 import { FC, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { screenEndpoints } from "../../../../constants/endpoints";
 import { selectedFiltersDefaults } from "../../../../constants/formsInitials";
-import { screenEndpoints } from "../../../../endpoints";
 import {
   updateIsFilterOpened,
   updateSelectedFilters,

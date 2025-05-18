@@ -1,6 +1,6 @@
 import cn from "classnames";
 import { FC, useState } from "react";
-import { API_ENDPOINTS } from "../../../../endpoints";
+import { API_ENDPOINTS } from "../../../../constants/endpoints";
 import { updateLikedProducts } from "../../../../features/products/productsSlice";
 import { fetchWithAuth } from "../../../../handlers/fetchWithToken";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";

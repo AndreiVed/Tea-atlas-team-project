@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 
 import { GeneralInput } from "../../../../components/GeneralInput";
 
-import { isEmailCorrect } from "../../../../components/GeneralInput/handlers";
+import { isEmailCorrect } from "../../../../handlers/isEmailCorrect";
 
 import {
   updateLoginError,

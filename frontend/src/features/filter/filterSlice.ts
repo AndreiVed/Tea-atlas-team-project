@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { cloneDeep } from 'lodash-es';
+import { screenEndpoints } from "../../constants/endpoints";
 import { selectedFiltersDefaults } from "../../constants/formsInitials";
-import { screenEndpoints } from "../../endpoints";
 import { SelectedFilters } from "../../types/SelectedFilters";
 
 export const filterSlice = createSlice({

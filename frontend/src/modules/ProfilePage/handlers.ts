@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { API_ENDPOINTS } from "../../endpoints";
+import { API_ENDPOINTS } from "../../constants/endpoints";
 import { updateUserInfo } from "../../features/profile/profileSlice";
 import { fetchWithAuth } from "../../handlers/fetchWithToken";
 import { AppDispatch } from "../../store/appStore";

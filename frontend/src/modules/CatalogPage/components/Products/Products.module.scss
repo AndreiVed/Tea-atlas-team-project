@@ -1,5 +1,11 @@
 .products {
+  background-color: inherit;
+
   &--empty {
     width: 100%;
+  }
+
+  &--fully-paginated {
+    margin-bottom: 120px;
   }
 }

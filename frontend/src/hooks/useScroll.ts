@@ -5,6 +5,8 @@ type ScrollParameters = {
   deps?: React.DependencyList;
 };
 
-export function useScroll({options, deps = []}: ScrollParameters) {
-  useEffect(() => window.scrollTo(options), [...deps]);
+export function useScroll({ options, deps = [] }: ScrollParameters) {
+  useEffect(() => {
+    window.scrollTo(options);
+  }, [...deps]);
 }

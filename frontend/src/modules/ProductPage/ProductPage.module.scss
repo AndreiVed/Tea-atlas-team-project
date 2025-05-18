@@ -64,6 +64,11 @@
     border: none;
     background-color: inherit;
 
+    &:hover {
+      transform: scale(1.1);
+      transition: transform 0.4s;
+    }
+
     &--filled {
       background-image: url("/icons/heart-green-filled.svg");
     }
@@ -179,7 +184,9 @@
     position: relative;
     margin-block: 56px;
 
-    &-text {
+    &-btn {
+      outline: none;
+      border: none;
       line-height: 120%;
       font-size: 22px;
       top: 16px;
@@ -190,7 +197,20 @@
       font-weight: 300;
       margin: 0;
       background-color: rgba(255, 255, 255, 0.8);
-      transition: background-color .4s;
+      transition: background-color 0.4s;
+
+      /* Mobile/H3 */
+      font-family: Cormorant;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 120%; /* 33.6px */
+      letter-spacing: -0.56px;
+
+      @include on-tablet {
+        font-size: 32px;
+        letter-spacing: -0.64px;
+      }
 
       &:hover {
         background-color: rgba(255, 255, 255, 1);

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { API_ENDPOINTS } from "../endpoints";
+import { API_ENDPOINTS } from "../constants/endpoints";
 import { updateSubmittedFilters } from "../features/filter/filterSlice";
-import { updateProducts } from "../features/products/productsSlice";
+import { updateIsProductsLoaded, updateProducts } from "../features/products/productsSlice";
 import { createFormattedParams } from "../handlers/createFormattedParams";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { SelectedFilters } from "../types/SelectedFilters";
@@ -18,6 +18,7 @@ export const useLoadSelectedProducts = () => {
   
     fetch(API_ENDPOINTS.catalog.applyFilters(stringParams))
       .then((response) => {
+        dispatch(updateIsProductsLoaded(false));
         if (!response.ok) {
           throw new Error("Something went wrong.");
         }
@@ -29,6 +30,8 @@ export const useLoadSelectedProducts = () => {
         dispatch(updateSubmittedFilters(selectedFilters));
         navigate(`/catalog?${stringParams}`);
         window.scrollTo({ top: 0, behavior: "smooth" });
+      }).finally(() => {
+        dispatch(updateIsProductsLoaded(true));
       });
   }
 

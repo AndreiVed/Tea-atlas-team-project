@@ -1,4 +1,4 @@
-import { API_ENDPOINTS } from "../endpoints";
+import { API_ENDPOINTS } from "../constants/endpoints";
 
 export const fetchWithAuth = async <T>(
   url: string,

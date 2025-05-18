@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { screenEndpoints } from "../../endpoints";
+import { screenEndpoints } from "../../constants/endpoints";
 import styles from "./Banner.module.scss";
 
 type Device = "mobile" | "tablet" | "desktop";
@@ -8,18 +8,6 @@ type Props = {
   className: string;
   baseSrc: string;
 };
-
-/*
-baseSrc doesn't belong to any actual picture's url,
-it is used to append device type in the end,
-check public folder for reference.
-
-modifiers expected: 'mobile' | 'tablet' | 'desktop'
-
-Example:
-actual url '/banners/homepage/banner-mobile.jpg,
-baseSrc: '/banners/homepage/banner.jpg''
-*/
 
 export const Banner: FC<Props> = ({ className, baseSrc }) => {
   const { desktop, tablet } = screenEndpoints;

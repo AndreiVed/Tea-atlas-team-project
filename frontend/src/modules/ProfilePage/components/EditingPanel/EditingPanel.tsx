@@ -1,8 +1,7 @@
 import cn from "classnames";
 import { FC, useState } from "react";
 import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
-import { isEmailCorrect } from "../../../../components/GeneralInput/handlers";
-import { API_ENDPOINTS } from "../../../../endpoints";
+import { API_ENDPOINTS } from "../../../../constants/endpoints";
 import {
   updateEditingDetails,
   updateEditingForm,
@@ -10,6 +9,7 @@ import {
   updateUserInfo,
 } from "../../../../features/profile/profileSlice";
 import { fetchWithAuth } from "../../../../handlers/fetchWithToken";
+import { isEmailCorrect } from "../../../../handlers/isEmailCorrect";
 import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { DetailType } from "../../../../types/DetailType";

@@ -11,18 +11,12 @@ type Props = {
 export const CountryCart: FC<Props> = ({ country }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const { title, photoPath } = country;
-  // const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const handleCartClick = () => {
-
-    handleMouseLeave(); // remove big cursor
+    handleMouseLeave();
     navigate(`/catalog?country=${title.toLowerCase()}`);
-    // setSearchParams({country: title.toLowerCase()});
-
-
-  }
-
+  };
 
   return (
     <article
