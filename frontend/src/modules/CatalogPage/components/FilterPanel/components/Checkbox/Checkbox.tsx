@@ -1,10 +1,10 @@
+import { updateSelectedFilters } from "@/features/filter/filterSlice";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { FilterOption } from "@/types/FilterOption";
+import { FilterSection } from "@/types/FilterSection";
 import cn from "classnames";
 import { FC } from "react";
-import { updateSelectedFilters } from "../../../../../../features/filter/filterSlice";
-import { useCursorEffect } from "../../../../../../hooks/useCursorEffect";
-import { useAppDispatch, useAppSelector } from "../../../../../../store/hooks";
-import { FilterOption } from "../../../../../../types/FilterOption";
-import { FilterSection } from "../../../../../../types/FilterSection";
 import styles from "./Checkbox.module.scss";
 
 type Props = {

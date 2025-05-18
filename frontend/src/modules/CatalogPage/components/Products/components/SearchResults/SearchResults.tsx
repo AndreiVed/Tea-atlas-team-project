@@ -1,5 +1,5 @@
-import { FC, useEffect } from "react";
-import { useAppSelector } from "../../../../../../store/hooks";
+import { useAppSelector } from "@/store/hooks";
+import { FC } from "react";
 import styles from "./SearchResults.module.scss";
 
 type Props = {
@@ -8,11 +8,7 @@ type Props = {
 };
 
 export const SearchResults: FC<Props> = ({ nameParam, hasProducts }) => {
-  const { isProductsLoaded } = useAppSelector(state => state.products);
-
-  useEffect(() => {
-    console.log(isProductsLoaded);
-  }, [isProductsLoaded]);
+  const { isProductsLoaded } = useAppSelector((state) => state.products);
 
   if (!nameParam && !hasProducts && isProductsLoaded) {
     return (

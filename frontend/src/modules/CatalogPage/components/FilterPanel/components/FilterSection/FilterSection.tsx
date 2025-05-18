@@ -1,7 +1,7 @@
+import { FilterOption } from "@/types/FilterOption";
+import { FilterSection as FilterSectionType } from "@/types/FilterSection";
 import cn from "classnames";
 import { FC, useRef, useState } from "react";
-import { FilterOption } from "../../../../../../types/FilterOption";
-import { FilterSection as FilterSectionType } from "../../../../../../types/FilterSection";
 import { CheckBox } from "../Checkbox";
 import styles from "./FilterSection.module.scss";
 

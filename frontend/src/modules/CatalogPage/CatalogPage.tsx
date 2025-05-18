@@ -2,33 +2,48 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { FC, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Banner } from "../../components/Banner";
-import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
-import { screenEndpoints } from "../../constants/endpoints";
-import { selectedFiltersDefaults } from "../../constants/formsInitials";
-import {
-  updateIsFilterOpened,
-  updateSelectedFilters,
-  updateSubmittedFilters,
-} from "../../features/filter/filterSlice";
-import { updateCurrentPage, updateProductsPerPage } from "../../features/products/productsSlice";
-import { updateShowSearch } from "../../features/search/searchSlice";
-import { useLoadSelectedProducts, useScroll } from "../../hooks";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { SelectedFilters } from "../../types/SelectedFilters";
-import styles from "./CatalogPage.module.scss";
+
+import { screenEndpoints } from "@/constants/endpoints";
+import { selectedFiltersDefaults } from "@/constants/formsInitials";
+
+import { filterActions } from "@/features/filter/filterSlice";
+import { productsActions } from "@/features/products/productsSlice";
+import { updateShowSearch } from "@/features/search/searchSlice";
+
+import { useLoadSelectedProducts, useScroll } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+
+import { Banner } from "@/components/Banner";
+import { GeneralButton } from "@/components/GeneralButton";
 import { Filter } from "./components/Filter";
 import { Products } from "./components/Products";
 
+import { SelectedFilters } from "@/types/SelectedFilters";
+import styles from "./CatalogPage.module.scss";
+
 export const CatalogPage: FC = () => {
+  const {
+    updateSelectedFilters,
+    updateSubmittedFilters,
+    updateIsFilterOpened,
+  } = filterActions;
+
+  const { updateCurrentPage, updateProductsPerPage } = productsActions;
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
-  const { isFilterOpened } = useAppSelector((state) => state.filter);
-  const { products, currentPage, productsPerPage } = useAppSelector((state) => state.products);
-  const { loadSelectedProducts } = useLoadSelectedProducts();
   const { width } = useWindowSize();
+  const { loadSelectedProducts } = useLoadSelectedProducts();
 
-  useScroll({ options: { top: 0, behavior: "instant" }});
+  useScroll({ options: { top: 0, behavior: "instant" } });
+
+  const { isFilterOpened } = useAppSelector((state) => state.filter);
+  const { products, currentPage, productsPerPage } = useAppSelector(
+    (state) => state.products
+  );
+
+  useEffect(() => {
+    dispatch(updateIsFilterOpened(false));
+  }, [dispatch]);
 
   useEffect(() => {
     const urlFilters: SelectedFilters & { name: string } = {
@@ -59,18 +74,15 @@ export const CatalogPage: FC = () => {
   }, [dispatch, searchParams]);
 
   useEffect(() => {
-    dispatch(updateIsFilterOpened(false));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (width && width >= screenEndpoints.desktop && productsPerPage === 8 ) {
-      dispatch(updateProductsPerPage(9));
+    if (!width) {
       return;
     }
 
-    if (width && width <= screenEndpoints.desktop && productsPerPage === 9) {
-      dispatch(updateProductsPerPage(8));
-      return;
+    const isDesktop = width >= screenEndpoints.desktop;
+    const expectedProductsPerPage = isDesktop ? 9 : 8;
+
+    if (productsPerPage !== expectedProductsPerPage) {
+      dispatch(updateProductsPerPage(expectedProductsPerPage));
     }
   }, [width]);
 

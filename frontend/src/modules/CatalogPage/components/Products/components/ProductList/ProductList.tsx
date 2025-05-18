@@ -1,19 +1,18 @@
+import { ProductCart } from "@/components/ProductCart";
+import { useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { FC } from "react";
-import { ProductCart } from "../../../../../../components/ProductCart";
-import { useAppSelector } from "../../../../../../store/hooks";
-import { Product } from "../../../../../../types/Product";
 import styles from "./ProductList.module.scss";
 
 type Props = {
-  products: Product[];
   hasProducts: boolean;
 };
 
-export const ProductList: FC<Props> = ({ products, hasProducts }) => {
-  const { currentPage, productsPerPage } = useAppSelector(
+export const ProductList: FC<Props> = ({ hasProducts }) => {
+  const { currentPage, productsPerPage, products } = useAppSelector(
     (state) => state.products
   );
+
   const paginateTo = currentPage * productsPerPage;
 
   return (

@@ -1,6 +1,6 @@
-@use '../../../../../../styles/utils/mixins/grid-mixins.scss' as *;
-@use '../../../../../../styles/utils/vars' as *;
-@use '../../../../../../styles/utils/colors' as *;
+@use '@/styles/utils/mixins/grid-mixins.scss' as *;
+@use '@/styles/utils/vars' as *;
+@use '@/styles/utils/colors' as *;
 
 .search-results {
   @include on-tablet {

@@ -1,7 +1,7 @@
+import { useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { FC } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useAppSelector } from "../../../../store/hooks";
 import { ProductList } from "./components/ProductList";
 import { SearchResults } from "./components/SearchResults";
 import styles from "./Products.module.scss";
@@ -19,7 +19,7 @@ export const Products: FC = () => {
       })}
     >
       <SearchResults nameParam={nameParam} hasProducts={hasProducts} />
-      <ProductList products={products} hasProducts={hasProducts} />
+      <ProductList hasProducts={hasProducts} />
     </section>
   );
 };

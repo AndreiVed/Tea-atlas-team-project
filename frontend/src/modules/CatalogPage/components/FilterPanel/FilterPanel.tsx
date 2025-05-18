@@ -1,43 +1,26 @@
-// libraries
+import { Loader } from "@/components/Loader";
+import { filterOptions, selectedFiltersDefaults } from "@/constants";
+import { screenEndpoints } from "@/constants/endpoints";
+import { filterActions } from "@/features/filter/filterSlice";
+import { loadAllProducts } from "@/handlers/loadAllProducts";
+import { useCursorEffect, useLoadSelectedProducts } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { isEqual, some } from "lodash-es";
 import { FC, FormEvent, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-
-// components
-import { Loader } from "../../../../components/Loader";
 import { FilterSection } from "./components/FilterSection";
-
-// constants
-import {
-  countriesOptions,
-  fermentationOptions,
-  impactOptions,
-  selectedFiltersDefaults,
-  typeOptions,
-} from "../../../../constants";
-
-// ednpoints
-import { screenEndpoints } from "../../../../constants/endpoints";
-
-// redux slice / actions
-import {
-  updateIsFilterOpened,
-  updateSelectedFilters,
-  updateSubmittedFilters,
-} from "../../../../features/filter/filterSlice";
-
-// handlers
-import { loadAllProducts } from "../../../../handlers/loadAllProducts";
-
-//hooks
-import { useCursorEffect, useLoadSelectedProducts } from "../../../../hooks";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 
 import styles from "./FilterPanel.module.scss";
 
 export const FilterPanel: FC = () => {
+  const {
+    updateIsFilterOpened,
+    updateSelectedFilters,
+    updateSubmittedFilters,
+  } = filterActions;
+
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
@@ -62,11 +45,11 @@ export const FilterPanel: FC = () => {
     }
   }, [isDesktop, dispatch, isFilterOpened]);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setLoadingApply(true);
-    loadSelectedProducts(selectedFilters);
+    await loadSelectedProducts(selectedFilters);
     setLoadingApply(false);
     dispatch(updateIsFilterOpened(false));
   };
@@ -127,25 +110,25 @@ export const FilterPanel: FC = () => {
           <FilterSection
             title="country"
             icon="/icons/planet.svg"
-            options={countriesOptions}
+            options={filterOptions.countries}
           />
 
           <FilterSection
             title="impact"
             icon="/icons/hand-heart.svg"
-            options={impactOptions}
+            options={filterOptions.impact}
           />
 
           <FilterSection
             title="fermentation"
             icon="/icons/coffee.svg"
-            options={fermentationOptions}
+            options={filterOptions.fermentation}
           />
 
           <FilterSection
             title="type"
             icon="/icons/leaf.svg"
-            options={typeOptions}
+            options={filterOptions.type}
           />
         </div>
       </form>
