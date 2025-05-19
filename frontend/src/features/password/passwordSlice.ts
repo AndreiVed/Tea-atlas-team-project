@@ -1,5 +1,5 @@
+import { PasswordRequirements } from "@/types/PasswordRequirements";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PasswordRequirements } from "../../types/PasswordRequirements";
 
 export const passwordSlice = createSlice({
   name: "password",

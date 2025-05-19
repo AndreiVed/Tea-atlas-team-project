@@ -1,6 +1,6 @@
+import { PasswordRequirements } from "@/types/PasswordRequirements";
+import { RegistrationForm } from "@/types/RegistrationForm";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PasswordRequirements } from "../../types/PasswordRequirements";
-import { RegistrationForm } from "../../types/RegistrationForm";
 
 export const registrationSlice = createSlice({
   name: "register",

@@ -1,8 +1,8 @@
+import { EditingDetails } from "@/types/EditingDetails";
+import { EditingForm } from "@/types/EditingForm";
+import { EditingPassword } from "@/types/EditingPassword";
+import { UserInfo } from "@/types/UserInfo";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EditingDetails } from "../../types/EditingDetails";
-import { EditingForm } from "../../types/EditingForm";
-import { EditingPassword } from "../../types/EditingPassword";
-import { UserInfo } from "../../types/UserInfo";
 
 type SetDetails = { field: keyof EditingDetails; value: boolean };
 

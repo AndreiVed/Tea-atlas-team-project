@@ -1,6 +1,6 @@
+import { contactFormDefaults } from "@/constants/formsInitials";
+import { ContactForm } from "@/types/ContactForm";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { contactFormDefaults } from "../../constants/formsInitials";
-import { ContactForm } from "../../types/ContactForm";
 
 export const contactSlice = createSlice({
   name: "contact",

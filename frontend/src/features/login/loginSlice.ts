@@ -1,5 +1,5 @@
+import { LoginForm } from "@/types/LoginForm";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LoginForm } from "../../types/LoginForm";
 
 export const loginSlice = createSlice({
   name: "login",
