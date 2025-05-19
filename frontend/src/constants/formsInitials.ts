@@ -40,3 +40,11 @@ export const contactFormDefaults = {
   email: "",
   message: "",
 }
+
+export const urlFiltersDefaults: SelectedFilters & { name: string } = {
+  country: [],
+  impact: [],
+  fermentation: [],
+  type: [],
+  name: "",
+};

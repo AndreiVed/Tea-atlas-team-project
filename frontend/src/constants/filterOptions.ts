@@ -30,3 +30,10 @@ export const typeOptions: FilterOption[] = [
   { id: 18, title: "White", value: "white"},
   { id: 19, title: "Oolong", value: "oolong" },
 ];
+
+export const filterOptions = {
+  countries: countriesOptions,
+  impact: impactOptions,
+  fermentation: fermentationOptions,
+  type: typeOptions,
+};
