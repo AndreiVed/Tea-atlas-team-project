@@ -1,6 +1,6 @@
+import { useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { FC } from "react";
-import { useAppSelector } from "../../store/hooks";
 import styles from "./UserAvatar.module.scss";
 
 type Props = {

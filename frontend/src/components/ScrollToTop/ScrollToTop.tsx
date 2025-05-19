@@ -1,6 +1,6 @@
+import { useCursorEffect } from "@/hooks/useCursorEffect";
 import cn from "classnames";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
-import { useCursorEffect } from "../../hooks/useCursorEffect";
 import styles from "./ScrollToTop.module.scss";
 
 export const ScrollToTop: FC = () => {

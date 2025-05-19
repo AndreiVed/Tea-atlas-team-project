@@ -1,9 +1,9 @@
+import { allPasswordRequirementsCorrect } from "@/handlers/allPasswordRequirementsCorrect";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useAppSelector } from "@/store/hooks";
+import { GeneralInput as GeneralInputProps } from "@/types/GeneralInput";
 import cn from "classnames";
 import { ChangeEvent, FC, useRef, useState } from "react";
-import { allPasswordRequirementsCorrect } from "../../handlers/allPasswordRequirementsCorrect";
-import { useCursorEffect } from "../../hooks/useCursorEffect";
-import { useAppSelector } from "../../store/hooks";
-import { GeneralInput as GeneralInputProps } from "../../types/GeneralInput";
 import styles from "./GeneralInput.module.scss";
 import { PasswordRequirements } from "./components/PasswordRequirements";
 import { ShowPasswordBtn } from "./components/ShowPasswordBtn";

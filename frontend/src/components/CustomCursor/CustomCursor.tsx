@@ -1,6 +1,6 @@
+import { useAppSelector } from "@/store/hooks";
+import { Cursor } from "@/types/Cursor";
 import { FC, useEffect, useState } from "react";
-import { useAppSelector } from "../../store/hooks";
-import { Cursor } from "../../types/Cursor";
 
 export const CustomCursor: FC = () => {
   const cursorType = useAppSelector((state) => state.cursor.cursorType);

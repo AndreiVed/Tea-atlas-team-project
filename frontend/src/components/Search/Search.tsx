@@ -1,8 +1,8 @@
+import { updateShowSearch } from "@/features/search/searchSlice";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useAppDispatch } from "@/store/hooks";
 import { ChangeEvent, FC, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { updateShowSearch } from "../../features/search/searchSlice";
-import { useCursorEffect } from "../../hooks/useCursorEffect";
-import { useAppDispatch } from "../../store/hooks";
 import styles from "./Search.module.scss";
 
 export const Search: FC = () => {

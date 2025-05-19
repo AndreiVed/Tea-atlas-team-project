@@ -1,6 +1,6 @@
+import { useCursorEffect } from "@/hooks/useCursorEffect";
 import cn from "classnames";
 import { Dispatch, FC, RefObject, SetStateAction, useState } from "react";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import styles from "./ShowPasswordBtn.module.scss";
 
 type Props = {

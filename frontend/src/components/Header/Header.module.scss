@@ -1,6 +1,6 @@
-@use "../../styles/index.scss" as *;
-@use "../../styles/utils/_colors.scss" as *;
-@use "../../styles/utils/mixins/grid-mixins.scss" as *;
+@use "@/styles/index.scss" as *;
+@use "@/styles/utils/_colors.scss" as *;
+@use "@/styles/utils/mixins/grid-mixins.scss" as *;
 
 .header {
   box-sizing: border-box;

@@ -1,7 +1,7 @@
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { Product } from "@/types/Product";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCursorEffect } from "../../hooks/useCursorEffect";
-import { Product } from "../../types/Product";
 import styles from "./ProductCart.module.scss";
 import { ToggleFavorite } from "./components/ToggleFavorite";
 

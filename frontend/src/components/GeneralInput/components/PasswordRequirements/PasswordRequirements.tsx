@@ -1,7 +1,7 @@
+import { PASSWORD_REQUIREMENTS } from "@/constants/passwordRequirements";
+import { useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { FC } from "react";
-import { PASSWORD_REQUIREMENTS } from "../../../../constants/passwordRequirements";
-import { useAppSelector } from "../../../../store/hooks";
 import styles from "./PasswordRequirements.module.scss";
 
 type Props = {

@@ -1,11 +1,11 @@
+import { userInfoDefaults } from "@/constants/formsInitials";
+import { updateIsLoggedIn, updateUserInfo } from "@/features/profile/profileSlice";
+import { clearTokens } from "@/handlers/clearTokens";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { userInfoDefaults } from "../../../../constants/formsInitials";
-import { updateIsLoggedIn, updateUserInfo } from "../../../../features/profile/profileSlice";
-import { clearTokens } from "../../../../handlers/clearTokens";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { UserAvatar } from "../../../UserAvatar";
 import styles from "./ProfileModal.module.scss";
 

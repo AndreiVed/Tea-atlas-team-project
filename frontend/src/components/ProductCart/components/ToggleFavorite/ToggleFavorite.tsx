@@ -1,11 +1,11 @@
+import { API_ENDPOINTS } from "@/constants/endpoints";
+import { updateLikedProducts } from "@/features/products/productsSlice";
+import { fetchWithAuth } from "@/handlers/fetchWithToken";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { Product } from "@/types/Product";
 import cn from "classnames";
 import { FC, useState } from "react";
-import { API_ENDPOINTS } from "../../../../constants/endpoints";
-import { updateLikedProducts } from "../../../../features/products/productsSlice";
-import { fetchWithAuth } from "../../../../handlers/fetchWithToken";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-import { Product } from "../../../../types/Product";
 import styles from "./ToggleFavorite.module.scss";
 
 type Props = {

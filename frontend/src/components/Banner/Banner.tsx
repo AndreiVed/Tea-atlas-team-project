@@ -1,5 +1,5 @@
+import { screenEndpoints } from "@/constants/endpoints";
 import { FC } from "react";
-import { screenEndpoints } from "../../constants/endpoints";
 import styles from "./Banner.module.scss";
 
 type Device = "mobile" | "tablet" | "desktop";
