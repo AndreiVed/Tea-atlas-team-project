@@ -4,7 +4,7 @@ import { FC, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { screenEndpoints } from "@/constants/endpoints";
-import { selectedFiltersDefaults } from "@/constants/formsInitials";
+import { selectedFiltersDefaults, urlFiltersDefaults } from "@/constants/formsInitials";
 
 import { filterActions } from "@/features/filter/filterSlice";
 import { productsActions } from "@/features/products/productsSlice";
@@ -46,13 +46,7 @@ export const CatalogPage: FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const urlFilters: SelectedFilters & { name: string } = {
-      country: [],
-      impact: [],
-      fermentation: [],
-      type: [],
-      name: "",
-    };
+    const urlFilters = { ...urlFiltersDefaults };
 
     searchParams.forEach((value, key) => {
       if (Object.keys(urlFilters).includes(key)) {
