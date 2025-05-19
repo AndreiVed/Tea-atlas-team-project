@@ -1,7 +1,7 @@
+import { Banner } from "@/components/Banner";
+import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
 import cn from "classnames";
 import { FC } from "react";
-import { Banner } from "../../../../components/Banner";
-import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
 import styles from "./BlogSection.module.scss";
 
 export const BlogSection: FC = () => {

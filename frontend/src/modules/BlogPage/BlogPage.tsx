@@ -1,9 +1,9 @@
+import { Banner } from "@/components/Banner";
+import { useScroll } from "@/hooks/useScroll";
 import cn from "classnames";
 import { FC } from "react";
-import { Banner } from "../../components/Banner";
-import { useScroll } from "../../hooks/useScroll";
 import styles from "./BlogPage.module.scss";
-import { BlogSection } from "./components/BlogSection/BlogSection";
+import { BlogSection } from "./components/BlogSection";
 
 export const BlogPage: FC = () => {
   useScroll({options: {top: 0, behavior: "instant"}});
