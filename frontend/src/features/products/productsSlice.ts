@@ -51,3 +51,5 @@ export const {
   updateProductsPerPage,
   updateIsProductsLoaded,
 } = productsSlice.actions;
+
+export const productsActions = productsSlice.actions; // to destructure actions inside heavy components

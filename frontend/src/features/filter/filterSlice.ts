@@ -36,4 +36,5 @@ export const {
   updateSubmittedFilters,
 } = filterSlice.actions;
 
+export const filterActions = filterSlice.actions; // to destructure actions inside heavy components
 export default filterSlice.reducer;
