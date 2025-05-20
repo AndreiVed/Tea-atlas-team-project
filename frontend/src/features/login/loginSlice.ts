@@ -27,3 +27,4 @@ export const loginSlice = createSlice({
 
 export default loginSlice.reducer;
 export const { updateLoginForm, updateLoginError } = loginSlice.actions;
+export const loginActions = loginSlice.actions;

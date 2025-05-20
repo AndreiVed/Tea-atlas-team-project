@@ -1,4 +1,5 @@
 import { useWindowSize } from "@uidotdev/usehooks";
+import cn from "classnames";
 import { FC, FormEvent, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -11,24 +12,18 @@ import { LoginInput } from "./components/LoginInput";
 
 import { API_ENDPOINTS, screenEndpoints } from "@/constants/endpoints";
 import { isEmailCorrect } from "@/handlers/isEmailCorrect";
-import cn from "classnames";
 
+import { loginActions } from "@/features/login/loginSlice";
 import { updateLikedProducts } from "@/features/products/productsSlice";
-import {
-  updateIsLoggedIn,
-  updateToken,
-  updateUserInfo,
-} from "@/features/profile/profileSlice";
-import {
-  updateLoginError,
-  updateLoginForm,
-} from "../../features/login/loginSlice";
+import { profileActions } from "@/features/profile/profileSlice";
 
 import { LoginResponseData } from "@/types/LoginResponseData";
 
 import styles from "./LoginPage.module.scss";
 
 export const LoginPage: FC = () => {
+  const { updateLoginError, updateLoginForm } = loginActions;
+  const { updateToken, updateUserInfo, updateIsLoggedIn } = profileActions;
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -76,7 +71,7 @@ export const LoginPage: FC = () => {
       })
       .then((data: LoginResponseData) => {
         const { access, user, refresh } = data;
-        
+
         dispatch(updateToken(access));
         dispatch(updateUserInfo(user));
         dispatch(updateIsLoggedIn(true));
@@ -86,7 +81,7 @@ export const LoginPage: FC = () => {
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("access_token", access);
         localStorage.removeItem("confirmationEmail");
-        
+
         navigate("/");
 
         fetch(API_ENDPOINTS.auth.favoriteList, {
