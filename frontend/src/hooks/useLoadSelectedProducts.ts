@@ -1,10 +1,10 @@
+import { API_ENDPOINTS } from "@/constants/endpoints";
+import { updateSubmittedFilters } from "@/features/filter/filterSlice";
+import { updateIsProductsLoaded, updateProducts } from "@/features/products/productsSlice";
+import { createFormattedParams } from "@/handlers/createFormattedParams";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { SelectedFilters } from "@/types/SelectedFilters";
 import { useNavigate } from "react-router-dom";
-import { API_ENDPOINTS } from "../constants/endpoints";
-import { updateSubmittedFilters } from "../features/filter/filterSlice";
-import { updateIsProductsLoaded, updateProducts } from "../features/products/productsSlice";
-import { createFormattedParams } from "../handlers/createFormattedParams";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { SelectedFilters } from "../types/SelectedFilters";
 
 
 export const useLoadSelectedProducts = () => {

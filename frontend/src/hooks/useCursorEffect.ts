@@ -1,5 +1,5 @@
-import { changeCursorType } from "../features/cursor/cursorSlice";
-import { useAppDispatch } from "../store/hooks";
+import { changeCursorType } from "@/features/cursor/cursorSlice";
+import { useAppDispatch } from "@/store/hooks";
 
 export const useCursorEffect = () => {
   const dispatch = useAppDispatch();
