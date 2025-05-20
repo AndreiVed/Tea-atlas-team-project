@@ -1,6 +1,6 @@
+import { useCursorEffect } from "@/hooks/useCursorEffect";
 import cn from "classnames";
 import { Dispatch, FC, SetStateAction } from "react";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import styles from "./ManageOption.module.scss";
 
 type Props = {

@@ -1,6 +1,6 @@
+import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
 import { Dispatch, FC, SetStateAction } from "react";
-import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import styles from "./DeleteAccount.module.scss";
 
 type Props = {

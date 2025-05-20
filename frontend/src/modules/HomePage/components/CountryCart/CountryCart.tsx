@@ -1,7 +1,7 @@
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { CarouselCountry } from "@/types/CarouselCountry";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
-import { CarouselCountry } from "../../../../types/CarouselCountry";
 import styles from "./CountryCart.module.scss";
 
 type Props = {

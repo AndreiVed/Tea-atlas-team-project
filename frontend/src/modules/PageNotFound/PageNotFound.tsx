@@ -1,8 +1,8 @@
+import { Banner } from "@/components/Banner";
+import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
+import { useScroll } from "@/hooks/useScroll";
 import cn from "classnames";
 import { FC } from "react";
-import { Banner } from "../../components/Banner";
-import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
-import { useScroll } from "../../hooks/useScroll";
 import styles from "./PageNotFound.module.scss";
 
 export const PageNotFound: FC = () => {

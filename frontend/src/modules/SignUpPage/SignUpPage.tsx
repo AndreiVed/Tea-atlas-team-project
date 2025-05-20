@@ -1,7 +1,7 @@
+import { useScroll } from "@/hooks/useScroll";
 import cn from "classnames";
 import { FC } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { useScroll } from "../../hooks/useScroll";
 import styles from "./SignUpPage.module.scss";
 
 export const SignUpPage: FC = () => {

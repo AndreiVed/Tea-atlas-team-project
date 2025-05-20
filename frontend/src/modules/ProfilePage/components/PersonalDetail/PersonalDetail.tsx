@@ -1,10 +1,10 @@
+import { updateEditingDetails } from "@/features/profile/profileSlice";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { DetailType } from "@/types/DetailType";
+import { PersonalDetail as PersonalDetailType } from "@/types/PersonalDetail";
 import cn from "classnames";
 import { FC } from "react";
-import { updateEditingDetails } from "../../../../features/profile/profileSlice";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-import { DetailType } from "../../../../types/DetailType";
-import { PersonalDetail as PersonalDetailType } from "../../../../types/PersonalDetail";
 import { EditingPanel } from "../EditingPanel";
 import styles from "./PersonalDetail.module.scss";
 

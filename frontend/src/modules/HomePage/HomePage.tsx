@@ -1,6 +1,6 @@
-import { Banner } from "../../components/Banner";
-import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
-import { useScroll } from "../../hooks/useScroll";
+import { Banner } from "@/components/Banner";
+import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
+import { useScroll } from "@/hooks/useScroll";
 import { Carousel } from "./components/Carousel";
 import styles from "./HomePage.module.scss";
 

@@ -1,5 +1,5 @@
+import { carouselCountries } from "@/constants/carousel";
 import { FC } from "react";
-import { carouselCountries } from "../../../../constants/carousel";
 import { CountryCart } from "../CountryCart";
 import styles from "./Carousel.module.scss";
 

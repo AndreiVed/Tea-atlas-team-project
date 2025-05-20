@@ -1,15 +1,15 @@
+import { GeneralInput } from "@/components/GeneralInput";
+import { updatePasswordRequirements } from "@/features/password/passwordSlice";
+import { allPasswordRequirementsCorrect } from "@/handlers/allPasswordRequirementsCorrect";
+import { isEmailCorrect } from "@/handlers/isEmailCorrect";
+import { validatePasswordRequirements } from "@/handlers/validatePasswordRequirements";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { GeneralInput as GeneralInputType } from "@/types/GeneralInput";
 import { FC, useState } from "react";
-import { GeneralInput } from "../../../../../../components/GeneralInput";
-import { updatePasswordRequirements } from "../../../../../../features/password/passwordSlice";
 import {
   updateEditingForm,
   updateEditingPassword,
 } from "../../../../../../features/profile/profileSlice";
-import { allPasswordRequirementsCorrect } from "../../../../../../handlers/allPasswordRequirementsCorrect";
-import { isEmailCorrect } from "../../../../../../handlers/isEmailCorrect";
-import { validatePasswordRequirements } from "../../../../../../handlers/validatePasswordRequirements";
-import { useAppDispatch, useAppSelector } from "../../../../../../store/hooks";
-import { GeneralInput as GeneralInputType } from "../../../../../../types/GeneralInput";
 
 export const EditingInput: FC<Omit<GeneralInputType, "onChange">> = (props) => {
   const dispatch = useAppDispatch();

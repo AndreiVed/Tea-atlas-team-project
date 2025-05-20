@@ -1,1 +1,1 @@
-export * from './ProductCharacteristic.module.scss';
+export * from './ProductCharacteristic';

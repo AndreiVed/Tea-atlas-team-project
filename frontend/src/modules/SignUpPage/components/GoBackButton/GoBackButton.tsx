@@ -1,7 +1,7 @@
+import { useCursorEffect } from "@/hooks/useCursorEffect";
 import cn from "classnames";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
 import styles from "./GoBackButton.module.scss";
 
 type Props = {

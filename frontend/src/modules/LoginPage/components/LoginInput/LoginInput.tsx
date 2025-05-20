@@ -1,18 +1,10 @@
+import { GeneralInput } from "@/components/GeneralInput";
+import { updateLoginError, updateLoginForm } from "@/features/login/loginSlice";
+import { isEmailCorrect } from "@/handlers/isEmailCorrect";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { GeneralInput as GeneralInputType } from "@/types/GeneralInput";
+import { LoginForm } from "@/types/LoginForm";
 import { FC, useState } from "react";
-
-import { GeneralInput } from "../../../../components/GeneralInput";
-
-import { isEmailCorrect } from "../../../../handlers/isEmailCorrect";
-
-import {
-  updateLoginError,
-  updateLoginForm,
-} from "../../../../features/login/loginSlice";
-
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-
-import { GeneralInput as GeneralInputType } from "../../../../types/GeneralInput";
-import { LoginForm } from "../../../../types/LoginForm";
 
 export const LoginInput: FC<Omit<GeneralInputType, "onChange">> = (props) => {
   const { name, value } = props;

@@ -2,29 +2,29 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { FC, FormEvent, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { useCursorEffect } from "../../hooks/useCursorEffect";
-import { useScroll } from "../../hooks/useScroll";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useScroll } from "@/hooks/useScroll";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-import { GeneralButton } from "../../components/GeneralButton";
+import { GeneralButton } from "@/components/GeneralButton";
 import { LoginInput } from "./components/LoginInput";
 
+import { API_ENDPOINTS, screenEndpoints } from "@/constants/endpoints";
+import { isEmailCorrect } from "@/handlers/isEmailCorrect";
 import cn from "classnames";
-import { API_ENDPOINTS, screenEndpoints } from "../../constants/endpoints";
-import { isEmailCorrect } from "../../handlers/isEmailCorrect";
 
-import {
-  updateLoginError,
-  updateLoginForm,
-} from "../../features/login/loginSlice";
-import { updateLikedProducts } from "../../features/products/productsSlice";
+import { updateLikedProducts } from "@/features/products/productsSlice";
 import {
   updateIsLoggedIn,
   updateToken,
   updateUserInfo,
-} from "../../features/profile/profileSlice";
+} from "@/features/profile/profileSlice";
+import {
+  updateLoginError,
+  updateLoginForm,
+} from "../../features/login/loginSlice";
 
-import { LoginResponseData } from "../../types/LoginResponseData";
+import { LoginResponseData } from "@/types/LoginResponseData";
 
 import styles from "./LoginPage.module.scss";
 

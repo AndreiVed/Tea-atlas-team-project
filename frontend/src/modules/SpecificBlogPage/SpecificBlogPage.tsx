@@ -1,12 +1,12 @@
+import { Banner } from "@/components/Banner";
+import { useScroll } from "@/hooks/useScroll";
 import cn from "classnames";
 import { FC } from "react";
-import { Banner } from "../../components/Banner";
-import { useScroll } from "../../hooks/useScroll";
 import styles from "./SpecificBlogPage.module.scss";
 
 /*
   this page's routing and code is hardcoded,
-  because my team and I decided not to implement backend
+  because my team and I decided not to implement backend for this part
 */
 
 export const SpecificBlogPage: FC = () => {

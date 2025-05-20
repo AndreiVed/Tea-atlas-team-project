@@ -1,11 +1,11 @@
+import { Banner } from "@/components/Banner";
+import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
+import { contactFormDefaults } from "@/constants/formsInitials";
+import { updateContactForm } from "@/features/contact/contactSlice";
+import { useScroll } from "@/hooks/useScroll";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { FC, FormEvent, useEffect } from "react";
-import { Banner } from "../../components/Banner";
-import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
-import { contactFormDefaults } from "../../constants/formsInitials";
-import { updateContactForm } from "../../features/contact/contactSlice";
-import { useScroll } from "../../hooks/useScroll";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import styles from "./ContactPage.module.scss";
 import { ContactInput } from "./components/ContactInput";
 import { Description } from "./components/Description";

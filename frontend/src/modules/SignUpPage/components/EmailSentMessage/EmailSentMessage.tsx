@@ -1,7 +1,7 @@
+import { Banner } from "@/components/Banner";
+import { useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { FC, useEffect } from "react";
-import { Banner } from "../../../../components/Banner";
-import { useAppSelector } from "../../../../store/hooks";
 import { GoBackButton } from "../GoBackButton";
 import styles from "./EmailSentMessage.module.scss";
 

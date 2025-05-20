@@ -1,23 +1,23 @@
-import cn from "classnames";
-import { FC, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
-import { API_ENDPOINTS } from "../../../../constants/endpoints";
+import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
+import { API_ENDPOINTS } from "@/constants/endpoints";
 import {
   passwordRequirementsDefaults,
   registrationFormDefaults,
-} from "../../../../constants/formsInitials";
-import { updatePasswordRequirements } from "../../../../features/password/passwordSlice";
+} from "@/constants/formsInitials";
+import { updatePasswordRequirements } from "@/features/password/passwordSlice";
 import {
   updateConfirmationEmail,
   updateRegistrationErrors,
   updateRegistrationForm,
   updateSignUpError,
-} from "../../../../features/registration/registrationSlice";
-import { allPasswordRequirementsCorrect } from "../../../../handlers/allPasswordRequirementsCorrect";
-import { isEmailCorrect } from "../../../../handlers/isEmailCorrect";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+} from "@/features/registration/registrationSlice";
+import { allPasswordRequirementsCorrect } from "@/handlers/allPasswordRequirementsCorrect";
+import { isEmailCorrect } from "@/handlers/isEmailCorrect";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import cn from "classnames";
+import { FC, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { GoBackButton } from "../GoBackButton";
 import styles from "./SignUpForm.module.scss";
 import { RegistrationInput } from "./components/RegistrationInput";

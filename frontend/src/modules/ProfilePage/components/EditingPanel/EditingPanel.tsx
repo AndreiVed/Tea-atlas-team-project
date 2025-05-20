@@ -1,21 +1,21 @@
-import cn from "classnames";
-import { FC, useState } from "react";
-import { GeneralButton } from "../../../../components/GeneralButton/GeneralButton";
-import { API_ENDPOINTS } from "../../../../constants/endpoints";
+import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
+import { API_ENDPOINTS } from "@/constants/endpoints";
 import {
   updateEditingDetails,
   updateEditingForm,
   updateEditingPassword,
   updateUserInfo,
-} from "../../../../features/profile/profileSlice";
-import { fetchWithAuth } from "../../../../handlers/fetchWithToken";
-import { isEmailCorrect } from "../../../../handlers/isEmailCorrect";
-import { useCursorEffect } from "../../../../hooks/useCursorEffect";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-import { DetailType } from "../../../../types/DetailType";
-import { EditingPassword } from "../../../../types/EditingPassword";
-import { PersonalDetail } from "../../../../types/PersonalDetail";
-import { UserInfo } from "../../../../types/UserInfo";
+} from "@/features/profile/profileSlice";
+import { fetchWithAuth } from "@/handlers/fetchWithToken";
+import { isEmailCorrect } from "@/handlers/isEmailCorrect";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { DetailType } from "@/types/DetailType";
+import { EditingPassword } from "@/types/EditingPassword";
+import { PersonalDetail } from "@/types/PersonalDetail";
+import { UserInfo } from "@/types/UserInfo";
+import cn from "classnames";
+import { FC, useState } from "react";
 import styles from "./EditingPanel.module.scss";
 import { EditingInput } from "./components/EditingInput";
 

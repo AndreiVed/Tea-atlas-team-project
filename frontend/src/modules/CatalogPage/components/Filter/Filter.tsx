@@ -1,22 +1,24 @@
+import { screenEndpoints } from "@/constants/endpoints";
+import { selectedFiltersDefaults } from "@/constants/formsInitials";
+import { filterActions } from "@/features/filter/filterSlice";
+import { loadAllProducts } from "@/handlers/loadAllProducts";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { some } from "lodash-es";
 import { FC, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { screenEndpoints } from "../../../../constants/endpoints";
-import { selectedFiltersDefaults } from "../../../../constants/formsInitials";
-import {
-  updateIsFilterOpened,
-  updateSelectedFilters,
-  updateSubmittedFilters,
-} from "../../../../features/filter/filterSlice";
-import { loadAllProducts } from "../../../../handlers/loadAllProducts";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import "../../../../styles/utils/mixins/font-mixins.scss";
 import { FilterPanel } from "../FilterPanel";
 import styles from "./Filter.module.scss";
 
 export const Filter: FC = () => {
+  const {
+    updateIsFilterOpened,
+    updateSelectedFilters,
+    updateSubmittedFilters,
+  } = filterActions;
+
   const { width } = useWindowSize();
   const isBelowDesktop = width ? width <= screenEndpoints.desktop : undefined;
   const dispatch = useAppDispatch();

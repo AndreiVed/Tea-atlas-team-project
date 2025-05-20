@@ -1,9 +1,9 @@
+import { UserAvatar } from "@/components/UserAvatar";
+import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useScroll } from "@/hooks/useScroll";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserAvatar } from "../../components/UserAvatar";
-import { useCursorEffect } from "../../hooks/useCursorEffect";
-import { useScroll } from "../../hooks/useScroll";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import styles from "./ProfilePage.module.scss";
 import { DeleteAccount } from "./components/DeleteAccount/DeleteAccount";
 import { ManageOption } from "./components/ManageOption";

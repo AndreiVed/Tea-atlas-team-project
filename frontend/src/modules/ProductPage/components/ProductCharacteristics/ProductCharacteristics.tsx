@@ -1,6 +1,6 @@
+import { ProductCategoryExtended } from "@/types/ProductCategory";
 import { FC } from "react";
-import { ProductCategoryExtended } from "../../../../types/ProductCategory";
-import { ProductCharacteristic } from "../ProductCharacteristic/ProductCharacteristic";
+import { ProductCharacteristic } from "../ProductCharacteristic";
 import styles from "./ProductCharacteristics.module.scss";
 
 type Props = {

@@ -1,17 +1,17 @@
-import { FC, useEffect } from "react";
-import { GeneralInput } from "../../../../../../components/GeneralInput";
-import { updatePasswordRequirements } from "../../../../../../features/password/passwordSlice";
+import { GeneralInput } from "@/components/GeneralInput";
+import { updatePasswordRequirements } from "@/features/password/passwordSlice";
 import {
   updateRegistrationErrors,
   updateRegistrationForm,
   updateSignUpError,
-} from "../../../../../../features/registration/registrationSlice";
-import { allPasswordRequirementsCorrect } from "../../../../../../handlers/allPasswordRequirementsCorrect";
-import { isEmailCorrect } from "../../../../../../handlers/isEmailCorrect";
-import { validatePasswordRequirements } from "../../../../../../handlers/validatePasswordRequirements";
-import { useAppDispatch, useAppSelector } from "../../../../../../store/hooks";
-import { GeneralInput as GeneralInputType } from "../../../../../../types/GeneralInput";
-import { RegistrationForm } from "../../../../../../types/RegistrationForm";
+} from "@/features/registration/registrationSlice";
+import { allPasswordRequirementsCorrect } from "@/handlers/allPasswordRequirementsCorrect";
+import { isEmailCorrect } from "@/handlers/isEmailCorrect";
+import { validatePasswordRequirements } from "@/handlers/validatePasswordRequirements";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { GeneralInput as GeneralInputType } from "@/types/GeneralInput";
+import { RegistrationForm } from "@/types/RegistrationForm";
+import { FC, useEffect } from "react";
 
 export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
   props
@@ -20,9 +20,7 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
   const { registrationForm, registrationErrors, signUpError } = useAppSelector(
     (state) => state.registration
   );
-  const { passwordRequirements } = useAppSelector(
-    (state) => state.password
-  );
+  const { passwordRequirements } = useAppSelector((state) => state.password);
   const value = registrationForm[props.name as keyof RegistrationForm];
   const { type } = props;
 
@@ -42,9 +40,7 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
     dispatch(updateRegistrationForm({ [name]: value }));
 
     if (name === "password1") {
-      dispatch(
-        updatePasswordRequirements(validatePasswordRequirements(value))
-      );
+      dispatch(updatePasswordRequirements(validatePasswordRequirements(value)));
     }
   };
 
@@ -84,7 +80,9 @@ export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
   return (
     <GeneralInput
       {...props}
-      error={registrationErrors[props.name as keyof typeof registrationErrors] || ""}
+      error={
+        registrationErrors[props.name as keyof typeof registrationErrors] || ""
+      }
       value={value}
       disabled={isDisabled}
       onChange={handleChange}

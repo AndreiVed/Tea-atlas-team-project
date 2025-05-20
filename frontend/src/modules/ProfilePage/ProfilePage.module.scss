@@ -1,6 +1,6 @@
-@use "../../styles/utils/colors" as *;
-@use '../../styles/utils/mixins/grid-mixins.scss' as *;
-@use '../../styles/utils/mixins/styling-mixins.scss' as *;
+@use "@/styles/utils/colors" as *;
+@use '@/styles/utils/mixins/grid-mixins.scss' as *;
+@use '@/styles/utils/mixins/styling-mixins.scss' as *;
 
 .profile {
   padding-inline: 16px;

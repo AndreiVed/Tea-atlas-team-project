@@ -1,9 +1,9 @@
+import { API_ENDPOINTS } from "@/constants/endpoints";
+import { updateUserInfo } from "@/features/profile/profileSlice";
+import { fetchWithAuth } from "@/handlers/fetchWithToken";
+import { AppDispatch } from "@/store/appStore";
+import { UserInfo } from "@/types/UserInfo";
 import { ChangeEvent } from "react";
-import { API_ENDPOINTS } from "../../constants/endpoints";
-import { updateUserInfo } from "../../features/profile/profileSlice";
-import { fetchWithAuth } from "../../handlers/fetchWithToken";
-import { AppDispatch } from "../../store/appStore";
-import { UserInfo } from "../../types/UserInfo";
 
 export const handleFileSelect = (
   e: ChangeEvent<HTMLInputElement>,

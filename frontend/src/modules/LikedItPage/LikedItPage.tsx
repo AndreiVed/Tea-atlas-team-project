@@ -1,8 +1,8 @@
+import { Banner } from "@/components/Banner";
+import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
+import { ProductCart } from "@/components/ProductCart";
+import { useAppSelector } from "@/store/hooks";
 import { FC } from "react";
-import { Banner } from "../../components/Banner";
-import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
-import { ProductCart } from "../../components/ProductCart";
-import { useAppSelector } from "../../store/hooks";
 import styles from "./LikedItPage.module.scss";
 
 export const LikedItPage: FC = () => {

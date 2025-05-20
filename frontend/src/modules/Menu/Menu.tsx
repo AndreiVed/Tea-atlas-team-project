@@ -1,15 +1,15 @@
-import cn from "classnames";
-import { FC } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { GeneralButton } from "../../components/GeneralButton/GeneralButton";
-import { userInfoDefaults } from "../../constants/formsInitials";
-import { menuLinks } from "../../constants/links";
+import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
+import { userInfoDefaults } from "@/constants/formsInitials";
+import { menuLinks } from "@/constants/links";
 import {
   updateIsLoggedIn,
   updateUserInfo,
-} from "../../features/profile/profileSlice";
-import { clearTokens } from "../../handlers/clearTokens";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+} from "@/features/profile/profileSlice";
+import { clearTokens } from "@/handlers/clearTokens";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import cn from "classnames";
+import { FC } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Menu.module.scss";
 
 export const Menu: FC = () => {
