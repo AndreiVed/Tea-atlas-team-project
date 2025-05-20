@@ -1,10 +1,7 @@
 import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
 import { userInfoDefaults } from "@/constants/formsInitials";
 import { menuLinks } from "@/constants/links";
-import {
-  updateIsLoggedIn,
-  updateUserInfo,
-} from "@/features/profile/profileSlice";
+import { profileActions } from "@/features/profile/profileSlice";
 import { clearTokens } from "@/handlers/clearTokens";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import cn from "classnames";
@@ -13,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./Menu.module.scss";
 
 export const Menu: FC = () => {
+  const { updateIsLoggedIn, updateUserInfo } = profileActions;
   const { isLoggedIn } = useAppSelector((state) => state.profile);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -23,7 +21,6 @@ export const Menu: FC = () => {
     dispatch(updateUserInfo(userInfoDefaults));
     localStorage.removeItem("user");
     clearTokens();
-
   };
 
   return (
