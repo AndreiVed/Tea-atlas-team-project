@@ -48,3 +48,14 @@ export const urlFiltersDefaults: SelectedFilters & { name: string } = {
   type: [],
   name: "",
 };
+
+// export grouped
+export const formDefaults = {
+  registrationFormDefaults,
+  registrationFormErrorDefaults,
+  passwordRequirementsDefaults,
+  userInfoDefaults,
+  selectedFiltersDefaults,
+  contactFormDefaults,
+  urlFiltersDefaults,
+};

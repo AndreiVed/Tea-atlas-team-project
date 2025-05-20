@@ -1,10 +1,6 @@
 import { GeneralInput } from "@/components/GeneralInput";
 import { updatePasswordRequirements } from "@/features/password/passwordSlice";
-import {
-  updateRegistrationErrors,
-  updateRegistrationForm,
-  updateSignUpError,
-} from "@/features/registration/registrationSlice";
+import { registrationActions } from "@/features/registration/registrationSlice";
 import { allPasswordRequirementsCorrect } from "@/handlers/allPasswordRequirementsCorrect";
 import { isEmailCorrect } from "@/handlers/isEmailCorrect";
 import { validatePasswordRequirements } from "@/handlers/validatePasswordRequirements";
@@ -13,9 +9,15 @@ import { GeneralInput as GeneralInputType } from "@/types/GeneralInput";
 import { RegistrationForm } from "@/types/RegistrationForm";
 import { FC, useEffect } from "react";
 
-export const RegistrationInput: FC<Omit<GeneralInputType, "onChange">> = (
-  props
-) => {
+type Props = Omit<GeneralInputType, "onChange">;
+
+export const RegistrationInput: FC<Props> = (props) => {
+  const {
+    updateRegistrationForm,
+    updateRegistrationErrors,
+    updateSignUpError,
+  } = registrationActions;
+
   const dispatch = useAppDispatch();
   const { registrationForm, registrationErrors, signUpError } = useAppSelector(
     (state) => state.registration

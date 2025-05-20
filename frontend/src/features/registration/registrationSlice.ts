@@ -78,3 +78,5 @@ export const {
   updateSignUpError,
   updateConfirmationEmail,
 } = registrationSlice.actions;
+
+export const registrationActions = registrationSlice.actions;

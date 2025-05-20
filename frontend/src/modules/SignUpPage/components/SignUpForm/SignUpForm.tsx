@@ -1,16 +1,8 @@
 import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
 import { API_ENDPOINTS } from "@/constants/endpoints";
-import {
-  passwordRequirementsDefaults,
-  registrationFormDefaults,
-} from "@/constants/formsInitials";
+import { formDefaults as formDefs } from "@/constants/formsInitials";
 import { updatePasswordRequirements } from "@/features/password/passwordSlice";
-import {
-  updateConfirmationEmail,
-  updateRegistrationErrors,
-  updateRegistrationForm,
-  updateSignUpError,
-} from "@/features/registration/registrationSlice";
+import { registrationActions } from "@/features/registration/registrationSlice";
 import { allPasswordRequirementsCorrect } from "@/handlers/allPasswordRequirementsCorrect";
 import { isEmailCorrect } from "@/handlers/isEmailCorrect";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
@@ -23,6 +15,15 @@ import styles from "./SignUpForm.module.scss";
 import { RegistrationInput } from "./components/RegistrationInput";
 
 export const SignUpForm: FC = () => {
+  const {
+    updateConfirmationEmail,
+    updateRegistrationErrors,
+    updateRegistrationForm,
+    updateSignUpError,
+  } = registrationActions;
+
+  const { registrationFormDefaults, passwordRequirementsDefaults } = formDefs;
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isPending, setIsPending] = useState(false);
