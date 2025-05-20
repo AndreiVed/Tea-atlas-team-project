@@ -11,7 +11,7 @@ export const registrationFormDefaults: RegistrationForm = {
   password2: "",
 };
 
-export const registrationFormErrorDefaults = registrationFormDefaults;
+export const registrationFormErrorDefaults = { ...registrationFormDefaults };
 
 export const passwordRequirementsDefaults: PasswordRequirements = {
   isLettersTyped: false,
@@ -39,7 +39,7 @@ export const contactFormDefaults = {
   phone: "",
   email: "",
   message: "",
-}
+};
 
 export const urlFiltersDefaults: SelectedFilters & { name: string } = {
   country: [],
