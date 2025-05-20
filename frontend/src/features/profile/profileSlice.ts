@@ -79,3 +79,5 @@ export const {
   updateUserInfo,
   updateToken,
 } = profileSlice.actions;
+
+export const profileActions = profileSlice.actions;

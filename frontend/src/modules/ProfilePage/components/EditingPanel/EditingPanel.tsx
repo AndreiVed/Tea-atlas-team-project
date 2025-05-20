@@ -1,11 +1,6 @@
 import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
 import { API_ENDPOINTS } from "@/constants/endpoints";
-import {
-  updateEditingDetails,
-  updateEditingForm,
-  updateEditingPassword,
-  updateUserInfo,
-} from "@/features/profile/profileSlice";
+import { profileActions } from "@/features/profile/profileSlice";
 import { fetchWithAuth } from "@/handlers/fetchWithToken";
 import { isEmailCorrect } from "@/handlers/isEmailCorrect";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
@@ -25,6 +20,13 @@ type Props = {
 };
 
 export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
+  const {
+    updateEditingDetails,
+    updateEditingForm,
+    updateEditingPassword,
+    updateUserInfo,
+  } = profileActions;
+
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const dispatch = useAppDispatch();
   const title = `Edit ${forDetail.toLowerCase()}`;
