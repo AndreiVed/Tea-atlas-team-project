@@ -28,7 +28,7 @@ export const ProductCart: FC<Props> = ({ product, usedIn, onClick }) => {
     }
 
     handleMouseLeave();
-    navigate(`/product/${id}`);
+    navigate(`/catalog/${id}`);
   };
 
   return (
