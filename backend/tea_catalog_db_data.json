@@ -1,0 +1,513 @@
+[
+  {
+    "country": {
+      "name": "China"
+    },
+    "regions": [
+      {
+        "province": "Fujian",
+        "categories": [
+          {
+            "name": "Oolong",
+            "fermentation": "Moderately Oxidized",
+            "teas": [
+              {
+                "name": "Da Hong Pao",
+                "description": "Legendary oolong tea from Wuyi Mountains.",
+                "descriptors": ["mineral", "roasted", "fruity"],
+                "impact": "Balancing"
+              },
+              {
+                "name": "Tie Guan Yin",
+                "description": "A popular oolong tea known for its floral aroma.",
+                "descriptors": ["floral", "buttery", "sweet"],
+                "impact": "Balancing"
+              },
+              {
+                "name": "Bai Ji Guan",
+                "description": "Rare Wuyi oolong with unique characteristics.",
+                "descriptors": ["creamy", "roasted", "complex"],
+                "impact": "Balancing"
+              }
+            ]
+          },
+          {
+            "name": "White Tea",
+            "fermentation": "Minimally Oxidized",
+            "teas": [
+              {
+                "name": "Bai Hao Yin Zhen",
+                "description": "Silver Needle, high-grade white tea, delicate and fresh.",
+                "descriptors": ["fresh", "sweet", "melon"],
+                "impact": "Cooling"
+              },
+              {
+                "name": "Bai Mudan",
+                "description": "White Peony, a popular white tea with subtle notes.",
+                "descriptors": ["floral", "honey", "nutty"],
+                "impact": "Cooling"
+              },
+              {
+                "name": "Shou Mei",
+                "description": "Eyebrow of Longevity, a bolder white tea with fruity notes.",
+                "descriptors": ["fruity", "earthy", "malty"],
+                "impact": "Balancing"
+              }
+            ]
+          },
+          {
+            "name": "Black Tea",
+            "fermentation": "Fully Oxidized",
+            "teas": [
+              {
+                "name": "Zhengshan Xiaozhong",
+                "description": "Lapsang Souchong, famous for its smoky flavor.",
+                "descriptors": ["smoky", "pine", "sweet"],
+                "impact": "Warming"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Yunnan",
+        "categories": [
+          {
+            "name": "Pu-erh tea",
+            "fermentation": "Post-Fermented",
+            "teas": [
+              {
+                "name": "Sheng Pu-erh",
+                "description": "Raw Pu-erh, naturally aged, complex and evolving.",
+                "descriptors": ["grassy", "fruity", "aged"],
+                "impact": "Warming"
+              },
+              {
+                "name": "Shu Pu-erh",
+                "description": "Ripe Pu-erh, fermented, earthy and smooth.",
+                "descriptors": ["earthy", "woody", "sweet"],
+                "impact": "Warming"
+              }
+            ]
+          },
+          {
+            "name": "Black Tea",
+            "fermentation": "FULLY",
+            "teas": [
+              {
+                "name": "Dian Hong",
+                "description": "Yunnan Black, known for its malty and honey notes.",
+                "descriptors": ["malty", "honey", "chocolate"],
+                "impact": "Warming"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Zhejiang",
+        "categories": [
+          {
+            "name": "Green Tea",
+            "fermentation": "Minimally Oxidized",
+            "teas": [
+              {
+                "name": "Longjing",
+                "description": "Dragon Well, famous Chinese green tea, flat and fresh.",
+                "descriptors": ["nutty", "fresh", "sweet"],
+                "impact": "Cooling"
+              },
+              {
+                "name": "Anji Bai Cha",
+                "description": "White Tea from Anji, very delicate green tea.",
+                "descriptors": ["umami", "floral", "sweet"],
+                "impact": "Cooling"
+              },
+              {
+                "name": "Guzhu Zisun",
+                "description": "Purple Shoot from Guzhu, ancient tribute tea.",
+                "descriptors": ["grassy", "sweet", "vegetal"],
+                "impact": "Cooling"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Anhui",
+        "categories": [
+          {
+            "name": "Green Tea",
+            "fermentation": "Minimally Oxidized",
+            "teas": [
+              {
+                "name": "Huangshan Maofeng",
+                "description": "Yellow Mountain Fur Peak, highly aromatic green tea.",
+                "descriptors": ["floral", "sweet", "orchidy"],
+                "impact": "Cooling"
+              },
+              {
+                "name": "Lu’an Guapian",
+                "description": "Lu'an Melon Seed, unique flat green tea.",
+                "descriptors": ["nutty", "toasted", "vegetal"],
+                "impact": "Cooling"
+              },
+              {
+                "name": "Taiping Houkui",
+                "description": "Peaceful Monkey King, unique large leaf green tea.",
+                "descriptors": ["orchid", "sweet", "grassy"],
+                "impact": "Cooling"
+              }
+            ]
+          },
+          {
+            "name": "Black Tea",
+            "fermentation": "Fully Oxidized",
+            "teas": [
+              {
+                "name": "Qimen Hongcha",
+                "description": "Keemun Black, famous for its 'Keemun aroma'.",
+                "descriptors": ["floral", "malty", "winey"],
+                "impact": "Warming"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Guangdong",
+        "categories": [
+          {
+            "name": "Oolong",
+            "fermentation": "Moderately Oxidized",
+            "teas": [
+              {
+                "name": "Mi Lan Xiang",
+                "description": "Honey Orchid, a popular Phoenix Dan Cong oolong.",
+                "descriptors": ["honey", "floral", "fruity"],
+                "impact": "Balancing"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Guangxi",
+        "categories": [
+          {
+            "name": "Dark Tea",
+            "fermentation": "Post-Fermented",
+            "teas": [
+              {
+                "name": "Liubao",
+                "description": "Traditional dark tea from Guangxi.",
+                "descriptors": ["earthy", "woody", "medicinal"],
+                "impact": "Warming"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Sichuan",
+        "categories": [
+          {
+            "name": "Green Tea",
+            "fermentation": "Minimally",
+            "teas": [
+              {
+                "name": "Mengding Ganlu",
+                "description": "Sweet Dew from Mengding Mountain.",
+                "descriptors": ["sweet", "fresh", "grassy"],
+                "impact": "Cooling"
+              },
+              {
+                "name": "Zhuyeqing",
+                "description": "Bamboo Leaf Green, delicate and refreshing.",
+                "descriptors": ["bamboo", "nutty", "sweet"],
+                "impact": "Cooling"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Hunan",
+        "categories": [
+          {
+            "name": "Dark Tea",
+            "fermentation": "Post-Fermented",
+            "teas": [
+              {
+                "name": "Anhua Heicha",
+                "description": "Dark tea from Anhua.",
+                "descriptors": ["earthy", "woody", "mushroom"],
+                "impact": "Warming"
+              }
+            ]
+          },
+          {
+            "name": "White Tea",
+            "fermentation": "Minimally",
+            "teas": [
+              {
+                "name": "Yue Guang Bai",
+                "description": "Moonlight White, unique white tea from Yunnan.",
+                "descriptors": ["floral", "fruity", "sweet"],
+                "impact": "Cooling"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "country": {
+      "name": "Japan"
+    },
+    "regions": [
+      {
+        "province": "Shizuoka Prefecture",
+        "categories": [
+          {
+            "name": "Green Tea",
+            "fermentation": "MINIMALLY",
+            "teas": [
+              {
+                "name": "Sencha",
+                "description": "The most popular green tea in Japan, known for its refreshing taste and vibrant green color.",
+                "impact": "COOLING",
+                "descriptors": ["grassy", "fresh", "umami"]
+              },
+              {
+                "name": "Gyokuro",
+                "description": "A shade-grown green tea, highly prized for its rich umami flavor and sweet aroma.",
+                "impact": "BALANCING",
+                "descriptors": ["umami", "sweet", "seaweed"]
+              }
+            ]
+          },
+          {
+            "name": "Roasted Green Tea",
+            "fermentation": "MINIMALLY",
+            "teas": [
+              {
+                "name": "Hojicha",
+                "description": "Roasted Japanese green tea with a distinctive nutty and slightly caramel flavor, low in caffeine.",
+                "impact": "WARMING",
+                "descriptors": ["nutty", "roasted", "caramel"]
+              }
+            ]
+          },
+          {
+            "name": "Blended Green Tea",
+            "fermentation": "MINIMALLY",
+            "teas": [
+              {
+                "name": "Genmaicha",
+                "description": "Green tea blended with roasted brown rice, offering a unique nutty and toasted flavor.",
+                "impact": "BALANCING",
+                "descriptors": ["nutty", "toasted", "savory"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Uji",
+        "categories": [
+          {
+            "name": "Powdered Green Tea",
+            "fermentation": "Minimally",
+            "teas": [
+              {
+                "name": "Matcha",
+                "description": "Finely ground powdered green tea, known for its vibrant color, intense umami, and ceremonial use.",
+                "impact": "Cleansing",
+                "descriptors": ["umami", "creamy", "vegetal"]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "country": {
+      "name": "Thailand"
+    },
+    "regions": [
+      {
+        "province": "Chiang Rai Province",
+        "categories": [
+          {
+            "name": "Oolong",
+            "fermentation": "Moderately",
+            "teas": [
+              {
+                "name": "Thai Oolong",
+                "description": "Often light and floral, sometimes with creamy notes, typical of northern Thai highlands.",
+                "impact": "Balancing",
+                "descriptors": ["floral", "creamy", "light"]
+              }
+            ]
+          },
+          {
+            "name": "Black Tea",
+            "fermentation": "Fully",
+            "teas": [
+              {
+                "name": "Thai Assam Black Tea",
+                "description": "A robust black tea with malty notes, grown from Camellia sinensis var. assamica.",
+                "impact": "Warming",
+                "descriptors": ["malty", "strong", "bold"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Northern Thailand",
+        "categories": [
+          {
+            "name": "Fermented Tea",
+            "fermentation": "Post-Fermented",
+            "teas": [
+              {
+                "name": "Miang",
+                "description": "Traditional fermented tea leaves, often chewed or used in salads, with a sour-bitter taste.",
+                "impact": "Aids digestion",
+                "descriptors": ["sour", "bitter", "earthy"]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "country": {
+      "name": "Taiwan"
+    },
+    "regions": [
+      {
+        "province": "Nantou County",
+        "categories": [
+          {
+            "name": "Oolong",
+            "fermentation": "Moderately Oxidized",
+            "teas": [
+              {
+                "name": "Dong Ding Oolong",
+                "description": "A classic Taiwanese oolong, often lightly roasted, with complex fruity, floral, and mineral notes.",
+                "impact": "Balancing",
+                "descriptors": ["fruity", "floral", "roasted"]
+              },
+              {
+                "name": "Jin Xuan (Milk Oolong)",
+                "description": "Naturally creamy and milky aroma, a popular oolong cultivar from Taiwan.",
+                "impact": "Moisturizing",
+                "descriptors": ["creamy", "milky", "sweet"]
+              },
+              {
+                "name": "Si Ji Chun (Four Seasons Oolong)",
+                "description": "A versatile oolong that can be harvested year-round, known for its light, fresh, floral character.",
+                "impact": "Cooling",
+                "descriptors": ["light", "fresh", "floral"]
+              }
+            ]
+          },
+          {
+            "name": "Black Tea",
+            "fermentation": "Fully Oxidized",
+            "teas": [
+              {
+                "name": "Ruby Black Tea No. 18",
+                "description": "A unique Taiwanese black tea with distinct cinnamon and menthol notes.",
+                "impact": "Warming",
+                "descriptors": ["cinnamon", "menthol", "fruity"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Chiayi County",
+        "categories": [
+          {
+            "name": "High Mountain Oolong",
+            "fermentation": "Lightly Oxidized",
+            "teas": [
+              {
+                "name": "Alishan Oolong",
+                "description": "Famous high-mountain oolong with bright, floral, and subtly creamy notes.",
+                "impact": "Cleansing",
+                "descriptors": ["bright", "floral", "creamy"]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "country": {
+      "name": "Vietnam"
+    },
+    "regions": [
+      {
+        "province": "Thai Nguyen Province",
+        "categories": [
+          {
+            "name": "Green Tea",
+            "fermentation": "Minimally Oxidized",
+            "teas": [
+              {
+                "name": "Thai Nguyen Green Tea",
+                "description": "One of Vietnam's most popular green teas, known for its rich, slightly astringent, yet sweet aftertaste.",
+                "impact": "Cooling",
+                "descriptors": ["astringent", "sweet", "fresh"]
+              }
+            ]
+          },
+          {
+            "name": "Aromatized Tea",
+            "fermentation": "Minimally Oxidized",
+            "teas": [
+              {
+                "name": "Lotus Tea",
+                "description": "Traditional Vietnamese green tea delicately scented with lotus flowers, offering a unique floral aroma.",
+                "impact": "Balancing",
+                "descriptors": ["floral", "sweet", "aromatic"]
+              },
+              {
+                "name": "Jasmine Tea",
+                "description": "Green tea infused with the fragrant aroma of jasmine blossoms.",
+                "impact": "Cooling",
+                "descriptors": ["jasmine", "aromatic", "light"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "province": "Ha Giang Province",
+        "categories": [
+          {
+            "name": "Pu-erh Style Tea",
+            "fermentation": "Post-Fermented",
+            "teas": [
+              {
+                "name": "Shan Tuyet Tea",
+                "description": "Fermented tea from ancient wild tea trees in Vietnam, similar to Chinese Pu-erh.",
+                "impact": "Aids digestion",
+                "descriptors": ["earthy", "mellow", "woody"]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

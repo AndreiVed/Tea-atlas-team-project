@@ -90,13 +90,13 @@ class Tea(models.Model):
         ordering = ["category", "name"]
 
 
-class Steeping(models.Model):
-    tea_category = models.OneToOneField(Category, on_delete=CASCADE)
-    leaves = models.IntegerField()
-    water_volume = models.IntegerField()
-    water_temperature = models.IntegerField()
-    steep_time = models.IntegerField()
-    infusion = models.IntegerField()
-
-    class Meta:
-        ordering = ["tea_category"]
+# class Steeping(models.Model):
+#     tea_category = models.OneToOneField(Category, on_delete=CASCADE)
+#     leaves = models.IntegerField()
+#     water_volume = models.IntegerField()
+#     water_temperature = models.IntegerField()
+#     steep_time = models.IntegerField()
+#     infusion = models.IntegerField()
+#
+#     class Meta:
+#         ordering = ["tea_category"]
