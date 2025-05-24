@@ -19,7 +19,8 @@ services:
       - ./backend/.env
     volumes:
       - ./backend:/app
-      - my_media:/files/media
+#      - my_media:/files/media
+      - my_media:/app/media
     ports:
       - "8000:8000"
     depends_on:

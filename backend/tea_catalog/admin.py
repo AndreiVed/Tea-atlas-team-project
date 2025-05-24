@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from tea_catalog.models import Country, Region, Descriptor, Category, Tea, Steeping
+from tea_catalog.models import Country, Region, Descriptor, Category, Tea
 
 
 @admin.register(Country)
@@ -45,15 +45,16 @@ class TeaAdmin(admin.ModelAdmin):
     get_country.admin_order_field = "category__region__country"
 
 
-@admin.register(Steeping)
-class SteepingAdmin(admin.ModelAdmin):
-    list_display = (
-        "tea_category",
-        "leaves",
-        "water_volume",
-        "water_temperature",
-        "steep_time",
-        "infusion",
-    )
-    list_filter = ("tea_category",)
-    autocomplete_fields = ("tea_category",)
+#
+# @admin.register(Steeping)
+# class SteepingAdmin(admin.ModelAdmin):
+#     list_display = (
+#         "tea_category",
+#         "leaves",
+#         "water_volume",
+#         "water_temperature",
+#         "steep_time",
+#         "infusion",
+#     )
+#     list_filter = ("tea_category",)
+#     autocomplete_fields = ("tea_category",)
