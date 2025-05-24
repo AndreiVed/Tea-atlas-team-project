@@ -21,11 +21,13 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
   const dispatch = useAppDispatch();
 
   const isLiked = Array.isArray(likedProducts)
-  ? likedProducts.find((likedProduct) => likedProduct.id === productId)
-  : undefined;
+    ? likedProducts.find((likedProduct) => likedProduct.id === productId)
+    : undefined;
   const title = isLiked ? "Remove from favorites" : "Add to favorites";
 
-  const handleTogglingProduct = () => {
+  const handleTogglingProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
     if (!isLoggedIn) {
       return;
     }
@@ -61,16 +63,9 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
         [styles["toggle-favorite--favorites-page"]]: usedIn === "liked-it", // anyway it will be liked in this case
       })}
       title={title}
-      onMouseEnter={() => {
-        handleMouseEnter();
-      }}
-      onMouseLeave={() => {
-        handleMouseLeave();
-      }}
-      onClick={(e) => {
-        e.stopPropagation();
-        handleTogglingProduct();
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleTogglingProduct}
     />
   );
 };
