@@ -33,6 +33,10 @@ python manage.py createsuperuser
     
 python manage.py runserver 
 ```
+Run to populate the BD 
+```shel
+ python /backend/import_teas.py
+```
 
 ## Run with docker
 Install PostgresSQL and create DB
@@ -50,6 +54,11 @@ set PGDATA=/var/lib/postgresql/data
 docker-compose build
 docker-compose up
 ```
+Run to populate the BD 
+```shel
+ docker-compose exec web python /app/import_teas.py
+```
+
 
 ## Getting access
 
