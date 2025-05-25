@@ -35,21 +35,37 @@ class TeaViewSet(
         if name:
             queryset = queryset.filter(name__icontains=name)
 
-        if category:
-            category = category.split(",")
-            queryset = queryset.filter(category__name__in=category)
-
         if country:
-            country = country.split(",")
-            queryset = queryset.filter(category__region__country__name__in=country)
+            country_list = country.split(",")
+            country_queryset = []
+            for country in country_list:
+                country_queryset += queryset.filter(
+                    category__region__country__name__icontains=country
+                )
+            queryset = country_queryset
+
+        if category:
+            category_list = category.split(",")
+            category_queryset = []
+            for category in category_list:
+                category_queryset += queryset.filter(category__name__icontains=category)
+            queryset = category_queryset
 
         if fermentation:
-            fermentation = fermentation.split(",")
-            queryset = queryset.filter(category__fermentation__in=fermentation)
+            fermentation_list = fermentation.split(",")
+            fermentation_queryset = []
+            for fermentation in fermentation_list:
+                fermentation_queryset += queryset.filter(
+                    category__fermentation__icontains=fermentation
+                )
+            queryset = fermentation_queryset
 
         if impact:
-            impact = impact.split(",")
-            queryset = queryset.filter(impact__in=impact)
+            impact_list = impact.split(",")
+            impact_queryset = []
+            for impact in impact_list:
+                impact_queryset += queryset.filter(impact__icontains=impact)
+            queryset = impact_queryset
 
         return queryset
 
