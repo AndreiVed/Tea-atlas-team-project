@@ -1,5 +1,6 @@
 import { Banner } from "@/components/Banner";
 import { ProductCart } from "@/components/ProductCart";
+import { ProductPhoto } from "@/components/ProductPhoto";
 import { API_ENDPOINTS } from "@/constants/endpoints";
 import { updateLikedProducts } from "@/features/products/productsSlice";
 import { fetchWithAuth } from "@/handlers/fetchWithToken";
@@ -118,11 +119,7 @@ export const ProductPage: FC = () => {
   return (
     <section className={styles["product"]}>
       <div className={styles["product__top-info-wrap"]}>
-        <img
-          className={styles["product__photo"]}
-          src={image}
-          alt="Product photo"
-        />
+        <ProductPhoto image={image} usedInPage />
         <div className={styles["product__characteristics-wrap"]}>
           <div className={styles["product__top"]}>
             <h2 className={styles["product__title"]}>{name}</h2>

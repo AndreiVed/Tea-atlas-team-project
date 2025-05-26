@@ -2,6 +2,7 @@ import { useCursorEffect } from "@/hooks/useCursorEffect";
 import { Product } from "@/types/Product";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
+import { ProductPhoto } from "../ProductPhoto";
 import styles from "./ProductCart.module.scss";
 import { ToggleFavorite } from "./components/ToggleFavorite";
 
@@ -38,7 +39,9 @@ export const ProductCart: FC<Props> = ({ product, usedIn, onClick }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <img className={styles["product__photo"]} src={image} alt="Product" />
+      <div className={styles["product__photo"]}>
+        <ProductPhoto image={image} />
+      </div>
       <ToggleFavorite productId={id} usedIn={usedIn} />
       <div className={styles["product__info"]}>
         <h3 className={styles["product__info-title"]}>{name}</h3>
