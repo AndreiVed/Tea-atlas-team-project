@@ -47,6 +47,7 @@ export const FilterSection: FC<Props> = ({ title, icon, options }) => {
             [styles["filter-section__heading-arrow-btn--clicked"]]:
               isListOpened,
           })}
+          type="button"
         />
       </div>
       <div
