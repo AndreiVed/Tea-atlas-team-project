@@ -5,7 +5,7 @@ import { updateContactForm } from "@/features/contact/contactSlice";
 import { useScroll } from "@/hooks/useScroll";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import cn from "classnames";
-import { FC, FormEvent, useEffect } from "react";
+import { FC, FormEvent } from "react";
 import styles from "./ContactPage.module.scss";
 import { ContactInput } from "./components/ContactInput";
 import { Description } from "./components/Description";
@@ -15,10 +15,6 @@ export const ContactPage: FC = () => {
   const { contactForm } = useAppSelector((state) => state.contact);
   const { name, email, phone, message } = contactForm;
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    console.log(contactForm);
-  }, [contactForm]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,7 +41,6 @@ export const ContactPage: FC = () => {
         </div>
         <form
           className={cn(styles["contact-us__main-form"], styles["form"])}
-          action=""
           onSubmit={handleSubmit}
         >
           <div className={styles["form__inputs"]}>
