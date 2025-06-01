@@ -29,6 +29,7 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
   const handleProfileClick = () => {
     navigate("/profile");
     setOpenProfileModal(false);
+    handleMouseLeave();
   };
 
   const handleLogout = () => {
