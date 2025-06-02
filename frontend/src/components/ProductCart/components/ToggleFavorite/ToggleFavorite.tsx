@@ -37,7 +37,8 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
       {
         method: "POST",
       },
-      token
+      token,
+      dispatch
     )
       .then()
       .catch((e) => setError(e))
@@ -46,7 +47,8 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
           fetchWithAuth(
             API_ENDPOINTS.auth.favoriteList,
             { method: "GET" },
-            token
+            token,
+            dispatch
           ).then((data) => {
             dispatch(updateLikedProducts(data as Product[]));
             localStorage.removeItem("likedProducts");

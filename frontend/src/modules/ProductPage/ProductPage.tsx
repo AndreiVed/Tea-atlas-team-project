@@ -88,14 +88,16 @@ export const ProductPage: FC = () => {
       {
         method: "POST",
       },
-      token
+      token,
+      dispatch
     ).then(() => {
       fetchWithAuth(
         API_ENDPOINTS.auth.favoriteList,
         {
           method: "GET",
         },
-        token
+        token,
+        dispatch
       )
         .then((data) => {
           dispatch(updateLikedProducts(data as Product[]));

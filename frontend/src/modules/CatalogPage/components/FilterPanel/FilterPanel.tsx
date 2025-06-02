@@ -32,6 +32,7 @@ export const FilterPanel: FC = () => {
   const [loadingApply, setLoadingApply] = useState(false);
   const isDesktop = width && width >= screenEndpoints.desktop;
   const hasSelectedFilters = some(selectedFilters, (arr) => arr.length > 0);
+  const hasSubmittedFilters = some(submittedFilters, (arr) => arr.length > 0);
 
   useEffect(() => {
     if (!isDesktop && isFilterOpened) {
@@ -62,7 +63,10 @@ export const FilterPanel: FC = () => {
   };
 
   const isApplyDisabled =
-    isEqual(submittedFilters, selectedFilters) || !hasSelectedFilters;
+    isEqual(submittedFilters, selectedFilters) ||
+    (!hasSelectedFilters && !hasSubmittedFilters);
+
+  const isResetAllBtnDisabled = !hasSelectedFilters && !hasSubmittedFilters
 
   return isFilterOpened || isDesktop ? (
     <section className={styles["filter"]}>
@@ -99,7 +103,7 @@ export const FilterPanel: FC = () => {
           </button>
           <button
             className={styles["filter__top-buttons-clear-all-filters"]}
-            disabled={!hasSelectedFilters}
+            disabled={isResetAllBtnDisabled}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={handleResettingFilters}

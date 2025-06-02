@@ -37,6 +37,8 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
   const { new_password1, new_password2 } = editingPassword;
   const [error, setError] = useState("");
 
+  const sendingToken = localStorage.getItem("access_token") || token;
+
   const addFormField = () => {
     switch (detailType) {
       case "name":
@@ -161,7 +163,8 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
         method: forDetail === "Password" ? "POST" : "PATCH",
         body: parseTempUser(),
       },
-      token
+      sendingToken,
+      dispatch,
     )
       .then((data) => {
         // only password form doesn't send back updated user

@@ -27,7 +27,8 @@ export const handleFileSelect = (
       method: "PATCH",
       body: formData,
     },
-    token
+    token,
+    dispatch
   ).then((data) => {
     dispatch(updateUserInfo(data as UserInfo));
     localStorage.removeItem("user");
