@@ -29,7 +29,7 @@ export const SignUpForm: FC = () => {
   const [isPending, setIsPending] = useState(false);
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
 
-  const { registrationForm, signUpError, registrationErrors } = useAppSelector(
+  const { registrationForm, signUpError } = useAppSelector(
     (state) => state.registration
   );
   const { passwordRequirements } = useAppSelector((state) => state.password);
@@ -66,13 +66,15 @@ export const SignUpForm: FC = () => {
         if (!response.ok) {
           return response.json().then((res) => {
             dispatch(updateRegistrationErrors(res));
+
+            return { hasErrors: true };
           });
         }
 
         return response.json();
       })
-      .then(() => {
-        if (Object.values(registrationErrors).some((error) => !error)) {
+      .then(({ hasErrors }) => {
+        if (hasErrors) {
           setIsPending(false);
 
           return;

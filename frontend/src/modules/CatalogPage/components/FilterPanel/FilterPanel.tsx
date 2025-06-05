@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
 import { isEqual, some } from "lodash-es";
-import { FC, FormEvent, useEffect, useState } from "react";
+import { FC, FormEvent, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FilterSection } from "./components/FilterSection";
 
@@ -27,9 +27,9 @@ export const FilterPanel: FC = () => {
   const { isFilterOpened, selectedFilters, submittedFilters } = useAppSelector(
     (state) => state.filter
   );
+  const { isProductsLoaded } = useAppSelector(state => state.products);
   const [, setSearchParams] = useSearchParams();
   const { loadSelectedProducts } = useLoadSelectedProducts();
-  const [loadingApply, setLoadingApply] = useState(false);
   const isDesktop = width && width >= screenEndpoints.desktop;
   const hasSelectedFilters = some(selectedFilters, (arr) => arr.length > 0);
   const hasSubmittedFilters = some(submittedFilters, (arr) => arr.length > 0);
@@ -48,10 +48,7 @@ export const FilterPanel: FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    setLoadingApply(true);
-    await loadSelectedProducts(selectedFilters);
-    setLoadingApply(false);
+    loadSelectedProducts(selectedFilters);
     dispatch(updateIsFilterOpened(false));
   };
 
@@ -95,7 +92,7 @@ export const FilterPanel: FC = () => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            {loadingApply ? (
+            {!isProductsLoaded ? (
               <Loader />
             ) : (
               <span className="button-text">apply</span>

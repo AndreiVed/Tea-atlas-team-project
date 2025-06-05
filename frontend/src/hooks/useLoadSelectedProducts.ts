@@ -15,10 +15,11 @@ export const useLoadSelectedProducts = () => {
   const loadSelectedProducts = (filters: SelectedFilters) => {
     const params = createFormattedParams(filters);
     const stringParams = params.toString();
+
+    dispatch(updateIsProductsLoaded(false));
   
     fetch(API_ENDPOINTS.catalog.applyFilters(stringParams))
       .then((response) => {
-        dispatch(updateIsProductsLoaded(false));
         if (!response.ok) {
           throw new Error("Something went wrong.");
         }

@@ -1,6 +1,6 @@
 import { useWindowSize } from "@uidotdev/usehooks";
 import cn from "classnames";
-import { FC, FormEvent, useEffect } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useCursorEffect } from "@/hooks/useCursorEffect";
@@ -28,6 +28,7 @@ export const LoginPage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
+  const [isLoadingResponse, setIsLoadingResponse] = useState(false);
 
   const { loginForm, loginError } = useAppSelector((state) => state.login);
   const { email, password } = loginForm;
@@ -51,6 +52,7 @@ export const LoginPage: FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoadingResponse(true);
 
     fetch(API_ENDPOINTS.auth.login, {
       method: "POST",
@@ -101,6 +103,9 @@ export const LoginPage: FC = () => {
             dispatch(updateLikedProducts(data));
             localStorage.setItem("likedProducts", JSON.stringify(data));
           });
+      })
+      .finally(() => {
+        setIsLoadingResponse(false);
       });
   };
 
@@ -167,6 +172,7 @@ export const LoginPage: FC = () => {
               type={"secondary"}
               text="SIGN IN"
               isDisabled={isSubmitDisabled}
+              isLoading={isLoadingResponse}
             />
           </div>
         </form>
