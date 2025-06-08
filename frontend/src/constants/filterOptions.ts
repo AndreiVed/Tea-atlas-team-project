@@ -26,9 +26,11 @@ export const fermentationOptions: FilterOption[] = [
 ];
 
 export const typeOptions: FilterOption[] = [
-  { id: 17, title: "Pu-erh", value: "pu-erh" },
-  { id: 18, title: "White", value: "white"},
+  { id: 17, title: "White", value: "white" },
+  { id: 18, title: "Green", value: "green"},
   { id: 19, title: "Oolong", value: "oolong" },
+  { id: 20, title: "Puerh", value: "puerh" },
+  { id: 21, title: "Black", value: "black" },
 ];
 
 export const filterOptions = {
