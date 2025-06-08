@@ -27,7 +27,7 @@ export const FilterPanel: FC = () => {
   const { isFilterOpened, selectedFilters, submittedFilters } = useAppSelector(
     (state) => state.filter
   );
-  const { isProductsLoaded } = useAppSelector(state => state.products);
+  const { isProductsLoaded } = useAppSelector((state) => state.products);
   const [, setSearchParams] = useSearchParams();
   const { loadSelectedProducts } = useLoadSelectedProducts();
   const isDesktop = width && width >= screenEndpoints.desktop;
@@ -63,7 +63,7 @@ export const FilterPanel: FC = () => {
     isEqual(submittedFilters, selectedFilters) ||
     (!hasSelectedFilters && !hasSubmittedFilters);
 
-  const isResetAllBtnDisabled = !hasSelectedFilters && !hasSubmittedFilters
+  const isResetAllBtnDisabled = !hasSelectedFilters && !hasSubmittedFilters;
 
   return isFilterOpened || isDesktop ? (
     <section className={styles["filter"]}>
@@ -109,6 +109,12 @@ export const FilterPanel: FC = () => {
 
         <div className={styles["filter__form-sections"]}>
           <FilterSection
+            title="type"
+            icon="/icons/leaf.svg"
+            options={filterOptions.type}
+          />
+
+          <FilterSection
             title="country"
             icon="/icons/planet.svg"
             options={filterOptions.countries}
@@ -124,12 +130,6 @@ export const FilterPanel: FC = () => {
             title="fermentation"
             icon="/icons/coffee.svg"
             options={filterOptions.fermentation}
-          />
-
-          <FilterSection
-            title="type"
-            icon="/icons/leaf.svg"
-            options={filterOptions.type}
           />
         </div>
       </form>
