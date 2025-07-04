@@ -66,8 +66,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -77,6 +77,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
@@ -217,6 +218,8 @@ REST_AUTH = {
     "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
     "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 9,
 }
 
 # django.contrib.sites
@@ -234,7 +237,6 @@ EMAIL_HOST_PASSWORD = "ujzu rkou zrtu hllu"  # Використовуйте па
 EMAIL_USE_SSL = True  # Використовуємо SSL
 
 ACCOUNT_EMAIL_VERIFICATION = "none"  # "mandatory", "optional" or "none"
-ACCOUNT_EMAIL_VERIFICATION = "none"  # або "optional"
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_LOGIN_METHODS = ["email"]
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True

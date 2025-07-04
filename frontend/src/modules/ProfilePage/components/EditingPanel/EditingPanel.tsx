@@ -36,6 +36,7 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
   const { first_name, last_name, email } = editingForm;
   const { new_password1, new_password2 } = editingPassword;
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const addFormField = () => {
     switch (detailType) {
@@ -155,6 +156,8 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
       : API_ENDPOINTS.auth.changeUserData;
 
   const handleSubmit = () => {
+    setIsLoading(true);
+
     fetchWithAuth(
       currentEndpoint,
       {
@@ -162,7 +165,7 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
         body: parseTempUser(),
       },
       token,
-      dispatch,
+      dispatch
     )
       .then((data) => {
         // only password form doesn't send back updated user
@@ -176,6 +179,9 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
       })
       .catch((err) => {
         setError(err.message || "Something went wrong");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -212,7 +218,12 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
         className={styles["editing-panel__save-btn-wrap"]}
         onClick={() => handleSubmit()}
       >
-        <GeneralButton type="primary" text="SAVE" isDisabled={isDisabled()} />
+        <GeneralButton
+          type="primary"
+          text="SAVE"
+          isDisabled={isDisabled()}
+          isLoading={isLoading}
+        />
       </div>
       {error && <p className="main-text">{error}</p>}
     </div>
