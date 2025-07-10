@@ -3,7 +3,6 @@ import os
 import django
 
 # Налаштування Django для запуску скрипта поза веб-сервером
-# Вам потрібно буде встановити правильний шлях до вашого settings.py
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tea_atlas_service.settings")
 django.setup()
 
@@ -139,28 +138,7 @@ def import_tea_data(json_file_path):
 
 if __name__ == "__main__":
     json_file_path = "tea_catalog_db_data.json"
-
     if os.path.exists(json_file_path):
-        # Це НЕ РЕКОМЕНДУЄТЬСЯ на продакшені!
-        # from django.db import connection
-        # cursor = connection.cursor()
-        # tables = [
-        #     "tea_catalog_tea_descriptors",
-        #     "tea_catalog_tea",
-        #     "tea_catalog_category",
-        #     "tea_catalog_region",
-        #     "tea_catalog_country",
-        #     "tea_catalog_descriptor"
-        # ]
-        # for table in tables:
-        #     try:
-        #         cursor.execute(f"DELETE FROM {table};")
-        #         print(f"Cleared table: {table}")
-        #     except Exception as e:
-        #         print(f"Error clearing {table}: {e}")
-        # connection.commit()
-        # print("Database tables cleared (if applicable). Starting import...")
-
         import_tea_data(json_file_path)
         print("\nData import process completed.")
     else:
