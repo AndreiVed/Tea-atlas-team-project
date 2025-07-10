@@ -34,7 +34,7 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     "localhost",
     "127.0.0.1",
-    "your-backend-service-name.onrender.com",
+    "tea-atlas-backend.onrender.com",
     ".render.com",
 ]
 
