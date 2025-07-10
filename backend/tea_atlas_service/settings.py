@@ -83,7 +83,7 @@ CORS_ALLOW_CREDENTIALS = True
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Для локальної розробки фронтенду
-    # Додайте URL вашого фронтенду на Render, коли він буде відомий:
+    "https://tea-atlas.onrender.com",  # Додайте URL вашого фронтенду на Render, коли він буде відомий:
     # 'https://your-frontend-service-name.onrender.com',
 ]
 # if not DEBUG:
