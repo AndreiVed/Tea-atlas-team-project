@@ -1,12 +1,15 @@
 asgiref==3.8.1
 attrs==25.1.0
 black==25.1.0
+boto3==1.38.46
+botocore==1.38.46
 certifi==2025.1.31
 cffi==1.17.1
 charset-normalizer==3.4.1
 click==8.1.8
 cryptography==44.0.2
 defusedxml==0.7.1
+dj-database-url==3.0.0
 dj-rest-auth==7.0.1
 Django==5.1.6
 django-allauth==65.5.0
@@ -15,12 +18,15 @@ django-cors-headers==4.7.0
 django-oauth-toolkit==3.0.1
 django-rest-auth==0.9.5
 django-rest-framework-social-oauth2==1.2.0
+django-storages==1.14.6
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.5.0
 dotenv==0.9.9
 drf-spectacular==0.28.0
+gunicorn==23.0.0
 idna==3.10
 inflection==0.5.1
+jmespath==1.0.1
 jsonschema==4.23.0
 jsonschema-specifications==2024.10.1
 jwcrypto==1.5.6
@@ -33,6 +39,7 @@ platformdirs==4.3.6
 psycopg2-binary==2.9.10
 pycparser==2.22
 PyJWT==2.9.0
+python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 python3-openid==3.2.0
 PyYAML==6.0.2
@@ -40,6 +47,7 @@ referencing==0.36.2
 requests==2.32.3
 requests-oauthlib==2.0.0
 rpds-py==0.23.1
+s3transfer==0.13.0
 six==1.17.0
 social-auth-app-django==5.4.3
 social-auth-core==4.5.6
@@ -47,3 +55,4 @@ sqlparse==0.5.3
 typing_extensions==4.12.2
 uritemplate==4.1.1
 urllib3==2.3.0
+whitenoise==6.9.0

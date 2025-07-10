@@ -26,14 +26,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
-
+DEBUG = os.environ.get("DEBUG", "") == "True"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "localhost",
     "127.0.0.1",
+    "your-backend-service-name.onrender.com",
+    ".render.com",
 ]
 
 
@@ -67,6 +69,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -79,8 +82,13 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    "http://localhost:5173",  # Для локальної розробки фронтенду
+    # Додайте URL вашого фронтенду на Render, коли він буде відомий:
+    # 'https://your-frontend-service-name.onrender.com',
 ]
+# if not DEBUG:
+#     # Додайте URL фронтенду на Render, коли він буде відомий
+#     CORS_ALLOWED_ORIGINS.append(os.environ.get("FRONTEND_URL"))
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
@@ -163,11 +171,38 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(
+    BASE_DIR, "staticfiles"
+)  # Шлях, куди collectstatic збере файли
 
-STATIC_URL = "static/"
 # MEDIA_ROOT = "/files/media"
 MEDIA_ROOT = BASE_DIR / "media"
-MEDIA_URL = "/media/"
+
+# Медіа-файли (AWS S3)
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = "public-read"
+
+MEDIA_URL = (
+    f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/media/"
+    if AWS_STORAGE_BUCKET_NAME
+    else "/media/"
+)
+# MEDIA_URL = "/media/"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",  # Використовуємо S3 для завантажених медіа
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",  # WhiteNoise для статичних файлів
+    },
+}
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
