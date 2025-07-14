@@ -265,12 +265,15 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 465  # 587
 EMAIL_USE_TLS = False
-EMAIL_HOST_USER = "catblues87@gmail.com"  # Вкажіть свою email-адресу
-EMAIL_HOST_PASSWORD = "ujzu rkou zrtu hllu"  # Використовуйте пароль або App Password (якщо у вас включено 2FA)
+EMAIL_HOST_USER = (
+    "teaatlas2025@gmail.com"  # "catblues87@gmail.com"  # Вкажіть свою email-адресу
+)
+EMAIL_HOST_PASSWORD = "dpql hgpu buro zsjb"
+# "ujzu rkou zrtu hllu"  # Використовуйте пароль або App Password (якщо у вас включено 2FA)
 
 EMAIL_USE_SSL = True  # Використовуємо SSL
 
-ACCOUNT_EMAIL_VERIFICATION = "none"  # "mandatory", "optional" or "none"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # "mandatory", "optional" or "none"
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_LOGIN_METHODS = ["email"]
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
