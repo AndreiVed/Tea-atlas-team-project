@@ -26,14 +26,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
-
+DEBUG = os.environ.get("DEBUG", "") == "True"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "localhost",
     "127.0.0.1",
+    "tea-atlas-backend.onrender.com",
+    ".render.com",
 ]
 
 
@@ -65,8 +67,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -79,8 +82,13 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    "http://localhost:5173",  # Для локальної розробки фронтенду
+    "https://tea-atlas.onrender.com",  # Додайте URL вашого фронтенду на Render, коли він буде відомий:
+    # 'https://your-frontend-service-name.onrender.com',
 ]
+# if not DEBUG:
+#     # Додайте URL фронтенду на Render, коли він буде відомий
+#     CORS_ALLOWED_ORIGINS.append(os.environ.get("FRONTEND_URL"))
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
@@ -163,11 +171,37 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(
+    BASE_DIR, "staticfiles"
+)  # Шлях, куди collectstatic збере файли
 
-STATIC_URL = "static/"
 # MEDIA_ROOT = "/files/media"
 MEDIA_ROOT = BASE_DIR / "media"
-MEDIA_URL = "/media/"
+
+# Медіа-файли (AWS S3)
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
+AWS_S3_FILE_OVERWRITE = False
+
+MEDIA_URL = (
+    f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/media/"
+    if AWS_STORAGE_BUCKET_NAME
+    else "/media/"
+)
+# MEDIA_URL = "/media/"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",  # Використовуємо S3 для завантажених медіа
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",  # WhiteNoise для статичних файлів
+    },
+}
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -227,16 +261,29 @@ SITE_ID = 1
 REST_USE_JWT = True  # Використання JWT у dj-rest-auth
 JWT_ALLOW_REFRESH = True
 
+
+# The URL to redirect to after a successful email confirmation, in case no user is logged in.
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = os.environ.get(
+    "EMAIL_CONFIRM_REDIRECT_URL", "https://tea-atlas.onrender.com/login"
+)
+# The URL to redirect to after a successful email confirmation, in case of an authenticated user.
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = os.environ.get(
+    "EMAIL_CONFIRM_REDIRECT_URL", "https://tea-atlas.onrender.com/login"
+)
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 465  # 587
 EMAIL_USE_TLS = False
-EMAIL_HOST_USER = "catblues87@gmail.com"  # Вкажіть свою email-адресу
-EMAIL_HOST_PASSWORD = "ujzu rkou zrtu hllu"  # Використовуйте пароль або App Password (якщо у вас включено 2FA)
+EMAIL_HOST_USER = (
+    "teaatlas2025@gmail.com"  # "catblues87@gmail.com"  # Вкажіть свою email-адресу
+)
+EMAIL_HOST_PASSWORD = "dpql hgpu buro zsjb"
+# "ujzu rkou zrtu hllu"  # Використовуйте пароль або App Password (якщо у вас включено 2FA)
 
 EMAIL_USE_SSL = True  # Використовуємо SSL
 
-ACCOUNT_EMAIL_VERIFICATION = "none"  # "mandatory", "optional" or "none"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # "mandatory", "optional" or "none"
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_LOGIN_METHODS = ["email"]
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True

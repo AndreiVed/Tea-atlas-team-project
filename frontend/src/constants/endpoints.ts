@@ -4,7 +4,8 @@ export const screenEndpoints = {
   desktop: 1440,
 };
 
-const BASE_URL = "http://127.0.0.1:8000/";
+// const BASE_URL = "http://127.0.0.1:8000/"; // for local
+const BASE_URL = "https://tea-atlas-backend.onrender.com/";
 const API_VERSION = "api/v1";
 
 const getEndpoint = (path: string) => `${BASE_URL}${API_VERSION}${path}`;
