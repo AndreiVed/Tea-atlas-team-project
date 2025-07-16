@@ -35,6 +35,8 @@ export const Banner: FC<Props> = ({ className, baseSrc }) => {
           className={styles[className]}
           src={insertImageSrc("mobile")}
           alt="Discover world of tea banner"
+          loading="eager"
+          fetchPriority="high"
         />
       </picture>
     </div>
