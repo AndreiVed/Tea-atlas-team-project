@@ -110,7 +110,8 @@ export const LoginPage: FC = () => {
   };
 
   const handleGoogleAuth = () => {
-    window.location.href = "http://127.0.0.1:8000/api/v1/google_auth/redirect/";
+    window.location.href =
+      "https://tea-atlas-backend.onrender.com/api/v1/google_auth/redirect/";
   };
 
   return (
@@ -118,7 +119,7 @@ export const LoginPage: FC = () => {
       {isOnDesktop ? (
         <img
           className={styles["login__banner"]}
-          src="/banners/loginpage/registration.jpg"
+          src="/banners/loginpage/registration.webp"
           alt="Registration"
         />
       ) : null}
