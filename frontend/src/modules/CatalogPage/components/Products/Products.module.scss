@@ -1,5 +1,15 @@
 .products {
+  width: 100%;
   background-color: inherit;
+
+  &--loading {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    margin-top: 10%;
+  }
 
   &--empty {
     width: 100%;

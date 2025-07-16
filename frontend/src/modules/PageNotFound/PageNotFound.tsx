@@ -13,7 +13,7 @@ export const PageNotFound: FC = () => {
     <div className={styles["page-not-found"]}>
       <div className={styles[bannerClassName]}>
         <Banner
-          baseSrc="/banners/notfoundpage/404.jpg"
+          baseSrc="/banners/notfoundpage/404.webp"
           className={bannerClassName}
         />
       </div>

@@ -20,7 +20,7 @@ export const EmailSentMessage: FC = () => {
       <div className={styles["email-sent__info"]}>
         <div className={styles["email-sent__banner"]}>
           <Banner
-            baseSrc="/banners/registrationpage/email-sent.jpg"
+            baseSrc="/banners/registrationpage/email-sent.webp"
             className="email-sent"
           />
         </div>

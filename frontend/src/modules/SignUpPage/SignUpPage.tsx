@@ -17,7 +17,7 @@ export const SignUpPage: FC = () => {
     >
       <img
         className={styles["sign-up__banner"]}
-        src="/banners/loginpage/registration.jpg"
+        src="/banners/loginpage/registration.webp"
         alt="Registration banner"
       />
       <Outlet />

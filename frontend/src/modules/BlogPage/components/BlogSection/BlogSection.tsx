@@ -9,7 +9,7 @@ export const BlogSection: FC = () => {
     <section className={styles["blog-section"]}>
       <Banner
         className="blog-section"
-        baseSrc="/banners/blogpage/blogsection/essentials.jpg"
+        baseSrc="/banners/blogpage/blogsection/essentials.webp"
       />
       <div className={styles["blog-section__info"]}>
         <h2 className={styles["blog-section__info-title"]}>

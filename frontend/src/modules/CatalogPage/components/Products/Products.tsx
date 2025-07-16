@@ -1,3 +1,4 @@
+import { Loader } from "@/components/Loader";
 import { useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { FC } from "react";
@@ -7,7 +8,9 @@ import { SearchResults } from "./components/SearchResults";
 import styles from "./Products.module.scss";
 
 export const Products: FC = () => {
-  const { products } = useAppSelector((state) => state.products);
+  const { products, isProductsLoaded } = useAppSelector(
+    (state) => state.products
+  );
   const [searchParams] = useSearchParams();
   const nameParam = searchParams.get("name");
   const hasProducts = Boolean(products.length);
@@ -16,10 +19,17 @@ export const Products: FC = () => {
     <section
       className={cn(styles["products"], {
         [styles["products--empty"]]: !products.length,
+        [styles["products--loading"]]: !isProductsLoaded,
       })}
     >
-      <SearchResults nameParam={nameParam} hasProducts={hasProducts} />
-      <ProductList hasProducts={hasProducts} />
+      {isProductsLoaded ? (
+        <>
+          <ProductList hasProducts={hasProducts} />
+          <SearchResults nameParam={nameParam} hasProducts={hasProducts} />
+        </>
+      ) : (
+        <Loader size="big" />
+      )}
     </section>
   );
 };

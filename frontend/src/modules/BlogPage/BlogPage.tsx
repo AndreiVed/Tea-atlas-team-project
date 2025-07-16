@@ -11,7 +11,7 @@ export const BlogPage: FC = () => {
   return (
     <section className={styles["blog"]}>
       <div className={cn(styles["blog__banner"], styles["blog-banner-wrap"])}>
-        <Banner className="blog__banner" baseSrc="/banners/blogpage/blog.jpg" />
+        <Banner className="blog__banner" baseSrc="/banners/blogpage/blog.webp" />
         <h1 className={styles["blog__banner-title"]}>Blog</h1>
       </div>
       <div className={styles["blog__sections"]}>

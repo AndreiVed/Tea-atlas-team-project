@@ -13,7 +13,7 @@ export const LikedItPage: FC = () => {
       <div className={styles["liked-it__banner"]}>
         <Banner
           className="liked-it__banner"
-          baseSrc="/banners/likeditpage/liked-it-title.jpg"
+          baseSrc="/banners/likeditpage/liked-it-title.webp"
         />
         <h1 className={styles["liked-it__banner-title"]}>Liked it</h1>
       </div>

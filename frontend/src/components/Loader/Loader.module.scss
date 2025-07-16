@@ -10,6 +10,11 @@
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 
+  &--big {
+    width: 48px;
+    height: 48px;
+  }
+
   &--primary {
     border-color: $white;
   }

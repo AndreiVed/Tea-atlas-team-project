@@ -96,7 +96,7 @@ export const CatalogPage: FC = () => {
       <div className={styles["catalog-banner-wrap"]}>
         <Banner
           className="catalog__banner"
-          baseSrc="/banners/catalogpage/catalog.jpg"
+          baseSrc="/banners/catalogpage/catalog.webp"
         />
         <h2 className={styles["catalog__title"]}>Tea Catalog</h2>
       </div>

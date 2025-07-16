@@ -17,7 +17,7 @@ export const SpecificBlogPage: FC = () => {
       <div className={styles["specific-blog__banner-wrap"]}>
         <Banner
           className="specific-blog__banner"
-          baseSrc="/banners/blogpage/blogsection/essentials.jpg"
+          baseSrc="/banners/blogpage/blogsection/essentials.webp"
         />
         <h1 className={styles["specific-blog__title"]}>
           Tea Brewing Essentials
@@ -35,7 +35,7 @@ export const SpecificBlogPage: FC = () => {
         <div className={styles["specific-blog__green-pot-banner"]}>
           <Banner
             className="green-pot__banner"
-            baseSrc="/banners/blogpage/blogsection/green-pot.jpg"
+            baseSrc="/banners/blogpage/blogsection/green-pot.webp"
           />
         </div>
         <div className={styles["specific-blog__first-point"]}>
@@ -124,7 +124,7 @@ export const SpecificBlogPage: FC = () => {
         <div className={styles["specific-blog__three-cups-banner"]}>
           <Banner
             className="three-cups__banner"
-            baseSrc="/banners/blogpage/blogsection/three-cups.jpg"
+            baseSrc="/banners/blogpage/blogsection/three-cups.webp"
           />
         </div>
         <div className={styles["specific-blog__third-point"]}>
@@ -231,7 +231,7 @@ export const SpecificBlogPage: FC = () => {
         <div className={styles["specific-blog__holding-cup-banner"]}>
           <Banner
             className="holding-cup__banner"
-            baseSrc="/banners/blogpage/blogsection/holding-cup.jpg"
+            baseSrc="/banners/blogpage/blogsection/holding-cup.webp"
           />
         </div>
         <div className={styles["specific-blog__fifth-point"]}>

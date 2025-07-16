@@ -3,40 +3,65 @@
 
 .product {
   &-photo {
-      box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s;
+    aspect-ratio: 1 / 1;
+
+    &--hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      position: absolute;
+    }
+
+    &--product-page {
+      object-fit: cover;
+      @include on-desktop {
+        grid-column: span 6;
+      }
+    }
+
+    &-wrapper {
+      position: relative;
       width: 100%;
       height: 100%;
-      transition: transform 0.4s;
-      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-loader {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    &-empty {
+      width: 100%;
+      height: 100%;
+
+      min-width: 50px;
+      min-height: 50px;
+      background-color: $gray-30;
 
       &--product-page {
-        object-fit: cover;
+        width: 100%;
+        height: 200px;
+
+        @include on-tablet {
+          height: 400px;
+        }
+
         @include on-desktop {
+          height: 100%;
           grid-column: span 6;
         }
       }
-  
-      &-empty {
-        width: 100%;
-        height: 100%;
-    
-        min-width: 50px;
-        min-height: 50px;
-        background-color: $gray-30;
-
-        &--product-page {
-          width: 100%;
-          height: 200px;
-
-          @include on-tablet {
-            height: 400px;
-          }
-
-          @include on-desktop {
-            height: 100%;
-            grid-column: span 6;
-          }
-        }
-      }
     }
+  }
 }

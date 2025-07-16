@@ -185,7 +185,7 @@ export const ProductPage: FC = () => {
 
       <div className={styles["product__learn-more"]}>
         <Banner
-          baseSrc="/banners/productpage/learn-more.jpg"
+          baseSrc="/banners/productpage/learn-more.webp"
           className="product__learn-more-banner"
         />
         <button

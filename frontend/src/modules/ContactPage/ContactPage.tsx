@@ -26,7 +26,7 @@ export const ContactPage: FC = () => {
       <div className={styles["contact-us__top"]}>
         <Banner
           className="contact-us__banner"
-          baseSrc="/banners/contactpage/contact.jpg"
+          baseSrc="/banners/contactpage/contact.webp"
         />
         <div className={styles["contact-us__top-info-wrap"]}>
           <h1 className={styles["contact-us__top-title"]}>Contact us</h1>

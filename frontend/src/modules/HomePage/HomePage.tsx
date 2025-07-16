@@ -12,7 +12,7 @@ export const HomePage = () => {
       <section className={styles["discover-world-of-tea"]}>
         <Banner
           className="discover-world-of-tea__banner"
-          baseSrc="/banners/homepage/teapot-with-tea-bright-table.jpg"
+          baseSrc="/banners/homepage/teapot-with-tea-bright-table.webp"
         />
         <div className={styles["discover-world-of-tea__wrap"]}>
           <h2 className={styles["discover-world-of-tea__title"]}>
@@ -25,7 +25,7 @@ export const HomePage = () => {
       <section className={styles["tea-catalog"]}>
         <Banner
           className="tea-catalog__banner"
-          baseSrc="/banners/homepage/tea-catalog-banner.jpg"
+          baseSrc="/banners/homepage/tea-catalog-banner.webp"
         />
         <div className={styles["tea-catalog__info"]}>
           <h3 className={styles["tea-catalog__info-title"]}>Tea Catalog</h3>
@@ -45,7 +45,7 @@ export const HomePage = () => {
       <section className={styles["guide"]}>
         <Banner
           className="guide__banner"
-          baseSrc="/banners/homepage/brewing.jpg"
+          baseSrc="/banners/homepage/brewing.webp"
         />
         <div className={styles["guide__info"]}>
           <h3 className={styles["guide__info-title"]}>Brewing Guide</h3>
