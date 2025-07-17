@@ -1,0 +1,7 @@
+@use "@/styles/utils/vars.scss" as *;
+
+.cursor {
+  @media (max-width: $tablet-min-width) {
+    visibility: none;
+  }
+}
