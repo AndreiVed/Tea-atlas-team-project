@@ -6,7 +6,8 @@
 
   display: block;
   scroll-snap-align: start;
-  width: 40vw;
+  min-width: 40vw;
+  flex-shrink: 0;
   aspect-ratio: 8 / 9;
   transition: transform .4s;
   overflow: clip;
