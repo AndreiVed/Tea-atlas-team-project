@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import {
   Navigate,
   Route,
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
 } from "react-router-dom";
 import { CustomCursor } from "./components/CustomCursor";
@@ -18,6 +18,7 @@ import { HomePage } from "./modules/HomePage";
 import { LikedItPage } from "./modules/LikedItPage";
 import { LoginPage } from "./modules/LoginPage";
 import { Menu } from "./modules/Menu";
+import { OAuthCallback } from "./modules/OAuthCallback";
 import { PageNotFound } from "./modules/PageNotFound";
 import { ProductPage } from "./modules/ProductPage";
 import { ProfilePage } from "./modules/ProfilePage";
@@ -62,6 +63,7 @@ export const App: FC = () => {
             element={<SpecificBlogPage />}
           />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/callback" element={<OAuthCallback />} />
           <Route path="*" element={<Navigate to="/page-not-found" replace />} />
           <Route path="/page-not-found" element={<PageNotFound />} />
         </Routes>
