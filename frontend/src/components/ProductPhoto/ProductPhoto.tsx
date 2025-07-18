@@ -24,7 +24,7 @@ export const ProductPhoto: FC<Props> = ({ image, usedInPage }) => {
   }
 
   return (
-    <div className="product-photo-wrapper">
+    <div className={styles["product-photo-wrapper"]}>
       {!loaded && (
         <div className={styles["product-photo-loader"]}>
           <Loader />
