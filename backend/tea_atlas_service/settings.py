@@ -79,12 +79,27 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
 ]
 
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],  # Переконайтеся, що ця лінія є
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+
 CORS_ALLOW_CREDENTIALS = True
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Для локальної розробки фронтенду
     "https://tea-atlas.onrender.com",  # Додайте URL вашого фронтенду на Render, коли він буде відомий:
-    # 'https://your-frontend-service-name.onrender.com',
 ]
 # if not DEBUG:
 #     # Додайте URL фронтенду на Render, коли він буде відомий

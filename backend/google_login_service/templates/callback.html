@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Автентифікація Google</title>
+    <script>
+        // Функція для отримання параметрів з URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const code = getUrlParameter('code');
+            const state = getUrlParameter('state');
+
+            // URL вашого бекенду, куди фронтенд буде відправляти code для обміну на JWT
+            // Це буде ваш новий POST-ендпоінт
+            const backendLoginUrl = 'https://tea-atlas-backend.onrender.com/api/v1/google_auth/login/';
+
+            // URL вашого фронтенду, куди переадресувати після успішного входу
+            const frontendHomeUrl = 'https://tea-atlas.onrender.com/'; // Або інший шлях, наприклад, '/dashboard'
+
+            if (code) {
+                fetch(backendLoginUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Якщо ваш Django REST Framework вимагає CSRF-токен для POST-запитів,
+                        // вам потрібно буде отримати його з кук або іншим способом.
+                        // Для міждоменних запитів (CORS) це може бути складніше,
+                        // але зазвичай для таких API-викликів CSRF не потрібен,
+                        // якщо ви використовуєте JWT без сесій.
+                        // 'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ code: code, state: state })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        // Якщо бекенд повернув помилку
+                        return response.json().then(err => { throw new Error(err.error || 'Помилка автентифікації на бекенді'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Припустимо, бекенд повертає { access: "...", refresh: "..." }
+                    localStorage.setItem('access_token', data.access);
+                    localStorage.setItem('refresh_token', data.refresh);
+                    // Перенаправляємо на головну сторінку фронтенду
+                    window.location.href = frontendHomeUrl;
+                })
+                .catch(error => {
+                    console.error('Помилка входу через Google:', error);
+                    alert('Помилка входу через Google. Спробуйте ще раз: ' + error.message);
+                    window.location.href = frontendHomeUrl; // Перенаправляємо на фронтенд навіть у разі помилки
+                });
+            } else {
+                alert('Не отримано код авторизації від Google.');
+                window.location.href = frontendHomeUrl;
+            }
+        });
+
+        // Функція для отримання куки CSRF (якщо потрібно)
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</head>
+<body>
+    <p>Обробка входу через Google...</p>
+    <p>Будь ласка, зачекайте, вас буде перенаправлено.</p>
+</body>
+</html>
