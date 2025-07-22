@@ -12,50 +12,43 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOMContentLoaded fired."); // Додайте цей лог
             const code = getUrlParameter('code');
             const state = getUrlParameter('state');
+            console.log("Code:", code, "State:", state); // Додайте цей лог
 
-            // URL вашого бекенду, куди фронтенд буде відправляти code для обміну на JWT
-            // Це буде ваш новий POST-ендпоінт
             const backendLoginUrl = 'https://tea-atlas-backend.onrender.com/api/v1/google_auth/login/';
-
-            // URL вашого фронтенду, куди переадресувати після успішного входу
-            const frontendHomeUrl = 'https://tea-atlas.onrender.com/'; // Або інший шлях, наприклад, '/dashboard'
+            const frontendHomeUrl = 'https://tea-atlas.onrender.com/';
 
             if (code) {
+                console.log("Attempting to send POST request..."); // Додайте цей лог
                 fetch(backendLoginUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        // Якщо ваш Django REST Framework вимагає CSRF-токен для POST-запитів,
-                        // вам потрібно буде отримати його з кук або іншим способом.
-                        // Для міждоменних запитів (CORS) це може бути складніше,
-                        // але зазвичай для таких API-викликів CSRF не потрібен,
-                        // якщо ви використовуєте JWT без сесій.
-                        // 'X-CSRFToken': getCookie('csrftoken')
                     },
                     body: JSON.stringify({ code: code, state: state })
                 })
                 .then(response => {
+                    console.log("Received response from backend POST:", response); // Додайте цей лог
                     if (!response.ok) {
-                        // Якщо бекенд повернув помилку
                         return response.json().then(err => { throw new Error(err.error || 'Помилка автентифікації на бекенді'); });
                     }
                     return response.json();
                 })
                 .then(data => {
-                    // Припустимо, бекенд повертає { access: "...", refresh: "..." }
+                    console.log("Parsed data from backend POST:", data); // Додайте цей лог
                     localStorage.setItem('access_token', data.access);
                     localStorage.setItem('refresh_token', data.refresh);
-                    // Перенаправляємо на головну сторінку фронтенду
                     window.location.href = frontendHomeUrl;
                 })
                 .catch(error => {
-                    console.error('Помилка входу через Google:', error);
+                    console.error('Fetch error:', error); // Додайте цей лог
                     alert('Помилка входу через Google. Спробуйте ще раз: ' + error.message);
-                    window.location.href = frontendHomeUrl; // Перенаправляємо на фронтенд навіть у разі помилки
+                    window.location.href = frontendHomeUrl;
                 });
             } else {
+                console.log("Code not found in URL."); // Додайте цей лог
                 alert('Не отримано код авторизації від Google.');
                 window.location.href = frontendHomeUrl;
             }

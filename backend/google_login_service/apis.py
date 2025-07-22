@@ -33,6 +33,8 @@ class GoogleAuthCallbackHtmlView(PublicApi):
         # щоб JavaScript міг їх зчитати.
         # Хоча JavaScript може зчитати їх і безпосередньо з window.location.search
         # Цей метод важливий для того, щоб браузер отримав HTML, а не JSON.
+        print(f"CODE: {request.GET.get("code")}")
+        print(f"STATE: {request.GET.get("state")}")
         return render(
             request,
             "callback.html",
@@ -88,7 +90,7 @@ class GoogleLoginApi(PublicApi):
         try:
             google_tokens = google_login_flow.get_tokens(code=code)
             # id_token_decoded = google_tokens.decode_id_token() # Не обов'язково повертати на фронтенд
-
+            print(f"GOOGLE TOKEN: {google_tokens}")
             user_info = google_login_flow.get_user_info(google_tokens=google_tokens)
 
             user, created = get_or_create_user(user_info)
@@ -105,6 +107,7 @@ class GoogleLoginApi(PublicApi):
                 "user_id": user.id,
                 "email": user.email,
             }
+            print(f"resp data: {response_data}")
             return Response(response_data, status=status.HTTP_200_OK)
         except Exception as e:
             # Обробка будь-яких помилок під час обміну коду або отримання інформації про користувача
