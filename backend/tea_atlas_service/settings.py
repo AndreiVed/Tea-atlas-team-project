@@ -305,7 +305,7 @@ ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_LOGIN_METHODS = ["email"]
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
-LOGIN_URL = "/api/v1/catalog/"
+LOGIN_URL = "https://tea-atlas.onrender.com/#/login"
 
 GOOGLE_OAUTH_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
 GOOGLE_OAUTH_PROJECT_ID = os.getenv("GOOGLE_OAUTH_PROJECT_ID")
