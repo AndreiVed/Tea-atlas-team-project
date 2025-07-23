@@ -281,11 +281,11 @@ JWT_ALLOW_REFRESH = True
 
 # The URL to redirect to after a successful email confirmation, in case no user is logged in.
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = os.environ.get(
-    "EMAIL_CONFIRM_REDIRECT_URL", "https://tea-atlas.onrender.com/login"
+    "EMAIL_CONFIRM_REDIRECT_URL", "https://tea-atlas.onrender.com/#/login"
 )
 # The URL to redirect to after a successful email confirmation, in case of an authenticated user.
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = os.environ.get(
-    "EMAIL_CONFIRM_REDIRECT_URL", "https://tea-atlas.onrender.com/login"
+    "EMAIL_CONFIRM_REDIRECT_URL", "https://tea-atlas.onrender.com/#/login"
 )
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
