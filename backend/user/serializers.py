@@ -1,13 +1,19 @@
+import os
+
 from allauth.account.models import EmailAddress
 from allauth.account.views import ConfirmEmailView
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import UserDetailsSerializer, LoginSerializer
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
+from dotenv import load_dotenv
 from rest_framework import serializers
 from allauth.account import app_settings as allauth_account_settings
 from rest_framework.validators import UniqueValidator
 from django.utils.translation import gettext_lazy as _
+
+load_dotenv()
+
 
 
 class UserSerializer(RegisterSerializer):
@@ -59,4 +65,4 @@ class UserProfileSerializer(UserDetailsSerializer):
 class CustomConfirmEmailView(ConfirmEmailView):
     def post(self, *args, **kwargs):
         self.get_object().confirm(self.request)
-        return redirect("https://tea-atlas.onrender.com/#/login")  # редірект на сторінку входу
+        return redirect(os.getenv("EMAIL_CONFIRM_REDIRECT_URL"))  # редірект на сторінку входу
