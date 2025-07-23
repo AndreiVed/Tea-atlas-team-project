@@ -59,4 +59,4 @@ class UserProfileSerializer(UserDetailsSerializer):
 class CustomConfirmEmailView(ConfirmEmailView):
     def post(self, *args, **kwargs):
         self.get_object().confirm(self.request)
-        return redirect("user:rest_login")  # редірект на сторінку входу
+        return redirect("https://tea-atlas.onrender.com/#/login")  # редірект на сторінку входу
