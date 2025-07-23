@@ -64,6 +64,7 @@ class GoogleLoginApi(PublicApi):
         email = serializers.EmailField(required=False)  # Додайте, якщо потрібно
 
     def post(self, request, *args, **kwargs):  # Змінено на POST
+
         input_serializer = self.InputSerializer(
             data=request.data
         )  # Використовуємо request.data для POST
