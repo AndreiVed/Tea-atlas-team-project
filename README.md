@@ -7,8 +7,11 @@ their origins, characteristics, and more.
 The project consists of a robust DRF backend, an interactive JavaScript frontend, and a PostgreSQL database, 
 all deployed as Docker containers.
 
-## Key Features
+Front-end server deployed on Render:
+https://tea-atlas.onrender.com/
 
+Back-end server deployed on Render: 
+https://tea-atlas-backend.onrender.com/
 
 ## Installing using GitHub
 
@@ -22,7 +25,8 @@ cd Tea-atlas-team-project
 
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+
+pip install -r backend/requirements.txt
 
 set POSTGRES_DB=tea_atlas_db
 set POSTGRES_USER=tea_atlas_user
@@ -35,14 +39,19 @@ set SECRET_KEY=your_secret_key
 docker-compose build
 docker-compose up
 ```
+For upload common tea data to database:
+```
+python backend/import_teas.py
+```
 
 ## Getting access
 
-* admin access:
-    email: admin@admin.com
-    password: 1qazcde3
+Admin access:
+* email: admin@admin.com 
+* password: 1qazcde3
 
 ## Features
+* Documentation is located at back-end server: api/v1/schema/swagger/
 
 * RESTful API: A robust backend built with Django REST Framework, providing a comprehensive API for all tea-related data.
 
@@ -53,15 +62,14 @@ docker-compose up
 * User Authentication: An implemented JWT with email confirmation for user authentication and authorization,
 An integrated authentication via Google oauth2
 
-* Scalable Database: Utilizes PostgreSQL for structured data storage.
+* Scalable Database: Integration with Neon DB for structured data storage.
 
 * Documentation is located at api/v1/schema/swagger/
 
 * User can add tea to favorites and view favorites list
 * User can filter tea list by country, category, fermentation and impact  
 * User can search tea by name
-
-[//]: # ( &#40;* Cloud Media Storage: Integration with AWS S3 for reliable and scalable storage of all user-uploaded media files, ensuring their persistence across service restarts.&#41;)
+* Cloud Media Storage: Integration with AWS S3 for reliable and scalable storage of all user-uploaded media files, ensuring their persistence across service restarts.)
 
 ## Technologies Used
 ### Backend (API)
@@ -75,7 +83,7 @@ An integrated authentication via Google oauth2
 
 * CORS: django-cors-headers
 
-[//]: # (* Static Files: WhiteNoise)
+* Static Files: WhiteNoise
 
 [//]: # ()
 [//]: # (Media Storage: django-storages with AWS S3 &#40;via boto3&#41;)
