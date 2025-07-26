@@ -38,8 +38,7 @@ class GoogleAccessTokens:
 
 
 class GoogleRawLoginFlowService:
-    # API_URI = reverse_lazy("google_auth:callback-raw")
-    API_URI = "https://tea-atlas.onrender.com/"
+    API_URI = reverse_lazy("google_auth:callback-raw")
 
     GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/auth"
     GOOGLE_ACCESS_TOKEN_OBTAIN_URL = "https://oauth2.googleapis.com/token"
@@ -68,7 +67,8 @@ class GoogleRawLoginFlowService:
         return redirect_uri
 
     def get_authorization_url(self):
-        redirect_uri = self._get_redirect_uri()
+        # redirect_uri = self._get_redirect_uri()
+        redirect_uri = "https://tea-atlas.onrender.com/"
         print(redirect_uri)
 
         state = self._generate_state_session_token()
