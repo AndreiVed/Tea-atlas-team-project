@@ -31,6 +31,7 @@ export const API_ENDPOINTS = {
   },
 
   google_auth: {
+    login: getEndpoint("/google_auth/login"),
     callback: getEndpoint("/google_auth/callback/"),
     redirect: getEndpoint("/google_auth/redirect/"),
   },
