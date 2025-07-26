@@ -33,8 +33,7 @@ class GoogleAuthCallbackHtmlView(PublicApi):
         # щоб JavaScript міг їх зчитати.
         # Хоча JavaScript може зчитати їх і безпосередньо з window.location.search
         # Цей метод важливий для того, щоб браузер отримав HTML, а не JSON.
-        print(f"CODE: {request.GET.get("code")}")
-        print(f"STATE: {request.GET.get("state")}")
+
         return render(
             request,
             "callback.html",
@@ -80,6 +79,8 @@ class GoogleLoginApi(PublicApi):
         if "google_oauth2_state" in request.session:
             del request.session["google_oauth2_state"]
 
+        print(f"!! session_state: {session_state}")
+        print(f"!! state: {state}")
         if session_state is None or state != session_state:
             return Response(
                 {"error": "CSRF check failed. Invalid or missing state."},
