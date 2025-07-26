@@ -21,12 +21,15 @@ export const HomePage = () => {
     const code = query.get("code");
     const state = query.get("state");
 
+    console.log(state);
+
     if (code && state) {
       fetch(API_ENDPOINTS.google_auth.login, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           code,
           state,
