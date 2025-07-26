@@ -29,6 +29,7 @@ export const HomePage = () => {
         },
         body: JSON.stringify({
           code,
+          state,
           redirect_uri: "https://tea-atlas.onrender.com/",
         }),
       })
