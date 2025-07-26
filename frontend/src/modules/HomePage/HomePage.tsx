@@ -4,42 +4,57 @@ import { API_ENDPOINTS } from "@/constants";
 import { updateUserInfo } from "@/features/profile/profileSlice";
 import { useScroll } from "@/hooks/useScroll";
 import { useAppDispatch } from "@/store/hooks";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Carousel } from "./components/Carousel";
+import { LoginErrorModal } from "./components/LoginErrorModal";
 import styles from "./HomePage.module.scss";
 
 export const HomePage = () => {
   useScroll({ options: { top: 0, behavior: "instant" } });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [isLoginError, setIsLoginError] = useState(false);
 
-  const query = new URLSearchParams(location.search);
-  const code = query.get("code");
-  const status = query.get("status");
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const code = query.get("code");
+    const state = query.get("state");
 
-  if (code && status) {
-    fetch(API_ENDPOINTS.google_auth.login, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        code,
-        redirect_uri: "https://tea-atlas.onrender.com/",
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        localStorage.setItem("refresh", data.refresh);
-        localStorage.setItem("access", data.access);
-        dispatch(updateUserInfo(data.user));
-
-        navigate("/", { replace: true });
-      });
-  }
+    if (code && state) {
+      fetch(API_ENDPOINTS.google_auth.login, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code,
+          redirect_uri: "https://tea-atlas.onrender.com/",
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Auth failed");
+          return res.json();
+        })
+        .then((data) => {
+          localStorage.setItem("refresh", data.refresh);
+          localStorage.setItem("access", data.access);
+          dispatch(updateUserInfo(data.user));
+        })
+        .catch(() => {
+          setIsLoginError(true);
+        })
+        .finally(() => {
+          navigate("/", { replace: true });
+        });
+    }
+  }, [location.search]);
 
   return (
     <>
+      {isLoginError ? (
+        <LoginErrorModal setIsLoginError={setIsLoginError} />
+      ) : null}
       <section className={styles["discover-world-of-tea"]}>
         <Banner
           className="discover-world-of-tea__banner"
