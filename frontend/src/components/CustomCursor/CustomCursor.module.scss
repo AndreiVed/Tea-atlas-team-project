@@ -2,6 +2,6 @@
 
 .cursor {
   @media (max-width: $tablet-min-width) {
-    visibility: none;
+    display: none;
   }
 }
