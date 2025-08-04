@@ -43,7 +43,6 @@ class GoogleLoginApi(View):
             return JsonResponse({"error": "Code and state are required."}, status=400)
 
         session_state = request.session.get("google_oauth2_state")
-        print(f"!!!! SESSION_STATE: {session_state}")
         if session_state is None:
             return JsonResponse({"error": "CSRF check failed."}, status=400)
 

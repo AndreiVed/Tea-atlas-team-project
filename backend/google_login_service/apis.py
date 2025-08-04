@@ -3,8 +3,10 @@ from django.shortcuts import redirect, render
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from google_login_service.service import GoogleRawLoginFlowService
+from tea_atlas_service import settings
 from user.selectors import get_or_create_user, generate_jwt_token
 
 
@@ -29,9 +31,6 @@ class GoogleAuthCallbackHtmlView(PublicApi):
     """
 
     def get(self, request, *args, **kwargs):
-        # Тут ми просто передаємо code та state в шаблон,
-        # щоб JavaScript міг їх зчитати.
-        # Хоча JavaScript може зчитати їх і безпосередньо з window.location.search
         # Цей метод важливий для того, щоб браузер отримав HTML, а не JSON.
 
         return render(
@@ -54,7 +53,9 @@ class GoogleLoginApi(PublicApi):
     class InputSerializer(serializers.Serializer):
         code = serializers.CharField(required=True)
         state = serializers.CharField(required=True)
-        # error = serializers.CharField(required=False) # Обробка помилок Google буде на фронтенді
+        error = serializers.CharField(
+            required=False
+        )  # Обробка помилок Google буде на фронтенді
 
     class OutputSerializer(serializers.Serializer):
         access = serializers.CharField()
@@ -62,25 +63,18 @@ class GoogleLoginApi(PublicApi):
         user_id = serializers.IntegerField(required=False)  # Додайте, якщо потрібно
         email = serializers.EmailField(required=False)  # Додайте, якщо потрібно
 
-    def post(self, request, *args, **kwargs):  # Змінено на POST
-
-        input_serializer = self.InputSerializer(
-            data=request.data
-        )  # Використовуємо request.data для POST
+    def post(self, request, *args, **kwargs):
+        input_serializer = self.InputSerializer(data=request.data)
         input_serializer.is_valid(raise_exception=True)
 
         validated_data = input_serializer.validated_data
-
         code = validated_data.get("code")
         state = validated_data.get("state")
 
         session_state = request.session.get("google_oauth2_state")
-        # Після успішного використання state, видаляємо його з сесії
         if "google_oauth2_state" in request.session:
             del request.session["google_oauth2_state"]
 
-        print(f"!! session_state: {session_state}")
-        print(f"!! state: {state}")
         if session_state is None or state != session_state:
             return Response(
                 {"error": "CSRF check failed. Invalid or missing state."},
@@ -91,26 +85,39 @@ class GoogleLoginApi(PublicApi):
 
         try:
             google_tokens = google_login_flow.get_tokens(code=code)
-            # id_token_decoded = google_tokens.decode_id_token() # Не обов'язково повертати на фронтенд
-            print(f"GOOGLE TOKEN: {google_tokens}")
             user_info = google_login_flow.get_user_info(google_tokens=google_tokens)
 
             user, created = get_or_create_user(user_info)
 
-            jwt_tokens = generate_jwt_token(user)
+            # Створення JWT-токенів
+            refresh = RefreshToken.for_user(user)
 
-            login(
-                request, user
-            )  # Вхід користувача в сесію Django (якщо використовуєте сесії)
+            response = Response(status=status.HTTP_200_OK)
 
-            response_data = {
-                "access": jwt_tokens["access"],
-                "refresh": jwt_tokens["refresh"],
+            # Встановлюємо access_token cookie
+            response.set_cookie(
+                key="access_token",
+                value=str(refresh.access_token),
+                httponly=True,
+                secure=not settings.DEBUG,  # Правильна логіка
+                samesite="Lax",
+            )
+            # Встановлюємо refresh_token cookie
+            response.set_cookie(
+                key="refresh_token",
+                value=str(refresh),
+                httponly=True,
+                secure=not settings.DEBUG,  # Правильна логіка
+                samesite="Lax",
+            )
+
+            # Ви можете повернути JSON з інформацією про користувача,
+            # але токени вже будуть у cookie
+            response.data = {
                 "user_id": user.id,
                 "email": user.email,
             }
-            print(f"resp data: {response_data}")
-            return Response(response_data, status=status.HTTP_200_OK)
+
+            return response
         except Exception as e:
-            # Обробка будь-яких помилок під час обміну коду або отримання інформації про користувача
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
