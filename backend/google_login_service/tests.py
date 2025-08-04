@@ -1,6 +1,8 @@
 from unittest.mock import patch
 
 from django.test import TestCase
+from rest_framework.test import APITestCase
+
 from django.urls import reverse
 from rest_framework import status
 from user.models import User
@@ -8,7 +10,7 @@ from user.models import User
 
 class GoogleLoginRedirectApiTest(TestCase):
     def test_redirect_to_google_auth(self):
-        url = reverse("google_auth:redirect-raw")
+        url = reverse("google_auth:google_login_redirect")
 
         response = self.client.get(url)
 
@@ -16,77 +18,85 @@ class GoogleLoginRedirectApiTest(TestCase):
         self.assertIn("https://accounts.google.com/o/oauth2/auth", response["Location"])
 
 
-class GoogleLoginApiTest(TestCase):
+class GoogleLoginApiTests(APITestCase):
+
+    def setUp(self):
+        self.url = reverse("google_auth:google_login_process")
+        # Імітуємо дані, які ми б отримали від Google
+        self.google_tokens_data = {
+            "access_token": "fake_access_token_from_google",
+            "refresh_token": "fake_refresh_token_from_google",
+            "id_token": "fake_id_token_from_google",
+        }
+        self.user_info_data = {
+            "email": "new_user@example.com",
+            "name": "New User",
+        }
+
     @patch("google_login_service.service.GoogleRawLoginFlowService.get_tokens")
     @patch("google_login_service.service.GoogleRawLoginFlowService.get_user_info")
-    @patch(
-        "google_login_service.service.GoogleRawLoginFlowService.get_authorization_url"
-    )
-    @patch("user.selectors.get_or_create_user")
-    @patch("google_login_service.apis.generate_jwt_token")
-    def test_successful_google_login(
-        self,
-        mock_generate_jwt,
-        mock_get_or_create_user,
-        mock_get_auth_url,
-        mock_get_user_info,
-        mock_get_tokens,
-    ):
-        # Моки
-        mock_get_tokens.return_value.decode_id_token.return_value = {"sub": "123"}
-        mock_get_user_info.return_value = {"email": "test@example.com"}
-        mock_get_or_create_user.return_value = (
-            User(id=1, email="test@example.com"),
-            True,
+    def test_successful_google_login(self, mock_get_user_info, mock_get_tokens):
+        """
+        Тестуємо повний успішний цикл обміну `code` на токени та автентифікації.
+        """
+        # 1. Налаштовуємо імітацію (mock)
+        # Встановлюємо, що наші імітовані методи повертатимуть фіктивні дані
+        mock_get_tokens.return_value = self.google_tokens_data
+        mock_get_user_info.return_value = self.user_info_data
+        # 2. Створюємо сесію та встановлюємо в неї state
+        session = self.client.session
+        session["google_oauth2_state"] = "test_state"
+        session.save()
+
+        # 3. Відправляємо POST-запит, як це зробив би фронтенд
+        response = self.client.post(
+            self.url,
+            {"code": "fake_code_from_google", "state": "test_state"},
+            format="json",
         )
-        mock_generate_jwt.return_value = {
-            "access": "mock_access_token",
-            "refresh": "mock_refresh_token",
-        }
-        print(mock_generate_jwt.return_value)
 
-        mock_get_auth_url.return_value = ("https://mock-auth-url", "mock_state")
-
-        # Симуляція сесії
-        session = self.client.session
-        session["google_oauth2_state"] = "mock_state"
-        session.save()
-
-        # Запит до API
-        url = reverse("google_auth:callback-raw")
-        response = self.client.get(url, {"code": "mock_code", "state": "mock_state"})
-
-        # Перевірка відповіді
+        # 4. Перевіряємо відповідь API
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("tokens", response.data)
-        self.assertEqual(response.data["tokens"]["access"], "mock_access_token")
-        self.assertEqual(response.data["tokens"]["refresh"], "mock_refresh_token")
 
-    def test_google_login_fails_on_csrf_check(self):
-        url = reverse("google_auth:callback-raw")
+        # 5. Перевіряємо, чи були встановлені cookie
+        self.assertIn("access_token", self.client.cookies)
+        self.assertIn("refresh_token", self.client.cookies)
+        print(self.client.cookies)
+        # 6. Перевіряємо, чи був створений новий користувач
+        self.assertTrue(User.objects.filter(email="new_user@example.com").exists())
 
-        # Симуляція сесії з неправильним `state`
+    @patch("google_login_service.service.GoogleRawLoginFlowService.get_tokens")
+    def test_google_login_invalid_state(self, mock_get_tokens):
+        """
+        Перевіряємо, чи запит відхиляється, якщо state не співпадає.
+        """
+        # Імітуємо стан сесії, який не співпадає
         session = self.client.session
-        session["google_oauth2_state"] = "valid_state"
+        session["google_oauth2_state"] = "wrong_state"
         session.save()
 
-        response = self.client.get(url, {"code": "mock_code", "state": "invalid_state"})
+        response = self.client.post(
+            self.url, {"code": "fake_code", "state": "correct_state"}, format="json"
+        )
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"], "CSRF check failed.")
+        self.assertIn("CSRF check failed", str(response.data))
 
-    def test_google_login_fails_without_code(self):
-        url = reverse("google_auth:callback-raw")
+    @patch("google_login_service.service.GoogleRawLoginFlowService.get_tokens")
+    def test_google_login_google_error(self, mock_get_tokens):
+        """
+        Перевіряємо, як обробляються помилки від Google (наприклад, невалідний code).
+        """
+        # Налаштовуємо імітацію, щоб вона кидала виняток
+        mock_get_tokens.side_effect = Exception("Google token request failed")
 
-        response = self.client.get(url, {"state": "valid_state"})
+        session = self.client.session
+        session["google_oauth2_state"] = "test_state"
+        session.save()
+
+        response = self.client.post(
+            self.url, {"code": "invalid_code", "state": "test_state"}, format="json"
+        )
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"], "Code and state are required.")
-
-    def test_google_login_fails_with_error_param(self):
-        url = reverse("google_auth:callback-raw")
-
-        response = self.client.get(url, {"error": "access_denied"})
-
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"], "access_denied")
+        self.assertIn("Google token request failed", str(response.data))
