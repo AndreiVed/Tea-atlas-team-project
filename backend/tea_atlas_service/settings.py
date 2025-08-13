@@ -27,8 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "") == "True"
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
@@ -79,36 +78,20 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
 ]
 
-TEMPLATES = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],  # Переконайтеся, що ця лінія є
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
-        },
-    },
-]
-
 CORS_ALLOW_CREDENTIALS = True
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
+    "http://0.0.0.0:5173",
     "http://localhost:5173",  # Для локальної розробки фронтенду
     "http://localhost:8000",  # Для локальної розробки
     "https://tea-atlas.onrender.com",  # Додайте URL вашого фронтенду на Render, коли він буде відомий:
 ]
-# if not DEBUG:
-#     # Додайте URL фронтенду на Render, коли він буде відомий
-#     CORS_ALLOWED_ORIGINS.append(os.environ.get("FRONTEND_URL"))
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:5173",
+    "http://0.0.0.0:5173",
+    "https://tea-atlas.onrender.com",
 ]
 
 ROOT_URLCONF = "tea_atlas_service.urls"
@@ -228,43 +211,21 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "user.authentication.JWTCookieAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
 }
 
-SIMPLE_JWT = {
-    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-    "AUTH_HEADER_TYPES": ("Bearer",),
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-    "TOKEN_TYPE_CLAIM": "token_type",
-    "TOKEN_USER_ID_CLAIM": "user_id",
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
-    "JWT_COOKIE_SECURE": True,  # Передавати куки лише через HTTPS (рекомендовано для production)
-    "JWT_COOKIE_HTTPONLY": True,  # Заборонити доступ JavaScript до кук
-    "JWT_COOKIE_SAMESITE": "Strict",  # Захист від CSRF (може бути 'Lax' залежно від ваших потреб)
-    "JWT_COOKIE_PATH": "/",  # Шлях, для якого діє кука
-    "JWT_COOKIE_DOMAIN": None,  # Домен, для якого діє кука (за потреби)
-    "JWT_REFRESH_COOKIE": "refresh_token",  # Назва cookie для refresh token
-    "JWT_REFRESH_COOKIE_SECURE": True,
-    "JWT_REFRESH_COOKIE_HTTPONLY": True,
-    "JWT_REFRESH_COOKIE_SAMESITE": "Strict",
-    "JWT_REFRESH_COOKIE_PATH": "/",
-    "JWT_REFRESH_COOKIE_DOMAIN": None,
-}
-
-
-AUTH_USER_MODEL = "user.User"
-
 # dj-rest-auth
 REST_AUTH = {
     "USE_JWT": True,
-    "JWT_AUTH_HTTPONLY": False,  # Забезпечує надсилання маркера оновлення
+    "JWT_AUTH_HTTPONLY": True,
+    "JWT_AUTH_COOKIE": "access_token",  # Name of access token cookie
+    "JWT_AUTH_REFRESH_COOKIE": "refresh_token",  # Name of refresh token cookie
     "REGISTER_SERIALIZER": "user.serializers.UserSerializer",
     "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
@@ -273,10 +234,19 @@ REST_AUTH = {
     "PAGE_SIZE": 9,
 }
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
+
+AUTH_USER_MODEL = "user.User"
+
 # django.contrib.sites
 SITE_ID = 1
 REST_USE_JWT = True  # Використання JWT у dj-rest-auth
 JWT_ALLOW_REFRESH = True
+JWT_AUTH_COOKIE = "access_token"
+JWT_AUTH_REFRESH_COOKIE = "refresh_token"
 
 
 # The URL to redirect to after a successful email confirmation, in case no user is logged in.
@@ -312,6 +282,3 @@ GOOGLE_OAUTH_PROJECT_ID = os.getenv("GOOGLE_OAUTH_PROJECT_ID")
 GOOGLE_OAUTH_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
 GOOGLE_OAUTH_CALLBACK_URL = os.getenv("GOOGLE_OAUTH_CALLBACK_URL")
 BASE_BACKEND_URL = os.getenv("BASE_BACKEND_URL")
-
-SESSION_COOKIE_SAMESITE = None
-SESSION_COOKIE_SECURE = True

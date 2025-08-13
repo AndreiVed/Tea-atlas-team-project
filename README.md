@@ -96,3 +96,21 @@ An integrated authentication via Google oauth2
 * Web Server: Nginx (for serving static files in production)
 
 * Framework: Vue 
+
+DataBase Structure:\
+![Tea Atlas DB Diagram (2).jpg](picture/Tea%20Atlas%20DB%20Diagram%20%282%29.jpg)\
+Documentation:\
+![Screenshot 2025-08-04 at 22.39.41.png](picture/Screenshot%202025-08-04%20at%2022.39.41.png)\
+Admin Panel:\
+![Screenshot 2025-08-04 at 22.40.34.png](picture/Screenshot%202025-08-04%20at%2022.40.34.png)\
+Home page:\
+![Screenshot 2025-08-04 at 22.29.13.png](picture/Screenshot%202025-08-04%20at%2022.29.13.png)
+![Screenshot 2025-08-04 at 22.29.36.png](picture/Screenshot%202025-08-04%20at%2022.29.36.png)
+![Screenshot 2025-08-04 at 22.29.44.png](picture/Screenshot%202025-08-04%20at%2022.29.44.png)
+![Screenshot 2025-08-04 at 22.29.53.png](picture/Screenshot%202025-08-04%20at%2022.29.53.png)\
+Login page:\
+![Screenshot 2025-08-04 at 22.32.26.png](picture/Screenshot%202025-08-04%20at%2022.32.26.png)\
+Profile Page:\
+![Screenshot 2025-08-04 at 22.36.49.png](picture/Screenshot%202025-08-04%20at%2022.36.49.png)\
+Favorite Teas Page:\
+![Screenshot 2025-08-04 at 22.37.54.png](picture/Screenshot%202025-08-04%20at%2022.37.54.png)\
