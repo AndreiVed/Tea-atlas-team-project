@@ -49,7 +49,7 @@ export const HomePage = () => {
           setIsLoginError(true);
         })
         .finally(() => {
-          navigate("/", { replace: true });
+          navigate("/");
         });
     }
   }, [location.search]);

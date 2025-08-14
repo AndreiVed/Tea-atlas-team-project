@@ -3,7 +3,7 @@ import { ProductCart } from "@/components/ProductCart";
 import { ProductPhoto } from "@/components/ProductPhoto";
 import { API_ENDPOINTS } from "@/constants/endpoints";
 import { updateLikedProducts } from "@/features/products/productsSlice";
-import { fetchWithAuth } from "@/handlers/fetchWithToken";
+import { fetchWithAuth } from "@/handlers/fetchWithAuth";
 import { loadAllProducts } from "@/handlers/loadAllProducts";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
 import { useScroll } from "@/hooks/useScroll";
@@ -24,7 +24,7 @@ export const ProductPage: FC = () => {
 
   const [isTogglingFavorites, setIsTogglingFavorites] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<CurrentProduct>(null);
-  const { token, isLoggedIn } = useAppSelector((state) => state.profile);
+  const { isLoggedIn } = useAppSelector((state) => state.profile);
   const { likedProducts, products } = useAppSelector((state) => state.products);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -81,6 +81,10 @@ export const ProductPage: FC = () => {
       return;
     }
 
+    if(!isLoggedIn) {
+      return 
+    }
+
     setIsTogglingFavorites(true);
 
     fetchWithAuth(
@@ -88,16 +92,16 @@ export const ProductPage: FC = () => {
       {
         method: "POST",
       },
-      token,
-      dispatch
+      // token,
+      // dispatch
     ).then(() => {
       fetchWithAuth(
         API_ENDPOINTS.auth.favoriteList,
         {
           method: "GET",
         },
-        token,
-        dispatch
+        // token,
+        // dispatch
       )
         .then((data) => {
           dispatch(updateLikedProducts(data as Product[]));

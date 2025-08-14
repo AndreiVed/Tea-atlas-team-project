@@ -40,7 +40,7 @@ export const profileSlice = createSlice({
       new_password2: "",
     } as EditingPassword,
 
-    token: localStorage.getItem("token") || "",
+    // token: localStorage.getItem("token") || "",
   },
   reducers: {
     updateIsLoggedIn(state, action: PayloadAction<boolean>) {
@@ -63,9 +63,9 @@ export const profileSlice = createSlice({
       state.editingForm = action.payload;
     },
 
-    updateToken(state, action: PayloadAction<string>) {
-      state.token = action.payload;
-    },
+    // updateToken(state, action: PayloadAction<string>) {
+    //   state.token = action.payload;
+    // },
   },
 });
 
@@ -77,7 +77,7 @@ export const {
   updateEditingPassword,
   updateEditingForm,
   updateUserInfo,
-  updateToken,
+  // updateToken,
 } = profileSlice.actions;
 
 export const profileActions = profileSlice.actions;

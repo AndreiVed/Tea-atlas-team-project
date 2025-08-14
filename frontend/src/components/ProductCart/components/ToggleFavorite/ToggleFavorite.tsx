@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "@/constants/endpoints";
 import { updateLikedProducts } from "@/features/products/productsSlice";
-import { fetchWithAuth } from "@/handlers/fetchWithToken";
+import { fetchWithAuth } from "@/handlers/fetchWithAuth";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Product } from "@/types/Product";
@@ -16,7 +16,7 @@ type Props = {
 export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const { likedProducts } = useAppSelector((state) => state.products);
-  const { token, isLoggedIn } = useAppSelector((state) => state.profile);
+  const { isLoggedIn } = useAppSelector((state) => state.profile);
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
 
@@ -37,8 +37,8 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
       {
         method: "POST",
       },
-      token,
-      dispatch
+      // token,
+      // dispatch
     )
       .then()
       .catch((e) => setError(e))
@@ -47,8 +47,8 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
           fetchWithAuth(
             API_ENDPOINTS.auth.favoriteList,
             { method: "GET" },
-            token,
-            dispatch
+            // token,
+            // dispatch
           ).then((data) => {
             dispatch(updateLikedProducts(data as Product[]));
             localStorage.removeItem("likedProducts");

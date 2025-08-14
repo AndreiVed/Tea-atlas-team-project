@@ -23,7 +23,7 @@ import styles from "./LoginPage.module.scss";
 
 export const LoginPage: FC = () => {
   const { updateLoginError, updateLoginForm } = loginActions;
-  const { updateToken, updateUserInfo, updateIsLoggedIn } = profileActions;
+  const { updateUserInfo, updateIsLoggedIn } = profileActions;
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -72,25 +72,25 @@ export const LoginPage: FC = () => {
         return response.json();
       })
       .then((data: LoginResponseData) => {
-        const { access, user, refresh } = data;
+        const { user } = data;
 
-        dispatch(updateToken(access));
+        // dispatch(updateToken(access));
         dispatch(updateUserInfo(user));
         dispatch(updateIsLoggedIn(true));
         dispatch(updateLoginForm({ email: "", password: "" }));
 
-        localStorage.setItem("refresh", refresh);
+        // localStorage.setItem("refresh", refresh);
         localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("access_token", access);
+        // localStorage.setItem("access_token", access);
         localStorage.removeItem("confirmationEmail");
 
         navigate("/");
 
         fetch(API_ENDPOINTS.auth.favoriteList, {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${access}`,
-          },
+          // headers: {
+          //   Authorization: `Bearer ${access}`,
+          // },
         })
           .then((response) => {
             if (!response.ok) {
