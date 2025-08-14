@@ -1,6 +1,6 @@
 import { userInfoDefaults } from "@/constants/formsInitials";
 import { updateIsLoggedIn, updateUserInfo } from "@/features/profile/profileSlice";
-import { clearTokens } from "@/handlers/clearTokens";
+// import { clearTokens } from "@/handlers/clearTokens";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import cn from "classnames";
@@ -39,7 +39,7 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("likedProducts");
 
-    clearTokens();
+    // clearTokens();
   };
 
   useEffect(() => {

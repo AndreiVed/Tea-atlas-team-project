@@ -1,7 +1,7 @@
 import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
 import { API_ENDPOINTS } from "@/constants/endpoints";
 import { profileActions } from "@/features/profile/profileSlice";
-import { fetchWithAuth } from "@/handlers/fetchWithToken";
+import { fetchWithAuth } from "@/handlers/fetchWithAuth";
 import { isEmailCorrect } from "@/handlers/isEmailCorrect";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -30,7 +30,7 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const dispatch = useAppDispatch();
   const title = `Edit ${forDetail.toLowerCase()}`;
-  const { editingForm, userInfo, editingPassword, token } = useAppSelector(
+  const { editingForm, userInfo, editingPassword } = useAppSelector(
     (state) => state.profile
   );
   const { first_name, last_name, email } = editingForm;
@@ -163,9 +163,9 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
       {
         method: forDetail === "Password" ? "POST" : "PATCH",
         body: parseTempUser(),
-      },
-      token,
-      dispatch
+      }
+      // token,
+      // dispatch
     )
       .then((data) => {
         // only password form doesn't send back updated user

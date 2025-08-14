@@ -2,6 +2,12 @@
 
 .cursor {
   @media (max-width: $tablet-min-width) {
-    display: none;
+    @media (hover: none) and (pointer: coarse) {
+      visibility: hidden;
+      opacity: 0;
+      display: none;
+      pointer-events: none;
+      transform: scale(0);
+    }
   }
 }
