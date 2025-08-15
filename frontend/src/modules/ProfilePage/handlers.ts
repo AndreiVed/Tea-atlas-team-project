@@ -8,7 +8,7 @@ import { ChangeEvent } from "react";
 export const handleFileSelect = (
   e: ChangeEvent<HTMLInputElement>,
   userInfo: UserInfo,
-  // token: string,
+  access: string,
   dispatch: AppDispatch
 ) => {
   const formData = new FormData();
@@ -27,8 +27,8 @@ export const handleFileSelect = (
       method: "PATCH",
       body: formData,
     },
-    // token,
-    // dispatch
+    access,
+    dispatch
   ).then((data) => {
     dispatch(updateUserInfo(data as UserInfo));
     localStorage.removeItem("user");

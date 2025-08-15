@@ -30,7 +30,7 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const dispatch = useAppDispatch();
   const title = `Edit ${forDetail.toLowerCase()}`;
-  const { editingForm, userInfo, editingPassword } = useAppSelector(
+  const { editingForm, userInfo, editingPassword, access } = useAppSelector(
     (state) => state.profile
   );
   const { first_name, last_name, email } = editingForm;
@@ -163,9 +163,9 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
       {
         method: forDetail === "Password" ? "POST" : "PATCH",
         body: parseTempUser(),
-      }
-      // token,
-      // dispatch
+      },
+      access,
+      dispatch
     )
       .then((data) => {
         // only password form doesn't send back updated user

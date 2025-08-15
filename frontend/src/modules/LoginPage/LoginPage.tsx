@@ -15,7 +15,7 @@ import { isEmailCorrect } from "@/handlers/isEmailCorrect";
 
 import { loginActions } from "@/features/login/loginSlice";
 import { updateLikedProducts } from "@/features/products/productsSlice";
-import { profileActions } from "@/features/profile/profileSlice";
+import { profileActions, updateAccessToken } from "@/features/profile/profileSlice";
 
 import { LoginResponseData } from "@/types/LoginResponseData";
 
@@ -72,25 +72,25 @@ export const LoginPage: FC = () => {
         return response.json();
       })
       .then((data: LoginResponseData) => {
-        const { user } = data;
+        const { user, access } = data;
 
-        // dispatch(updateToken(access));
+        dispatch(updateAccessToken(access));
         dispatch(updateUserInfo(user));
         dispatch(updateIsLoggedIn(true));
         dispatch(updateLoginForm({ email: "", password: "" }));
 
         // localStorage.setItem("refresh", refresh);
         localStorage.setItem("user", JSON.stringify(user));
-        // localStorage.setItem("access_token", access);
+        localStorage.setItem("access_token", access);
         localStorage.removeItem("confirmationEmail");
 
         navigate("/");
 
         fetch(API_ENDPOINTS.auth.favoriteList, {
           method: "GET",
-          // headers: {
-          //   Authorization: `Bearer ${access}`,
-          // },
+          headers: {
+            Authorization: `Bearer ${access}`,
+          },
         })
           .then((response) => {
             if (!response.ok) {

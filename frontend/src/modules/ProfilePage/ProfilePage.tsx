@@ -14,7 +14,7 @@ export const ProfilePage: FC = () => {
   useScroll({ options: { top: 0, behavior: "instant" } });
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const [showDeleteMsg, setShowDeleteMsg] = useState(false);
-  const { userInfo } = useAppSelector((state) => state.profile);
+  const { userInfo, access } = useAppSelector((state) => state.profile);
   const { first_name, last_name, email } = userInfo;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export const ProfilePage: FC = () => {
               className={styles["profile__info-photo-input"]}
               type="file"
               id="avatarInput"
-              onChange={(e) => handleFileSelect(e, userInfo, dispatch)}
+              onChange={(e) => handleFileSelect(e, userInfo, access, dispatch)}
             />
             <UserAvatar usedIn="profile" />
             <div className={styles["profile__info-photo-edit"]} />

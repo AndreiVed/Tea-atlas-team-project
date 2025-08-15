@@ -24,7 +24,7 @@ export const ProductPage: FC = () => {
 
   const [isTogglingFavorites, setIsTogglingFavorites] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<CurrentProduct>(null);
-  const { isLoggedIn } = useAppSelector((state) => state.profile);
+  const { isLoggedIn, access } = useAppSelector((state) => state.profile);
   const { likedProducts, products } = useAppSelector((state) => state.products);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -92,16 +92,16 @@ export const ProductPage: FC = () => {
       {
         method: "POST",
       },
-      // token,
-      // dispatch
+      access,
+      dispatch
     ).then(() => {
       fetchWithAuth(
         API_ENDPOINTS.auth.favoriteList,
         {
           method: "GET",
         },
-        // token,
-        // dispatch
+        access,
+        dispatch
       )
         .then((data) => {
           dispatch(updateLikedProducts(data as Product[]));

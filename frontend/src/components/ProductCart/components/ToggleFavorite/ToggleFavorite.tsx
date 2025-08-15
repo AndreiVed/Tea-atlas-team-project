@@ -16,7 +16,7 @@ type Props = {
 export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const { likedProducts } = useAppSelector((state) => state.products);
-  const { isLoggedIn } = useAppSelector((state) => state.profile);
+  const { isLoggedIn, access } = useAppSelector((state) => state.profile);
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
 
@@ -37,8 +37,8 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
       {
         method: "POST",
       },
-      // token,
-      // dispatch
+      access,
+      dispatch
     )
       .then()
       .catch((e) => setError(e))
@@ -47,8 +47,8 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
           fetchWithAuth(
             API_ENDPOINTS.auth.favoriteList,
             { method: "GET" },
-            // token,
-            // dispatch
+            access,
+            dispatch
           ).then((data) => {
             dispatch(updateLikedProducts(data as Product[]));
             localStorage.removeItem("likedProducts");
