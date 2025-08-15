@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import {
   Navigate,
   Route,
@@ -9,7 +9,7 @@ import { CustomCursor } from "./components/CustomCursor";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { ScrollToTop } from "./components/ScrollToTop";
-// import { updateToken } from "./features/profile/profileSlice";
+import { updateAccessToken } from "./features/profile/profileSlice";
 import "./index.scss";
 import { BlogPage } from "./modules/BlogPage";
 import { CatalogPage } from "./modules/CatalogPage";
@@ -25,18 +25,18 @@ import { EmailSentMessage } from "./modules/SignUpPage/components/EmailSentMessa
 import { SignUpForm } from "./modules/SignUpPage/components/SignUpForm";
 import { SignUpPage } from "./modules/SignUpPage/SignUpPage";
 import { SpecificBlogPage } from "./modules/SpecificBlogPage";
-// import { useAppDispatch } from "./store/hooks";
+import { useAppDispatch } from "./store/hooks";
 
 export const App: FC = () => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("access_token");
+  useEffect(() => {
+    const access = localStorage.getItem("access_token");
 
-  //   if (token) {
-  //     dispatch(updateToken(token));
-  //   }
-  // }, [dispatch]);
+    if (access) {
+      dispatch(updateAccessToken(access));
+    }
+  }, [dispatch]);
 
   return (
     <Router>
