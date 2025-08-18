@@ -82,8 +82,8 @@ CORS_ALLOW_CREDENTIALS = True
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://0.0.0.0:5173",
-    "http://localhost:5173",  # Для локальної розробки фронтенду
-    "http://localhost:8000",  # Для локальної розробки
+    "http://localhost:5173",
+    "http://localhost:8000",
     "https://tea-atlas.onrender.com",  # Додайте URL вашого фронтенду на Render, коли він буде відомий:
 ]
 
@@ -191,7 +191,6 @@ MEDIA_URL = (
     if AWS_STORAGE_BUCKET_NAME
     else "/media/"
 )
-# MEDIA_URL = "/media/"
 
 STORAGES = {
     "default": {
@@ -220,12 +219,17 @@ REST_FRAMEWORK = {
     ],
 }
 
+SESSION_COOKIE_DOMAIN = ".onrender.com"
+CSRF_COOKIE_DOMAIN = ".onrender.com"
+
 # dj-rest-auth
 REST_AUTH = {
     "USE_JWT": True,
     "JWT_AUTH_HTTPONLY": True,
     "JWT_AUTH_COOKIE": "access_token",  # Name of access token cookie
     "JWT_AUTH_REFRESH_COOKIE": "refresh_token",  # Name of refresh token cookie
+    "JWT_AUTH_COOKIE_DOMAIN": ".onrender.com",
+    "JWT_AUTH_REFRESH_COOKIE_DOMAIN": ".onrender.com",
     "REGISTER_SERIALIZER": "user.serializers.UserSerializer",
     "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
@@ -237,6 +241,9 @@ REST_AUTH = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_COOKIE_DOMAIN": ".onrender.com",
+    "AUTH_COOKIE_SECURE": True,  # You must use HTTPS in production
+    "AUTH_COOKIE_HTTP_ONLY": True,
 }
 
 AUTH_USER_MODEL = "user.User"
