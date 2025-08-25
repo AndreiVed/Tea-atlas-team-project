@@ -5,7 +5,7 @@ import { updateUserInfo } from "@/features/profile/profileSlice";
 import { useScroll } from "@/hooks/useScroll";
 import { useAppDispatch } from "@/store/hooks";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Carousel } from "./components/Carousel";
 import { LoginErrorModal } from "./components/LoginErrorModal";
 import styles from "./HomePage.module.scss";
@@ -13,7 +13,7 @@ import styles from "./HomePage.module.scss";
 export const HomePage = () => {
   useScroll({ options: { top: 0, behavior: "instant" } });
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [isLoginError, setIsLoginError] = useState(false);
 
   useEffect(() => {
@@ -21,38 +21,36 @@ export const HomePage = () => {
     const code = query.get("code");
     const state = query.get("state");
 
-    console.log(state);
+    if (!code || !state) return;
 
-    if (code && state) {
-      fetch(API_ENDPOINTS.google_auth.login, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          code,
-          state,
-          redirect_uri: "https://tea-atlas.onrender.com/",
-        }),
+    fetch(API_ENDPOINTS.google_auth.login, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        code,
+        state,
+        redirect_uri: "https://tea-atlas.onrender.com/",
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Auth failed");
+        return res.json();
       })
-        .then((res) => {
-          if (!res.ok) throw new Error("Auth failed");
-          return res.json();
-        })
-        .then((data) => {
-          localStorage.setItem("refresh", data.refresh);
-          localStorage.setItem("access", data.access);
-          dispatch(updateUserInfo(data.user));
-        })
-        .catch(() => {
-          setIsLoginError(true);
-        })
-        .finally(() => {
-          navigate("/");
-        });
-    }
-  }, [location.search]);
+      .then((data) => {
+        localStorage.setItem("refresh", data.refresh);
+        localStorage.setItem("access", data.access);
+        dispatch(updateUserInfo(data.user));
+      })
+      .catch(() => {
+        setIsLoginError(true);
+      })
+      .finally(() => {
+        window.history.replaceState({}, document.title, "/");
+      });
+  }, [location.search, dispatch]);
 
   return (
     <>
