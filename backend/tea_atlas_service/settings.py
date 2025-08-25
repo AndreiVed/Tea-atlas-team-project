@@ -79,7 +79,6 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-# CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://0.0.0.0:5173",
     "http://localhost:5173",
@@ -225,7 +224,7 @@ CSRF_COOKIE_DOMAIN = ".onrender.com"
 # dj-rest-auth
 REST_AUTH = {
     "USE_JWT": True,
-    "JWT_AUTH_HTTPONLY": True,
+    "JWT_AUTH_HTTPONLY": False,
     "JWT_AUTH_COOKIE": "access_token",  # Name of access token cookie
     "JWT_AUTH_REFRESH_COOKIE": "refresh_token",  # Name of refresh token cookie
     "JWT_AUTH_COOKIE_DOMAIN": ".onrender.com",
