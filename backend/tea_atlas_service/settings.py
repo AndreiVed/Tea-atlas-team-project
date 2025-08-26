@@ -233,6 +233,11 @@ else:
 
 SESSION_COOKIE_DOMAIN = COOKIE_DOMAIN
 CSRF_COOKIE_DOMAIN = COOKIE_DOMAIN
+SESSION_COOKIE_SAMESITE = "None"  # "Lax" to local
+CSRF_COOKIE_SAMESITE = "None"  # "Lax" to local
+AUTH_COOKIE_SAMESITE = "None"  # "Lax" to local
+CSRF_COOKIE_SECURE = not DEBUG
+
 # dj-rest-auth settings
 REST_AUTH = {
     "USE_JWT": True,
@@ -248,6 +253,7 @@ REST_AUTH = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 9,
     "JWT_AUTH_REFRESH_COOKIE_SECURE": not DEBUG,
+    "JWT_AUTH_REFRESH_COOKIE_SAMESITE": AUTH_COOKIE_SAMESITE,
 }
 
 # SIMPLE_JWT settings
@@ -257,16 +263,17 @@ SIMPLE_JWT = {
     "AUTH_COOKIE_DOMAIN": COOKIE_DOMAIN,
     "AUTH_COOKIE_SECURE": not DEBUG,
     "AUTH_COOKIE_HTTP_ONLY": True,
+    "AUTH_COOKIE_SAMESITE": AUTH_COOKIE_SAMESITE,
 }
 
 AUTH_USER_MODEL = "user.User"
 
-# django.contrib.sites
+# # django.contrib.sites
 SITE_ID = 1
-REST_USE_JWT = True  # Використання JWT у dj-rest-auth
-JWT_ALLOW_REFRESH = True
-JWT_AUTH_COOKIE = "access_token"
-JWT_AUTH_REFRESH_COOKIE = "refresh_token"
+# REST_USE_JWT = True  # Використання JWT у dj-rest-auth
+# JWT_ALLOW_REFRESH = True
+# JWT_AUTH_COOKIE = "access_token"
+# JWT_AUTH_REFRESH_COOKIE = "refresh_token"
 
 
 # The URL to redirect to after a successful email confirmation, in case no user is logged in.
