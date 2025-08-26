@@ -76,11 +76,14 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "tea_atlas_service.middleware.CookieLoggingMiddleware",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = DEBUG
 CORS_ALLOWED_ORIGINS = [
     "http://0.0.0.0:5173",
+    "http://127.0.0.1:5173",
     "http://localhost:5173",
     "http://localhost:8000",
     "https://tea-atlas.onrender.com",
@@ -88,8 +91,9 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
     "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:8000",
     "http://0.0.0.0:5173",
     "https://tea-atlas.onrender.com",
     "https://tea-atlas-backend.onrender.com",
@@ -220,30 +224,38 @@ REST_FRAMEWORK = {
     ],
 }
 
-SESSION_COOKIE_DOMAIN = ".onrender.com"
-CSRF_COOKIE_DOMAIN = ".onrender.com"
+if DEBUG:
+    # Use None for local development to work with localhost/127.0.0.1
+    COOKIE_DOMAIN = None
+else:
+    # Use the production domain for Render
+    COOKIE_DOMAIN = ".onrender.com"
 
-# dj-rest-auth
+SESSION_COOKIE_DOMAIN = COOKIE_DOMAIN
+CSRF_COOKIE_DOMAIN = COOKIE_DOMAIN
+# dj-rest-auth settings
 REST_AUTH = {
     "USE_JWT": True,
-    "JWT_AUTH_HTTPONLY": False,
-    "JWT_AUTH_COOKIE": "access_token",  # Name of access token cookie
-    "JWT_AUTH_REFRESH_COOKIE": "refresh_token",  # Name of refresh token cookie
-    "JWT_AUTH_COOKIE_DOMAIN": ".onrender.com",
-    "JWT_AUTH_REFRESH_COOKIE_DOMAIN": ".onrender.com",
+    "JWT_AUTH_HTTPONLY": True,
+    "JWT_AUTH_COOKIE": "access_token",
+    "JWT_AUTH_REFRESH_COOKIE": "refresh_token",
+    "JWT_AUTH_COOKIE_DOMAIN": COOKIE_DOMAIN,
+    "JWT_AUTH_REFRESH_COOKIE_DOMAIN": COOKIE_DOMAIN,
     "REGISTER_SERIALIZER": "user.serializers.UserSerializer",
     "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
     "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 9,
+    "JWT_AUTH_REFRESH_COOKIE_SECURE": not DEBUG,
 }
 
+# SIMPLE_JWT settings
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "AUTH_COOKIE_DOMAIN": ".onrender.com",
-    "AUTH_COOKIE_SECURE": True,  # You must use HTTPS in production
+    "AUTH_COOKIE_DOMAIN": COOKIE_DOMAIN,
+    "AUTH_COOKIE_SECURE": not DEBUG,
     "AUTH_COOKIE_HTTP_ONLY": True,
 }
 
