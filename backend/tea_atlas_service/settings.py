@@ -76,7 +76,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    "tea_atlas_service.middleware.CookieLoggingMiddleware",
+    # "tea_atlas_service.middleware.CookieLoggingMiddleware",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -215,55 +215,54 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        # "rest_framework_simplejwt.authentication.JWTAuthentication",
-        # "user.authentication.JWTCookieAuthentication",
-        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
 }
-
-if DEBUG:
-    # Use None for local development to work with localhost/127.0.0.1
-    COOKIE_DOMAIN = None
-else:
-    # Use the production domain for Render
-    COOKIE_DOMAIN = ".onrender.com"
-
-SESSION_COOKIE_DOMAIN = COOKIE_DOMAIN
-CSRF_COOKIE_DOMAIN = COOKIE_DOMAIN
-SESSION_COOKIE_SAMESITE = "None"  # "Lax" to local
-CSRF_COOKIE_SAMESITE = "None"  # "Lax" to local
-AUTH_COOKIE_SAMESITE = "None"  # "Lax" to local
-CSRF_COOKIE_SECURE = not DEBUG
+#
+# if DEBUG:
+#     # Use None for local development to work with localhost/127.0.0.1
+#     COOKIE_DOMAIN = None
+# else:
+#     # Use the production domain for Render
+#     COOKIE_DOMAIN = ".onrender.com"
+#
+# SESSION_COOKIE_DOMAIN = COOKIE_DOMAIN
+# CSRF_COOKIE_DOMAIN = COOKIE_DOMAIN
+# SESSION_COOKIE_SAMESITE = "None"  # "Lax" to local
+# CSRF_COOKIE_SAMESITE = "None"  # "Lax" to local
+# AUTH_COOKIE_SAMESITE = "None"  # "Lax" to local
+# CSRF_COOKIE_SECURE = not DEBUG
 
 # dj-rest-auth settings
 REST_AUTH = {
     "USE_JWT": True,
-    "JWT_AUTH_HTTPONLY": True,
-    "JWT_AUTH_COOKIE": "access_token",
-    "JWT_AUTH_REFRESH_COOKIE": "refresh_token",
-    "JWT_AUTH_COOKIE_DOMAIN": COOKIE_DOMAIN,
-    "JWT_AUTH_REFRESH_COOKIE_DOMAIN": COOKIE_DOMAIN,
+    "JWT_AUTH_HTTPONLY": False,
     "REGISTER_SERIALIZER": "user.serializers.UserSerializer",
     "USER_DETAILS_SERIALIZER": "user.serializers.UserProfileSerializer",
     "LOGIN_SERIALIZER": "user.serializers.UserLoginSerializer",
     "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 9,
-    "JWT_AUTH_REFRESH_COOKIE_SECURE": not DEBUG,
-    "JWT_AUTH_REFRESH_COOKIE_SAMESITE": AUTH_COOKIE_SAMESITE,
+    # "JWT_AUTH_COOKIE": "access_token",
+    # "JWT_AUTH_REFRESH_COOKIE": "refresh_token",
+    # "JWT_AUTH_COOKIE_DOMAIN": COOKIE_DOMAIN,
+    # "JWT_AUTH_REFRESH_COOKIE_DOMAIN": COOKIE_DOMAIN,
+    # "JWT_AUTH_REFRESH_COOKIE_SECURE": not DEBUG,
+    # "JWT_AUTH_REFRESH_COOKIE_SAMESITE": AUTH_COOKIE_SAMESITE,
 }
 
 # SIMPLE_JWT settings
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "AUTH_COOKIE_DOMAIN": COOKIE_DOMAIN,
-    "AUTH_COOKIE_SECURE": not DEBUG,
-    "AUTH_COOKIE_HTTP_ONLY": True,
-    "AUTH_COOKIE_SAMESITE": AUTH_COOKIE_SAMESITE,
+    # "AUTH_COOKIE_DOMAIN": COOKIE_DOMAIN,
+    # "AUTH_COOKIE_SECURE": not DEBUG,
+    # "AUTH_COOKIE_HTTP_ONLY": True,
+    # "AUTH_COOKIE_SAMESITE": AUTH_COOKIE_SAMESITE,
 }
 
 AUTH_USER_MODEL = "user.User"
