@@ -24,7 +24,7 @@ export const HomePage = () => {
     if (!code || !state) return;
 
     fetch(API_ENDPOINTS.google_auth.login, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
