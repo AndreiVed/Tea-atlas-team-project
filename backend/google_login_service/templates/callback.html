@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Автентифікація Google</title>
+    <title>Google Authentication</title>
     <script>
+      // --- New function to get URL parameters ---
       function getUrlParameter(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
@@ -12,141 +13,203 @@
           : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
 
-      // --- Нова функція для виводу логів в HTML ---
-      function logToBody(message, data = "") {
-        const debugDiv = document.getElementById("debug-output");
-        if (debugDiv) {
-          const p = document.createElement("p");
-          p.textContent =
-            message + (data ? ": " + JSON.stringify(data, null, 2) : "");
-          debugDiv.appendChild(p);
-        }
+      // --- New function for logging to the console ---
+      function logToConsole(message, data = "") {
+        console.log(message, data);
       }
-      // --- Кінець нової функції ---
 
       document.addEventListener("DOMContentLoaded", function () {
-        logToBody("DOMContentLoaded fired on callback.html"); // Використовуємо нову функцію
+        logToConsole("DOMContentLoaded fired on callback.html");
 
-        const code = getUrlParameter("code");
-        const state = getUrlParameter("state");
+        // Get the tokens and user info from the URL parameters
+        const accessToken = getUrlParameter("access");
+        const refreshToken = getUrlParameter("refresh");
+        const userId = getUrlParameter("user_id");
+        const email = getUrlParameter("email");
 
-        logToBody("Code from URL", code);
-        logToBody("State from URL", state);
+        logToConsole("Checking for tokens in URL...");
 
-        const backendLoginUrl =
-          "https://tea-atlas-backend.onrender.com/api/v1/google_auth/login/";
-        // const backendLoginUrl = "http://0.0.0.0:8000/api/v1/google_auth/login/";
-        const frontendHomeUrl = "https://tea-atlas.onrender.com/";
-        // const frontendHomeUrl = "http://localhost:5174/";
+        // If tokens are present, save them and redirect
+        if (accessToken && refreshToken) {
+          logToConsole("Access and Refresh tokens found in URL.");
 
-        function redirectToFrontend(url, delay = 300) {
-          setTimeout(() => {
-            window.location.href = url;
-          }, delay);
-        }
+          localStorage.setItem("access_token", accessToken);
+          localStorage.setItem("refresh_token", refreshToken);
+          localStorage.setItem("user_id", userId);
+          localStorage.setItem("email", email);
 
-        if (code) {
-          logToBody("Code is present, attempting to fetch from backend...");
-          fetch(backendLoginUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ code: code, state: state }),
-          })
-            .then((response) => {
-              logToBody("Received raw response from backend:", response);
-              if (!response.ok) {
-                return response.json().then((err) => {
-                  logToBody("Backend error response:", err);
-                  throw new Error(
-                    err.error || "Помилка автентифікації на бекенді"
-                  );
-                });
-              }
-              return response.json();
-            })
-            .then((data) => {
-              logToBody("Parsed JSON data from backend:", data); // Основний лог для даних
+          logToConsole("Tokens and user info saved to localStorage.");
 
-              logToBody("Checking if data and tokens are present...");
-
-              if (data && data.access && data.refresh) {
-                logToBody("Access and Refresh tokens found in data.");
-
-                localStorage.setItem("access_token", data.access);
-                localStorage.setItem("refresh_token", data.refresh);
-
-                if (data.user_id) {
-                  localStorage.setItem("user_id", data.user_id);
-                  logToBody("User ID saved:", data.user_id);
-                } else if (data.id) {
-                  localStorage.setItem("user_id", data.id);
-                  logToBody("User ID saved (from 'id'):", data.id);
-                } else {
-                  logToBody("User ID not found in backend response.");
-                }
-
-                // Перевірка чи дійсно токени ЗБЕРЕГЛИСЯ з localStorage
-                logToBody(
-                  "Verifying stored Access Token:",
-                  localStorage.getItem("access_token")
-                );
-                logToBody(
-                  "Verifying stored Refresh Token:",
-                  localStorage.getItem("refresh_token")
-                );
-                logToBody(
-                  "Verifying stored User ID:",
-                  localStorage.getItem("user_id")
-                );
-
-                logToBody("Redirecting to frontend home page...");
-                redirectToFrontend(frontendHomeUrl);
-              } else {
-                logToBody(
-                  "Tokens (access/refresh) are missing or data is malformed in backend response:",
-                  data
-                );
-                alert(
-                  "Помилка: Не отримано токени автентифікації від бекенду."
-                );
-                redirectToFrontend(frontendHomeUrl);
-              }
-            })
-            .catch((error) => {
-              logToBody("Fetch operation failed:", error.message || error); // Виводимо повідомлення про помилку
-              alert(
-                "Помилка входу через Google. Спробуйте ще раз: " + error.message
-              );
-              redirectToFrontend(frontendHomeUrl);
-            });
+          // Redirect to the main frontend page
+          {#window.location.href = "http://localhost:5173/";#}
+          window.location.href = "https://tea-atlas.onrender.com/";
         } else {
-          logToBody("Code parameter is missing in URL.");
-          alert("Не отримано код авторизації від Google.");
-          redirectToFrontend(frontendHomeUrl);
+          logToConsole(
+            "Tokens (access/refresh) are missing or URL is malformed."
+          );
+          alert("Error: Authentication tokens were not received.");
+          {#window.location.href = "http://localhost:5173/";#}
+          window.location.href = "https://tea-atlas.onrender.com/";
         }
       });
     </script>
   </head>
   <body>
-    <p>Обробка входу через Google...</p>
-    <p>Будь ласка, зачекайте, вас буде перенаправлено.</p>
-
-    <div
-      id="debug-output"
-      style="
-        margin-top: 20px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        background-color: #f9f9f9;
-        font-family: monospace;
-        white-space: pre-wrap;
-        max-height: 600px;
-        overflow-y: auto;
-      "
-    >
-      <h3>Дебаг-інформація:</h3>
-    </div>
+    <p>Processing Google login...</p>
+    <p>Please wait, you will be redirected shortly.</p>
   </body>
 </html>
+
+
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#  <head>#}
+{#    <title>Автентифікація Google</title>#}
+{#    <script>#}
+{#      function getUrlParameter(name) {#}
+{#        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");#}
+{#        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");#}
+{#        var results = regex.exec(location.search);#}
+{#        return results === null#}
+{#          ? ""#}
+{#          : decodeURIComponent(results[1].replace(/\+/g, " "));#}
+{#      }#}
+{##}
+{#      // --- Нова функція для виводу логів в HTML ---#}
+{#      function logToBody(message, data = "") {#}
+{#        const debugDiv = document.getElementById("debug-output");#}
+{#        if (debugDiv) {#}
+{#          const p = document.createElement("p");#}
+{#          p.textContent =#}
+{#            message + (data ? ": " + JSON.stringify(data, null, 2) : "");#}
+{#          debugDiv.appendChild(p);#}
+{#        }#}
+{#      }#}
+{#      // --- Кінець нової функції ---#}
+{##}
+{#      document.addEventListener("DOMContentLoaded", function () {#}
+{#        logToBody("DOMContentLoaded fired on callback.html"); // Використовуємо нову функцію#}
+{##}
+{#        const code = getUrlParameter("code");#}
+{#        const state = getUrlParameter("state");#}
+{##}
+{#        logToBody("Code from URL", code);#}
+{#        logToBody("State from URL", state);#}
+{##}
+        {#const backendLoginUrl =#}
+        {#  "https://tea-atlas-backend.onrender.com/api/v1/google_auth/login/";#}
+{#        const backendLoginUrl = "http://0.0.0.0:8000/api/v1/google_auth/login/";#}
+        {#const frontendHomeUrl = "https://tea-atlas.onrender.com/";#}
+{#        const frontendHomeUrl = "http://0.0.0.0:5173/";#}
+{##}
+{#        function redirectToFrontend(url, delay = 300) {#}
+{#          setTimeout(() => {#}
+{#            window.location.href = url;#}
+{#          }, delay);#}
+{#        }#}
+{##}
+{#        if (code) {#}
+{#          logToBody("Code is present, attempting to fetch from backend...");#}
+{#          fetch(backendLoginUrl, {#}
+{#            method: "POST",#}
+{#            headers: {#}
+{#              "Content-Type": "application/json",#}
+{#            },#}
+{#            body: JSON.stringify({ code: code, state: state }),#}
+{#          })#}
+{#            .then((response) => {#}
+{#              logToBody("Received raw response from backend:", response);#}
+{#              if (!response.ok) {#}
+{#                return response.json().then((err) => {#}
+{#                  logToBody("Backend error response:", err);#}
+{#                  throw new Error(#}
+{#                    err.error || "Помилка автентифікації на бекенді"#}
+{#                  );#}
+{#                });#}
+{#              }#}
+{#              return response.json();#}
+{#            })#}
+{#            .then((data) => {#}
+{#              logToBody("Parsed JSON data from backend:", data); // Основний лог для даних#}
+{##}
+{#              logToBody("Checking if data and tokens are present...");#}
+{##}
+{#              if (data && data.access && data.refresh) {#}
+{#                logToBody("Access and Refresh tokens found in data.");#}
+{##}
+{#                localStorage.setItem("access_token", data.access);#}
+{#                localStorage.setItem("refresh_token", data.refresh);#}
+{##}
+{#                if (data.user_id) {#}
+{#                  localStorage.setItem("user_id", data.user_id);#}
+{#                  logToBody("User ID saved:", data.user_id);#}
+{#                } else if (data.id) {#}
+{#                  localStorage.setItem("user_id", data.id);#}
+{#                  logToBody("User ID saved (from 'id'):", data.id);#}
+{#                } else {#}
+{#                  logToBody("User ID not found in backend response.");#}
+{#                }#}
+{##}
+{#                // Перевірка чи дійсно токени ЗБЕРЕГЛИСЯ з localStorage#}
+{#                logToBody(#}
+{#                  "Verifying stored Access Token:",#}
+{#                  localStorage.getItem("access_token")#}
+{#                );#}
+{#                logToBody(#}
+{#                  "Verifying stored Refresh Token:",#}
+{#                  localStorage.getItem("refresh_token")#}
+{#                );#}
+{#                logToBody(#}
+{#                  "Verifying stored User ID:",#}
+{#                  localStorage.getItem("user_id")#}
+{#                );#}
+{##}
+{#                logToBody("Redirecting to frontend home page...");#}
+{#                redirectToFrontend(frontendHomeUrl);#}
+{#              } else {#}
+{#                logToBody(#}
+{#                  "Tokens (access/refresh) are missing or data is malformed in backend response:",#}
+{#                  data#}
+{#                );#}
+{#                alert(#}
+{#                  "Помилка: Не отримано токени автентифікації від бекенду."#}
+{#                );#}
+{#                redirectToFrontend(frontendHomeUrl);#}
+{#              }#}
+{#            })#}
+{#            .catch((error) => {#}
+{#              logToBody("Fetch operation failed:", error.message || error); // Виводимо повідомлення про помилку#}
+{#              alert(#}
+{#                "Помилка входу через Google. Спробуйте ще раз: " + error.message#}
+{#              );#}
+{#              redirectToFrontend(frontendHomeUrl);#}
+{#            });#}
+{#        } else {#}
+{#          logToBody("Code parameter is missing in URL.");#}
+{#          alert("Не отримано код авторизації від Google.");#}
+{#          redirectToFrontend(frontendHomeUrl);#}
+{#        }#}
+{#      });#}
+{#    </script>#}
+{#  </head>#}
+{#  <body>#}
+{#    <p>Обробка входу через Google...</p>#}
+{#    <p>Будь ласка, зачекайте, вас буде перенаправлено.</p>#}
+{##}
+{#    <div#}
+{#      id="debug-output"#}
+{#      style="#}
+{#        margin-top: 20px;#}
+{#        padding: 10px;#}
+{#        border: 1px solid #ccc;#}
+{#        background-color: #f9f9f9;#}
+{#        font-family: monospace;#}
+{#        white-space: pre-wrap;#}
+{#        max-height: 600px;#}
+{#        overflow-y: auto;#}
+{#      "#}
+{#    >#}
+{#      <h3>Дебаг-інформація:</h3>#}
+{#    </div>#}
+{#  </body>#}
+{#</html>#}

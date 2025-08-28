@@ -112,6 +112,7 @@ export const LoginPage: FC = () => {
   const handleGoogleAuth = () => {
     window.location.href =
       "https://tea-atlas-backend.onrender.com/api/v1/google_auth/redirect/";
+      // "http://localhost:8000/api/v1/google_auth/redirect/"; // for local
   };
 
   return (
