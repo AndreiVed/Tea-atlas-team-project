@@ -10,6 +10,8 @@ from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse_lazy
 from oauthlib.common import UNICODE_ASCII_CHARACTER_SET
 
+from tea_atlas_service.settings import DEBUG
+
 
 class ApplicationError(Exception):
     def __init__(self, message, extra=None):
@@ -68,9 +70,13 @@ class GoogleRawLoginFlowService:
 
     def get_authorization_url(self):
         # redirect_uri = self._get_redirect_uri()
-        redirect_uri = "https://tea-atlas.onrender.com/"
+        print(f"DEBUG: {DEBUG}")
+        if DEBUG:
+            print(1111)
+            redirect_uri = "http://localhost:5173/"
+        else:
+            redirect_uri = "https://tea-atlas.onrender.com/"
         print(redirect_uri)
-
         state = self._generate_state_session_token()
 
         params = {
