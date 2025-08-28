@@ -23,17 +23,15 @@ export const HomePage = () => {
 
     if (!code || !state) return;
 
-    fetch(API_ENDPOINTS.google_auth.login, {
+    const params = new URLSearchParams({
+      code,
+      state,
+      redirect_uri: "https://tea-atlas.onrender.com/",
+    });
+
+    fetch(`${API_ENDPOINTS.google_auth.login}?${params.toString()}`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
       credentials: "include",
-      body: JSON.stringify({
-        code,
-        state,
-        redirect_uri: "https://tea-atlas.onrender.com/",
-      }),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Auth failed");
