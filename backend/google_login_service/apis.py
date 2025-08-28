@@ -48,6 +48,8 @@ class GoogleLoginApi(PublicApi):
         print(f"222 CODE: {code}")
         print(f"222 STATE: {state}")
         session_state = request.session.get("google_oauth2_state")
+        print(f"222 SESSION_STATE: {session_state}")
+        print(f"222 REQUEST: {request.session}")
         if "google_oauth2_state" in request.session:
             del request.session["google_oauth2_state"]
 
