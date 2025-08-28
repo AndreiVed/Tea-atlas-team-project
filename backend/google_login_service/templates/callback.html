@@ -3,7 +3,6 @@
   <head>
     <title>Google Authentication</title>
     <script>
-      // --- New function to get URL parameters ---
       function getUrlParameter(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
@@ -13,7 +12,6 @@
           : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
 
-      // --- New function for logging to the console ---
       function logToConsole(message, data = "") {
         console.log(message, data);
       }
@@ -21,7 +19,6 @@
       document.addEventListener("DOMContentLoaded", function () {
         logToConsole("DOMContentLoaded fired on callback.html");
 
-        // Get the tokens and user info from the URL parameters
         const accessToken = getUrlParameter("access");
         const refreshToken = getUrlParameter("refresh");
         const userId = getUrlParameter("user_id");
@@ -29,7 +26,14 @@
 
         logToConsole("Checking for tokens in URL...");
 
-        // If tokens are present, save them and redirect
+        // Dynamically determine the redirect URL based on the current hostname
+        const isLocal =
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1";
+        const redirectUrl = isLocal
+          ? "http://localhost:5173/"
+          : "https://tea-atlas.onrender.com/";
+
         if (accessToken && refreshToken) {
           logToConsole("Access and Refresh tokens found in URL.");
 
@@ -40,16 +44,13 @@
 
           logToConsole("Tokens and user info saved to localStorage.");
 
-          // Redirect to the main frontend page
-          {#window.location.href = "http://localhost:5173/";#}
-          window.location.href = "https://tea-atlas.onrender.com/";
+          window.location.href = redirectUrl;
         } else {
           logToConsole(
             "Tokens (access/refresh) are missing or URL is malformed."
           );
           alert("Error: Authentication tokens were not received.");
-          {#window.location.href = "http://localhost:5173/";#}
-          window.location.href = "https://tea-atlas.onrender.com/";
+          window.location.href = redirectUrl;
         }
       });
     </script>
