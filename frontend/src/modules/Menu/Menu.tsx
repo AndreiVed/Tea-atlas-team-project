@@ -2,7 +2,7 @@ import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
 import { userInfoDefaults } from "@/constants/formsInitials";
 import { menuLinks } from "@/constants/links";
 import { profileActions } from "@/features/profile/profileSlice";
-// import { clearTokens } from "@/handlers/clearTokens";
+import { clearTokens } from "@/handlers/clearTokens";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { FC } from "react";
@@ -20,7 +20,7 @@ export const Menu: FC = () => {
     dispatch(updateIsLoggedIn(false));
     dispatch(updateUserInfo(userInfoDefaults));
     localStorage.removeItem("user");
-    // clearTokens();
+    clearTokens();
   };
 
   return (

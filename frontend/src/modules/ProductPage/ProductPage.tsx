@@ -3,9 +3,9 @@ import { ProductCart } from "@/components/ProductCart";
 import { ProductPhoto } from "@/components/ProductPhoto";
 import { API_ENDPOINTS } from "@/constants/endpoints";
 import { updateLikedProducts } from "@/features/products/productsSlice";
-import { fetchWithAuth } from "@/handlers/fetchWithAuth";
 import { loadAllProducts } from "@/handlers/loadAllProducts";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useFetchWithAuth } from "@/hooks/useFetchWithAuth";
 import { useScroll } from "@/hooks/useScroll";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Product } from "@/types/Product";
@@ -24,10 +24,11 @@ export const ProductPage: FC = () => {
 
   const [isTogglingFavorites, setIsTogglingFavorites] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<CurrentProduct>(null);
-  const { isLoggedIn, access } = useAppSelector((state) => state.profile);
+  const { isLoggedIn } = useAppSelector((state) => state.profile);
   const { likedProducts, products } = useAppSelector((state) => state.products);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const fetchWithAuth = useFetchWithAuth();
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const { id } = useParams();
 
@@ -81,28 +82,18 @@ export const ProductPage: FC = () => {
       return;
     }
 
-    if(!isLoggedIn) {
-      return 
+    if (!isLoggedIn) {
+      return;
     }
 
     setIsTogglingFavorites(true);
 
-    fetchWithAuth(
-      API_ENDPOINTS.catalog.favoritesOperations(id),
-      {
-        method: "POST",
-      },
-      access,
-      dispatch
-    ).then(() => {
-      fetchWithAuth(
-        API_ENDPOINTS.auth.favoriteList,
-        {
-          method: "GET",
-        },
-        access,
-        dispatch
-      )
+    fetchWithAuth(API_ENDPOINTS.catalog.favoritesOperations(id), {
+      method: "POST",
+    }).then(() => {
+      fetchWithAuth(API_ENDPOINTS.auth.favoriteList, {
+        method: "GET",
+      })
         .then((data) => {
           dispatch(updateLikedProducts(data as Product[]));
           localStorage.removeItem("likedProducts");

@@ -72,14 +72,14 @@ export const LoginPage: FC = () => {
         return response.json();
       })
       .then((data: LoginResponseData) => {
-        const { user, access } = data;
+        const { user, access, refresh } = data;
 
         dispatch(updateAccessToken(access));
         dispatch(updateUserInfo(user));
         dispatch(updateIsLoggedIn(true));
         dispatch(updateLoginForm({ email: "", password: "" }));
 
-        // localStorage.setItem("refresh", refresh);
+        localStorage.setItem("refresh", refresh);
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("access_token", access);
         localStorage.removeItem("confirmationEmail");

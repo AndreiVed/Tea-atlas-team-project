@@ -1,7 +1,7 @@
 import { API_ENDPOINTS } from "@/constants/endpoints";
 import { updateLikedProducts } from "@/features/products/productsSlice";
-import { fetchWithAuth } from "@/handlers/fetchWithAuth";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useFetchWithAuth } from "@/hooks/useFetchWithAuth";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Product } from "@/types/Product";
 import cn from "classnames";
@@ -16,9 +16,10 @@ type Props = {
 export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const { likedProducts } = useAppSelector((state) => state.products);
-  const { isLoggedIn, access } = useAppSelector((state) => state.profile);
+  const { isLoggedIn } = useAppSelector((state) => state.profile);
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
+  const fetchWithAuth = useFetchWithAuth();
 
   const isLiked = Array.isArray(likedProducts)
     ? likedProducts.find((likedProduct) => likedProduct.id === productId)
@@ -36,20 +37,15 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
       API_ENDPOINTS.catalog.favoritesOperations(String(productId)),
       {
         method: "POST",
-      },
-      access,
-      dispatch
+      }
     )
       .then()
       .catch((e) => setError(e))
       .finally(() => {
         if (!error) {
-          fetchWithAuth(
-            API_ENDPOINTS.auth.favoriteList,
-            { method: "GET" },
-            access,
-            dispatch
-          ).then((data) => {
+          fetchWithAuth(API_ENDPOINTS.auth.favoriteList, {
+            method: "GET",
+          }).then((data) => {
             dispatch(updateLikedProducts(data as Product[]));
             localStorage.removeItem("likedProducts");
             localStorage.setItem("likedProducts", JSON.stringify(data));

@@ -1,5 +1,6 @@
 import { UserAvatar } from "@/components/UserAvatar";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useFetchWithAuth } from "@/hooks/useFetchWithAuth";
 import { useScroll } from "@/hooks/useScroll";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { FC, useEffect, useState } from "react";
@@ -14,10 +15,11 @@ export const ProfilePage: FC = () => {
   useScroll({ options: { top: 0, behavior: "instant" } });
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const [showDeleteMsg, setShowDeleteMsg] = useState(false);
-  const { userInfo, access } = useAppSelector((state) => state.profile);
+  const { userInfo } = useAppSelector((state) => state.profile);
   const { first_name, last_name, email } = userInfo;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const fetchWithAuth = useFetchWithAuth();
 
   useEffect(() => {
     if (Object.values(userInfo).every((val) => !val)) {
@@ -39,7 +41,9 @@ export const ProfilePage: FC = () => {
               className={styles["profile__info-photo-input"]}
               type="file"
               id="avatarInput"
-              onChange={(e) => handleFileSelect(e, userInfo, access, dispatch)}
+              onChange={(e) =>
+                handleFileSelect(e, userInfo, dispatch, fetchWithAuth)
+              }
             />
             <UserAvatar usedIn="profile" />
             <div className={styles["profile__info-photo-edit"]} />

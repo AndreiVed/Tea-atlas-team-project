@@ -1,6 +1,5 @@
 import { API_ENDPOINTS } from "@/constants/endpoints";
 import { updateUserInfo } from "@/features/profile/profileSlice";
-import { fetchWithAuth } from "@/handlers/fetchWithAuth";
 import { AppDispatch } from "@/store/appStore";
 import { UserInfo } from "@/types/UserInfo";
 import { ChangeEvent } from "react";
@@ -8,8 +7,8 @@ import { ChangeEvent } from "react";
 export const handleFileSelect = (
   e: ChangeEvent<HTMLInputElement>,
   userInfo: UserInfo,
-  access: string,
-  dispatch: AppDispatch
+  dispatch: AppDispatch,
+  fetchWithAuth: <T>(url: string, options: RequestInit) => Promise<T>,
 ) => {
   const formData = new FormData();
 
@@ -27,8 +26,6 @@ export const handleFileSelect = (
       method: "PATCH",
       body: formData,
     },
-    access,
-    dispatch
   ).then((data) => {
     dispatch(updateUserInfo(data as UserInfo));
     localStorage.removeItem("user");

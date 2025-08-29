@@ -1,8 +1,6 @@
-import { userInfoDefaults } from "@/constants/formsInitials";
-import { updateIsLoggedIn, updateUserInfo } from "@/features/profile/profileSlice";
-// import { clearTokens } from "@/handlers/clearTokens";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useLogout } from "@/hooks/useLogout";
+import { useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +15,7 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const modalRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const logout = useLogout();
   const { first_name, last_name } = useAppSelector(
     (state) => state.profile.userInfo
   );
@@ -30,16 +28,6 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
     navigate("/profile");
     setOpenProfileModal(false);
     handleMouseLeave();
-  };
-
-  const handleLogout = () => {
-    navigate("/");
-    dispatch(updateIsLoggedIn(false));
-    dispatch(updateUserInfo(userInfoDefaults));
-    localStorage.removeItem("user");
-    localStorage.removeItem("likedProducts");
-
-    // clearTokens();
   };
 
   useEffect(() => {
@@ -88,7 +76,7 @@ export const ProfileModal: FC<Props> = ({ setOpenProfileModal }) => {
             )}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            onClick={handleLogout}
+            onClick={logout}
           >
             Log out
           </li>

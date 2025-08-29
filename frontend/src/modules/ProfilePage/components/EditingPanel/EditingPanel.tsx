@@ -1,9 +1,9 @@
 import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
 import { API_ENDPOINTS } from "@/constants/endpoints";
 import { profileActions } from "@/features/profile/profileSlice";
-import { fetchWithAuth } from "@/handlers/fetchWithAuth";
 import { isEmailCorrect } from "@/handlers/isEmailCorrect";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useFetchWithAuth } from "@/hooks/useFetchWithAuth";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { DetailType } from "@/types/DetailType";
 import { EditingPassword } from "@/types/EditingPassword";
@@ -30,13 +30,14 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const dispatch = useAppDispatch();
   const title = `Edit ${forDetail.toLowerCase()}`;
-  const { editingForm, userInfo, editingPassword, access } = useAppSelector(
+  const { editingForm, userInfo, editingPassword } = useAppSelector(
     (state) => state.profile
   );
   const { first_name, last_name, email } = editingForm;
   const { new_password1, new_password2 } = editingPassword;
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const fetchWithAuth = useFetchWithAuth();
 
   const addFormField = () => {
     switch (detailType) {
@@ -158,15 +159,10 @@ export const EditingPanel: FC<Props> = ({ detailType, forDetail }) => {
   const handleSubmit = () => {
     setIsLoading(true);
 
-    fetchWithAuth(
-      currentEndpoint,
-      {
-        method: forDetail === "Password" ? "POST" : "PATCH",
-        body: parseTempUser(),
-      },
-      access,
-      dispatch
-    )
+    fetchWithAuth(currentEndpoint, {
+      method: forDetail === "Password" ? "POST" : "PATCH",
+      body: parseTempUser(),
+    })
       .then((data) => {
         // only password form doesn't send back updated user
         if (forDetail !== "Password") {

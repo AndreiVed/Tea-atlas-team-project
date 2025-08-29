@@ -1,54 +1,57 @@
-import { updateAccessToken } from "@/features/profile/profileSlice";
-import { AppDispatch } from "@/store/appStore";
-import { API_ENDPOINTS } from "../constants/endpoints";
+// import { updateAccessToken } from "@/features/profile/profileSlice";
+// import { AppDispatch } from "@/store/appStore";
+// import { API_ENDPOINTS } from "../constants/endpoints";
 
-export const fetchWithAuth = async <T>(
-  url: string,
-  options: RequestInit,
-  access: string,
-  dispatch: AppDispatch
-): Promise<T> => {
-  let response = await fetch(url, {
-    ...options,
-    credentials: "include",
-    headers: {
-      ...(options.headers || {}),
-      Authorization: `Bearer ${access}`,
-    },
-  });
+// export const fetchWithAuth = async <T>(
+//   url: string,
+//   options: RequestInit,
+//   access: string,
+//   dispatch: AppDispatch,
+//   logout: () => void,
+// ): Promise<T> => {
+//   let response = await fetch(url, {
+//     ...options,
+//     credentials: "include",
+//     headers: {
+//       ...(options.headers || {}),
+//       Authorization: `Bearer ${access}`,
+//     },
+//   });
 
-  if (response.status === 401) {
-    // const refreshToken = localStorage.getItem("refresh");
-    // if (!refreshToken) throw new Error("No refresh token");
+//   if (response.status === 401) {
+//     const refreshToken = localStorage.getItem("refresh");
 
-    const refreshResponse = await fetch(API_ENDPOINTS.auth.refreshToken, {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      // body: JSON.stringify({ refresh: refreshToken }),
-    });
+//     if (!refreshToken) {
+//       logout();
+//     };
 
-    if (!refreshResponse.ok) throw new Error("Unable to refresh token");
+//     const refreshResponse = await fetch(API_ENDPOINTS.auth.refreshToken, {
+//       method: "POST",
+//       credentials: "include",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ refresh: refreshToken }),
+//     });
 
-    const { access } = await refreshResponse.json();
-    localStorage.setItem("access_token", access);
-    // localStorage.setItem("refresh", refresh);
-    dispatch(updateAccessToken(access));
+//     if (!refreshResponse.ok) throw new Error("Unable to refresh token");
 
-    response = await fetch(url, {
-      ...options,
-      credentials: "include",
-      headers: {
-        ...(options.headers || {}),
-        Authorization: `Bearer ${access}`,
-      },
-    });
-  }
+//     const { access: newAccess } = await refreshResponse.json();
+//     localStorage.setItem("access_token", newAccess);
+//     dispatch(updateAccessToken(access));
 
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err?.message || "Request failed");
-  }
+//     response = await fetch(url, {
+//       ...options,
+//       credentials: "include",
+//       headers: {
+//         ...(options.headers || {}),
+//         Authorization: `Bearer ${access}`,
+//       },
+//     });
+//   }
 
-  return response.json();
-};
+//   if (!response.ok) {
+//     const err = await response.json();
+//     throw new Error(err?.message || "Request failed");
+//   }
+
+//   return response.json();
+// };

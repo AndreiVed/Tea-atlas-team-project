@@ -41,6 +41,7 @@ export const profileSlice = createSlice({
     } as EditingPassword,
 
     access: localStorage.getItem("token") || "",
+    refresh: localStorage.getItem("refresh") || "",
   },
   reducers: {
     updateIsLoggedIn(state, action: PayloadAction<boolean>) {
