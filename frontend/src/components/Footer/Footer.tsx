@@ -46,7 +46,7 @@ export const Footer: FC = () => {
         <img
           className={styles["footer__rights-container-photo"]}
           src="/icons/rights.svg"
-          alt="C"
+          alt="Rights"
         />
         <span
           className={cn(

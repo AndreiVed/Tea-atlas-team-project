@@ -1,4 +1,4 @@
-import { ProductCart } from "@/components/ProductCart";
+import { ProductCard } from "@/components/ProductCard";
 import { useAppSelector } from "@/store/hooks";
 import cn from "classnames";
 import { FC } from "react";
@@ -23,7 +23,7 @@ export const ProductList: FC<Props> = ({ hasProducts }) => {
       })}
     >
       {products.slice(0, paginateTo).map((product) => (
-        <ProductCart key={product.id} product={product} usedIn="catalog" />
+        <ProductCard key={product.id} product={product} usedIn="catalog" />
       ))}
     </div>
   );

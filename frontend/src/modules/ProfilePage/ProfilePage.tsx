@@ -15,17 +15,19 @@ export const ProfilePage: FC = () => {
   useScroll({ options: { top: 0, behavior: "instant" } });
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const [showDeleteMsg, setShowDeleteMsg] = useState(false);
-  const { userInfo } = useAppSelector((state) => state.profile);
+  const { userInfo, isReauthRequired } = useAppSelector(
+    (state) => state.profile
+  );
   const { first_name, last_name, email } = userInfo;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const fetchWithAuth = useFetchWithAuth();
 
   useEffect(() => {
-    if (Object.values(userInfo).every((val) => !val)) {
+    if (!isReauthRequired && Object.values(userInfo).every((val) => !val)) {
       navigate("/");
     }
-  }, [userInfo, navigate]);
+  }, [userInfo, isReauthRequired, navigate]);
 
   return (
     <section className={styles["profile"]}>
@@ -86,11 +88,7 @@ export const ProfilePage: FC = () => {
         />
       </div>
 
-      {showDeleteMsg ? (
-        <div className={styles["modal-overlay"]}>
-          <DeleteAccount setShowDeleteMsg={setShowDeleteMsg} />
-        </div>
-      ) : null}
+      {showDeleteMsg && <DeleteAccount setShowDeleteMsg={setShowDeleteMsg} />}
     </section>
   );
 };

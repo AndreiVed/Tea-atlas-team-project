@@ -12,6 +12,7 @@ export const profileSlice = createSlice({
   name: "profile",
   initialState: {
     isLoggedIn: localUser ? true : false,
+    isReauthRequired: false,
 
     userInfo: localUser
       ? JSON.parse(localUser)
@@ -67,6 +68,10 @@ export const profileSlice = createSlice({
     updateAccessToken(state, action: PayloadAction<string>) {
       state.access = action.payload;
     },
+
+    updateIsReauthRequired(state, action: PayloadAction<boolean>) {
+      state.isReauthRequired = action.payload;
+    }
   },
 });
 
@@ -79,6 +84,7 @@ export const {
   updateEditingForm,
   updateUserInfo,
   updateAccessToken,
+  updateIsReauthRequired,
 } = profileSlice.actions;
 
 export const profileActions = profileSlice.actions;

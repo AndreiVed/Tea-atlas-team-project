@@ -3,6 +3,7 @@ import contactReducer from '../features/contact/contactSlice';
 import cursorReducer from '../features/cursor/cursorSlice';
 import filterReducer from '../features/filter/filterSlice';
 import loginReducer from '../features/login/loginSlice';
+import modalReducer from '../features/modal/modalSlice';
 import passwordReducer from '../features/password/passwordSlice';
 import productsReducer from '../features/products/productsSlice';
 import profileReducer from '../features/profile/profileSlice';
@@ -20,6 +21,7 @@ export const appStore = configureStore({
     login: loginReducer,
     password: passwordReducer,
     contact: contactReducer,
+    modal: modalReducer,
   },
 });
 

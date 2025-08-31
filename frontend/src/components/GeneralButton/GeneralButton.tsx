@@ -55,7 +55,7 @@ export const GeneralButton: FC<Props> = ({
       type={isSubmit ? "submit" : "button"}
       disabled={isDisabled}
     >
-      {icon ? <img src={icon} alt={text} /> : null}
+      {icon && <img src={icon} alt={text} />}
       {isLoading ? <Loader /> : text}
     </button>
   );

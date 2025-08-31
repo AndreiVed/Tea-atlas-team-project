@@ -1,7 +1,9 @@
 import { Banner } from "@/components/Banner";
-import { ProductCart } from "@/components/ProductCart";
+import { LoginRequiredModal } from "@/components/LoginRequiredModal";
+import { ProductCard } from "@/components/ProductCard";
 import { ProductPhoto } from "@/components/ProductPhoto";
 import { API_ENDPOINTS } from "@/constants/endpoints";
+import { updateShowLoginRequiredModal } from "@/features/modal/modalSlice";
 import { updateLikedProducts } from "@/features/products/productsSlice";
 import { loadAllProducts } from "@/handlers/loadAllProducts";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
@@ -31,6 +33,7 @@ export const ProductPage: FC = () => {
   const fetchWithAuth = useFetchWithAuth();
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const { id } = useParams();
+  const { showLoginRequiredModal } = useAppSelector((state) => state.modal);
 
   if (!products.length) {
     loadAllProducts(dispatch);
@@ -78,11 +81,13 @@ export const ProductPage: FC = () => {
   }
 
   const handleManipulatingFavList = () => {
-    if (!id) {
+    if (!isLoggedIn) {
+      dispatch(updateShowLoginRequiredModal(true));
+
       return;
     }
 
-    if (!isLoggedIn) {
+    if (!id) {
       return;
     }
 
@@ -114,84 +119,89 @@ export const ProductPage: FC = () => {
   };
 
   return (
-    <section className={styles["product"]}>
-      <div className={styles["product__top-info-wrap"]}>
-        <ProductPhoto image={image} usedInPage />
-        <div className={styles["product__characteristics-wrap"]}>
-          <div className={styles["product__top"]}>
-            <h2 className={styles["product__title"]}>{name}</h2>
+    <>
+      <section className={styles["product"]}>
+        <div className={styles["product__top-info-wrap"]}>
+          <ProductPhoto image={image} usedInPage />
+          <div className={styles["product__characteristics-wrap"]}>
+            <div className={styles["product__top"]}>
+              <h2 className={styles["product__title"]}>{name}</h2>
+              <button
+                className={cn(styles["product__add-to-fav"], {
+                  [styles["product__add-to-fav--filled"]]: isInFavorites,
+                })}
+                title={
+                  isInFavorites ? "Remove from favorites" : "Add to favorites"
+                }
+                disabled={isTogglingFavorites}
+                onClick={handleManipulatingFavList}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              />
+            </div>
+            <h3 className={styles["product__tea-type"]}>{category.name}</h3>
+            <div className={styles["product__chars-wrap"]}>
+              <ProductCharacteristics
+                category={category}
+                impact={impact}
+                descriptors={descriptors}
+              />
+              <SteepingInstructions />
+            </div>
+          </div>
+          <div className={styles["product__about"]}>
+            <h3 className={styles["product__about-title"]}>
+              About the product
+            </h3>
+            <p className={styles["product__about-desc"]}>{description}</p>
+          </div>
+        </div>
+
+        <div className={styles["product__you-may-like"]}>
+          <div className={styles["product__you-may-like-top"]}>
+            <h4 className={styles["product__you-may-like-title"]}>
+              You may also like
+            </h4>
             <button
-              className={cn(styles["product__add-to-fav"], {
-                [styles["product__add-to-fav--filled"]]: isInFavorites,
-              })}
-              title={
-                isInFavorites ? "Remove from favorites" : "Add to favorites"
-              }
-              disabled={!isLoggedIn || isTogglingFavorites}
-              onClick={handleManipulatingFavList}
+              className={cn(
+                styles["product__you-may-like-view-btn"],
+                "link-button"
+              )}
+              onClick={handleViewAllBtnClick}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-            />
+            >
+              view all
+            </button>
           </div>
-          <h3 className={styles["product__tea-type"]}>{category.name}</h3>
-          <div className={styles["product__chars-wrap"]}>
-            <ProductCharacteristics
-              category={category}
-              impact={impact}
-              descriptors={descriptors}
-            />
-            <SteepingInstructions />
+          <div className={styles["product__recommended-products"]}>
+            {products.slice(0, 4).map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                usedIn="catalog"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              />
+            ))}
           </div>
         </div>
-        <div className={styles["product__about"]}>
-          <h3 className={styles["product__about-title"]}>About the product</h3>
-          <p className={styles["product__about-desc"]}>{description}</p>
-        </div>
-      </div>
 
-      <div className={styles["product__you-may-like"]}>
-        <div className={styles["product__you-may-like-top"]}>
-          <h4 className={styles["product__you-may-like-title"]}>
-            You may also like
-          </h4>
+        <div className={styles["product__learn-more"]}>
+          <Banner
+            baseSrc="/banners/productpage/learn-more.webp"
+            className="product__learn-more-banner"
+          />
           <button
-            className={cn(
-              styles["product__you-may-like-view-btn"],
-              "link-button"
-            )}
-            onClick={handleViewAllBtnClick}
+            className={styles["product__learn-more-btn"]}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onClick={handleLearnMoreClick}
           >
-            view all
+            Learn more about brewing tea
           </button>
         </div>
-        <div className={styles["product__recommended-products"]}>
-          {products.slice(0, 4).map((product) => (
-            <ProductCart
-              key={product.id}
-              product={product}
-              usedIn="catalog"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className={styles["product__learn-more"]}>
-        <Banner
-          baseSrc="/banners/productpage/learn-more.webp"
-          className="product__learn-more-banner"
-        />
-        <button
-          className={styles["product__learn-more-btn"]}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onClick={handleLearnMoreClick}
-        >
-          Learn more about brewing tea
-        </button>
-      </div>
-    </section>
+      </section>
+      {showLoginRequiredModal && <LoginRequiredModal />}
+    </>
   );
 };

@@ -20,18 +20,22 @@ export const ProductCharacteristics: FC<Props> = ({
 
   const characteristics = [
     {
+      id: 1,
       title: "Country",
       badges: [`${country} · ${province}`],
     },
     {
+      id: 2,
       title: "Impact",
       badges: [impact],
     },
     {
+      id: 3,
       title: "Fermentation",
       badges: [fermentation],
     },
     {
+      id: 4,
       title: "Tasting notes",
       badges: descriptors,
     },
@@ -40,11 +44,11 @@ export const ProductCharacteristics: FC<Props> = ({
   return (
     <div className={styles["product__characteristics"]}>
       {characteristics.map((characteristic, index) => {
-        const { title, badges } = characteristic;
+        const { id, title, badges } = characteristic;
 
         return (
           <ProductCharacteristic
-            key={Math.random() * index}
+            key={id}
             title={title}
             badges={badges}
             index={index}

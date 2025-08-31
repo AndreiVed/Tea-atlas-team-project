@@ -1,0 +1,23 @@
+@use "@/styles/utils/mixins/grid-mixins.scss" as *;
+
+.modal {
+  &-title {
+    font-size: 28px;
+
+    @include on-tablet {
+      font-size: 32px;
+    }
+
+    @include on-desktop {
+      font-size: 40px;
+    }
+
+    text-align: center;
+    margin: 0;
+  }
+
+  &-description {
+    text-align: center;
+    margin-block: 8px;
+  }
+}

@@ -1,4 +1,5 @@
 import { API_ENDPOINTS } from "@/constants/endpoints";
+import { updateShowLoginRequiredModal } from "@/features/modal/modalSlice";
 import { updateLikedProducts } from "@/features/products/productsSlice";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
 import { useFetchWithAuth } from "@/hooks/useFetchWithAuth";
@@ -6,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Product } from "@/types/Product";
 import cn from "classnames";
 import { FC, useState } from "react";
+import { LoginRequiredModal } from "../../../LoginRequiredModal";
 import styles from "./ToggleFavorite.module.scss";
 
 type Props = {
@@ -17,6 +19,7 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const { likedProducts } = useAppSelector((state) => state.products);
   const { isLoggedIn } = useAppSelector((state) => state.profile);
+  const { showLoginRequiredModal } = useAppSelector(state => state.modal);
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
   const fetchWithAuth = useFetchWithAuth();
@@ -30,6 +33,8 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
     e.stopPropagation();
 
     if (!isLoggedIn) {
+      dispatch(updateShowLoginRequiredModal(true));
+
       return;
     }
 
@@ -55,15 +60,19 @@ export const ToggleFavorite: FC<Props> = ({ productId, usedIn }) => {
   };
 
   return (
-    <button
-      className={cn(styles["toggle-favorite"], {
-        [styles["toggle-favorite--liked"]]: isLiked && usedIn !== "liked-it",
-        [styles["toggle-favorite--favorites-page"]]: usedIn === "liked-it", // anyway it will be liked in this case
-      })}
-      title={title}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleTogglingProduct}
-    />
+    <>
+      <button
+        className={cn(styles["toggle-favorite"], {
+          [styles["toggle-favorite--liked"]]: isLiked && usedIn !== "liked-it",
+          [styles["toggle-favorite--favorites-page"]]: usedIn === "liked-it", // anyway it will be liked in this case
+        })}
+        title={title}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleTogglingProduct}
+      />
+
+      {showLoginRequiredModal && <LoginRequiredModal />}
+    </>
   );
 };

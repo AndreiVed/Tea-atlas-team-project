@@ -3,6 +3,8 @@
 .product {
   margin-top: 56px;
 
+  min-height: 100vh;
+
   @include on-tablet {
     margin-top: 80px;
   }

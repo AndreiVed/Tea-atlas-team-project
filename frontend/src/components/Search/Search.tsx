@@ -21,19 +21,17 @@ export const Search: FC = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-  }
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if(event.key === "Enter") {
+    if (event.key === "Enter") {
       const params = new URLSearchParams();
 
       params.set("name", value);
-
       setSearchParams(params);
       navigate(`/catalog?${params}`);
-      
     }
-  }
+  };
 
   const handleSearchClick = () => inputRef.current?.focus();
 

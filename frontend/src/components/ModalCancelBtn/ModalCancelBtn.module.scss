@@ -1,0 +1,15 @@
+.cancel-btn {
+  align-self: end;
+  width: 24px;
+  height: 24px;
+
+  background-image: url("/icons/close.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  background-color: inherit;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

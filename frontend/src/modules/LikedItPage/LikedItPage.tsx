@@ -1,6 +1,6 @@
 import { Banner } from "@/components/Banner";
 import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
-import { ProductCart } from "@/components/ProductCart";
+import { ProductCard } from "@/components/ProductCard";
 import { useAppSelector } from "@/store/hooks";
 import { FC } from "react";
 import styles from "./LikedItPage.module.scss";
@@ -20,7 +20,7 @@ export const LikedItPage: FC = () => {
       <div className={styles["liked-it__products"]}>
         {Array.isArray(likedProducts)
           ? likedProducts.map((product) => (
-              <ProductCart
+              <ProductCard
                 product={product}
                 key={product.id}
                 usedIn="liked-it"

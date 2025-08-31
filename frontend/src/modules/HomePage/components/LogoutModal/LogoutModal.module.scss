@@ -1,0 +1,14 @@
+@use "@/styles/utils/colors.scss" as *;
+@use "@/styles/utils/mixins/grid-mixins.scss" as *;
+
+.logout-modal {
+  &__title {
+    text-align: center;
+    margin-block: 0px 4px;
+  }
+
+  &__subtitle {
+    text-align: center;
+    margin-block: 0 12px;
+  }
+}

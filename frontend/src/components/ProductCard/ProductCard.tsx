@@ -1,9 +1,10 @@
 import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { useAppSelector } from "@/store/hooks";
 import { Product } from "@/types/Product";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductPhoto } from "../ProductPhoto";
-import styles from "./ProductCart.module.scss";
+import styles from "./ProductCard.module.scss";
 import { ToggleFavorite } from "./components/ToggleFavorite";
 
 type Props = {
@@ -11,10 +12,11 @@ type Props = {
   usedIn: "catalog" | "liked-it";
   onClick?: () => void;
 };
-export const ProductCart: FC<Props> = ({ product, usedIn, onClick }) => {
+export const ProductCard: FC<Props> = ({ product, usedIn, onClick }) => {
   const { id, name, descriptors, image, category } = product;
   const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
   const navigate = useNavigate();
+  const { showLoginRequiredModal } = useAppSelector((state) => state.modal);
 
   const isMoreThanTwoCategories = descriptors.length > 2;
   const howMuchMore = isMoreThanTwoCategories ? descriptors.length - 2 : 0;
@@ -29,7 +31,10 @@ export const ProductCart: FC<Props> = ({ product, usedIn, onClick }) => {
     }
 
     handleMouseLeave();
-    navigate(`/catalog/${id}`);
+
+    if (!showLoginRequiredModal) {
+      navigate(`/catalog/${id}`);
+    }
   };
 
   return (
@@ -55,11 +60,11 @@ export const ProductCart: FC<Props> = ({ product, usedIn, onClick }) => {
               {descriptor}
             </p>
           ))}
-          {isMoreThanTwoCategories ? (
+          {isMoreThanTwoCategories && (
             <p
               className={styles["product__info-categories-more"]}
             >{`+${howMuchMore} more`}</p>
-          ) : null}
+          )}
         </div>
       </div>
     </article>

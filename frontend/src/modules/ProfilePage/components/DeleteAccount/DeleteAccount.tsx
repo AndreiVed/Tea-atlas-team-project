@@ -1,5 +1,6 @@
 import { GeneralButton } from "@/components/GeneralButton/GeneralButton";
-import { useCursorEffect } from "@/hooks/useCursorEffect";
+import { ModalCancelBtn } from "@/components/ModalCancelBtn";
+import { ModalMessage } from "@/components/ModalMessage";
 import { Dispatch, FC, SetStateAction } from "react";
 import styles from "./DeleteAccount.module.scss";
 
@@ -8,25 +9,16 @@ type Props = {
 };
 
 export const DeleteAccount: FC<Props> = ({ setShowDeleteMsg }) => {
-  const { handleMouseEnter, handleMouseLeave } = useCursorEffect();
 
   return (
-    <section className={styles["delete-account"]}>
+    <ModalMessage>
       <div className={styles["delete-account__header"]}>
         <img
           className={styles["delete-account__danger-icon"]}
           src="/icons/triangle-danger.svg"
           alt="Danger!"
         />
-        <button
-          className={styles["delete-account__close-btn"]}
-          onClick={() => {
-            setShowDeleteMsg(false);
-            handleMouseLeave();
-          }}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        />
+        <ModalCancelBtn onClick={() => setShowDeleteMsg(false)}/>
       </div>
       <div className={styles["delete-account__info"]}>
         <h3 className={styles["delete-account__info-title"]}>
@@ -43,6 +35,6 @@ export const DeleteAccount: FC<Props> = ({ setShowDeleteMsg }) => {
       >
         <GeneralButton type="secondary" text="BACK TO ACCOUNT" />
       </div>
-    </section>
+    </ModalMessage>
   );
 };

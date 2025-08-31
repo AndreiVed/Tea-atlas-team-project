@@ -5,16 +5,19 @@ import { updateUserInfo } from "@/features/profile/profileSlice";
 import { useScroll } from "@/hooks/useScroll";
 import { useAppDispatch } from "@/store/hooks";
 import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Carousel } from "./components/Carousel";
 import { LoginErrorModal } from "./components/LoginErrorModal";
+import { LogoutModal } from "./components/LogoutModal";
 import styles from "./HomePage.module.scss";
 
 export const HomePage = () => {
-  useScroll({ options: { top: 0, behavior: "instant" } });
   const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
+  const { state } = useLocation();
   const [isLoginError, setIsLoginError] = useState(false);
+  const [showReauth, setShowReauth] = useState(state?.reason === "reauth");
+
+  useScroll({ options: { top: 0, behavior: "instant" } });
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -52,9 +55,9 @@ export const HomePage = () => {
 
   return (
     <>
-      {isLoginError ? (
-        <LoginErrorModal setIsLoginError={setIsLoginError} />
-      ) : null}
+      {isLoginError && <LoginErrorModal setIsLoginError={setIsLoginError} />}
+      {showReauth && <LogoutModal setShowReauth={setShowReauth} />}
+
       <section className={styles["discover-world-of-tea"]}>
         <Banner
           className="discover-world-of-tea__banner"
