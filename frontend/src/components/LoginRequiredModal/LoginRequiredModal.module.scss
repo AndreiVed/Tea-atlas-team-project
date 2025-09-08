@@ -1,8 +1,11 @@
 @use "@/styles/utils/mixins/grid-mixins.scss" as *;
 
 .modal {
-  &-title {
+  &__title {
     font-size: 28px;
+    margin: 0;
+
+    text-align: center;
 
     @include on-tablet {
       font-size: 32px;
@@ -11,13 +14,15 @@
     @include on-desktop {
       font-size: 40px;
     }
-
-    text-align: center;
-    margin: 0;
   }
 
-  &-description {
+  &__description {
     text-align: center;
-    margin-block: 8px;
+    margin-block: 0 8px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 8px;
   }
 }

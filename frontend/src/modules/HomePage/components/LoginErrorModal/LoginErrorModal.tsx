@@ -16,7 +16,14 @@ export const LoginErrorModal: FC<Props> = ({ setIsLoginError }) => {
         Something went wrong with login
       </h3>
       <p className={styles["error-modal__description"]}>Please, try again</p>
-      <GeneralButton type="primary" text="LOGIN" to="/login" />
+      <div className={styles["error-modal__buttons"]}>
+        <GeneralButton type="primary" text="LOGIN" to="/login" />
+        <GeneralButton
+          type="secondary"
+          text="CANCEL"
+          onClick={() => setIsLoginError(false)}
+        />
+      </div>
     </ModalMessage>
   );
 };

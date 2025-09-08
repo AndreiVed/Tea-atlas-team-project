@@ -4,11 +4,21 @@
 .logout-modal {
   &__title {
     text-align: center;
-    margin-block: 0px 4px;
+    margin: 0;
   }
 
   &__subtitle {
     text-align: center;
-    margin-block: 0 12px;
+    margin-block: 0 8px;
+  }
+
+  &__buttons {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+
+    > * {
+      width: 100%;
+    }
   }
 }

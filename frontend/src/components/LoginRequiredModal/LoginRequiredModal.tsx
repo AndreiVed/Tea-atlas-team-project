@@ -14,15 +14,22 @@ export const LoginRequiredModal: FC = () => {
       <ModalCancelBtn
         onClick={() => dispatch(updateShowLoginRequiredModal(false))}
       />
-      <h2 className={styles["modal-title"]}>This action requires login</h2>
+      <h2 className={styles["modal__title"]}>This action requires login</h2>
 
-      <p className={styles["modal-description"]}>Please log in to continue</p>
-      <GeneralButton
-        type="primary"
-        text="LOGIN"
-        to="/login"
-        onClick={() => dispatch(updateShowLoginRequiredModal(false))}
-      />
+      <p className={styles["modal__description"]}>Please log in to continue</p>
+      <div className={styles["modal__buttons"]}>
+        <GeneralButton
+          type="primary"
+          text="LOGIN"
+          to="/login"
+          onClick={() => dispatch(updateShowLoginRequiredModal(false))}
+        />
+        <GeneralButton
+          type="secondary"
+          text="CANCEL"
+          onClick={() => dispatch(updateShowLoginRequiredModal(false))}
+        />
+      </div>
     </ModalMessage>
   );
 };

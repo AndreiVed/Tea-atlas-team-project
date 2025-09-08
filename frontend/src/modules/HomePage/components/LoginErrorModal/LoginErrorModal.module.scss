@@ -3,11 +3,17 @@
 .error-modal {
   &__title {
     text-align: center;
-    margin-block: 0 8px;
+    margin: 0;
   }
 
   &__description {
-    margin: 0;
+    margin-block: 0 8px;
+  }
+
+  &__buttons {
+    width: 100%;
+    display: flex;
+    gap: 8px;
   }
 
   &__cancel {

@@ -35,11 +35,18 @@ export const LogoutModal: FC<Props> = ({ setShowReauth }) => {
       <h3 className={styles["logout-modal__subtitle"]}>
         Please, log in again to continue
       </h3>
-      <GeneralButton
-        type="primary"
-        text="LOGIN"
-        onClick={handleLoginBtnClick}
-      />
+      <div className={styles["logout-modal__buttons"]}>
+        <GeneralButton
+          type="primary"
+          text="LOGIN"
+          onClick={handleLoginBtnClick}
+        />
+        <GeneralButton
+          type="secondary"
+          text="CANCEL"
+          onClick={handleCancelClick}
+        />
+      </div>
     </ModalMessage>
   );
 };
