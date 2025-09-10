@@ -1,6 +1,7 @@
 @use "@/styles/utils/colors" as *;
-@use '@/styles/utils/mixins/grid-mixins.scss' as *;
-@use '@/styles/utils/mixins/styling-mixins.scss' as *;
+@use "@/styles/utils/mixins/grid-mixins.scss" as *;
+@use "@/styles/utils/mixins/styling-mixins.scss" as *;
+@use "@/styles/utils/vars.scss" as *;
 
 .profile {
   padding-inline: 16px;
@@ -16,6 +17,8 @@
     align-items: center;
     flex-direction: column;
 
+    max-width: $large-desktop-min-width;
+  
     @include on-tablet {
       display: block;
       grid-column: 2 / -2;
@@ -34,7 +37,7 @@
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background-image: url('/icons/camera.svg');
+        background-image: url("/icons/camera.svg");
         background-position: center;
         background-repeat: no-repeat;
         background-size: 56px;
@@ -50,20 +53,19 @@
         width: 100%;
         height: 100%;
         position: relative;
-        transition: cursor .4s;
+        transition: cursor 0.4s;
       }
 
       &-wrap {
         position: relative;
         width: 112px;
         height: 112px;
-        
+
         &:hover {
           .profile__info-photo-edit {
-            transition: transform .4s;
+            transition: transform 0.4s;
             transform: scale(1.1);
           }
-
         }
       }
 
@@ -77,7 +79,7 @@
         padding: 8px;
         border-radius: 50%;
 
-        background-image: url('/icons/pencil.svg');
+        background-image: url("/icons/pencil.svg");
         background-size: 24px;
         background-position: center;
         background-repeat: no-repeat;
@@ -97,6 +99,8 @@
   &__personal-details {
     margin-block: 48px 24px;
 
+    max-width: $large-desktop-min-width;
+
     @include on-tablet {
       grid-column: 2 / -2;
     }
@@ -112,6 +116,7 @@
 
   &__manage-account {
     margin-bottom: 56px;
+    max-width: 1920px;
 
     @include on-tablet {
       grid-column: 2 / -2;

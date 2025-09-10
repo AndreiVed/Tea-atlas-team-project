@@ -18,6 +18,12 @@
   }
 }
 
+@mixin on-large-desktop {
+  @media (min-width: $large-desktop-min-width) {
+    @content;
+  }
+}
+
 @mixin mobile-grid {
   @media (max-width: $mobile-max-width) {
     display: grid;

@@ -1,5 +1,7 @@
 @use "@/styles/utils/colors" as *;
 @use "@/styles/utils/mixins/grid-mixins.scss" as *;
+@use "@/styles/utils/mixins/banner-title.scss" as *;
+@use "@/styles/utils/vars" as *;
 
 .specific-blog {
   &__banner-wrap {
@@ -8,22 +10,19 @@
 
   &__title {
     font-size: 40px;
-    color: $white;
-    margin: 0;
-    position: absolute;
 
-    left: 16px;
-    bottom: 16px;
+    @include banner-title;
 
     @include on-desktop {
-      left: 88px;
-      bottom: 40px;
       font-size: 55px;
     }
   }
 
   &__info {
     padding-inline: 16px;
+
+    max-width: $large-desktop-min-width;
+    margin-inline: auto;
 
     @include tablet-grid;
     @include desktop-grid;
@@ -52,7 +51,6 @@
 
   &__green-pot-banner {
     @include on-desktop {
-      // margin-bottom: 120px;
       grid-row: 2 / 4;
       grid-column: span 6;
     }
@@ -60,7 +58,6 @@
 
   &__three-cups-banner {
     @include on-desktop {
-      // margin-bottom: 120px;
       grid-row: span 2;
       grid-column: 7 / -1;
     }

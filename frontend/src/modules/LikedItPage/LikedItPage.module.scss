@@ -1,5 +1,7 @@
 @use '@/styles/utils/colors' as *;
 @use '@/styles/utils/mixins/grid-mixins.scss' as *;
+@use '@/styles/utils/mixins/banner-title.scss' as *;
+@use '@/styles/utils/vars.scss' as *;
 
 .liked-it {
   &__banner {
@@ -7,26 +9,17 @@
     width: 100%;
 
     &-title {
-      margin: 0;
-      color: $white;
-      position: absolute;
-      bottom: 16px;
-      left: 16px;
+      @include banner-title;
 
       @include on-mobile {
         font-size: 40px;
       }
-
-      @include on-tablet {
-        left: 32px;
-        bottom: 32px;
-      }
-
-      @include on-desktop {
-        left: 80px;
-        bottom: 40px
-      }
     }
+  }
+
+  &__content {
+    max-width: $large-desktop-min-width;
+    margin-inline: auto;
   }
 
   &__products {

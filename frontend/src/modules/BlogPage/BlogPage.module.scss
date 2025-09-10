@@ -1,5 +1,7 @@
 @use '@/styles/utils/colors' as *;
 @use '@/styles/utils/mixins/grid-mixins.scss' as *;
+@use '@/styles/utils/mixins/banner-title.scss' as *;
+@use '@/styles/utils/vars.scss' as *;
 
 .blog {
   min-height: 100vh;
@@ -9,29 +11,18 @@
     position: relative;
 
     &-title {
-      color: $white;
-      margin: 0;
-      position: absolute;
-      bottom: 16px;
-      left: 16px;
-
-      @include on-tablet {
-        bottom: 32px;
-        left: 32px;
-      }
-
-      @include on-desktop {
-        bottom: 40px;
-        left: 80px;
-      }
+      @include banner-title;
     }
   }
 
   &__sections {
     margin-block: 32px 56px;
     padding-inline: 16px;
+    max-width: $large-desktop-min-width;
+    margin-inline: auto;
 
     @include tablet-grid;
     @include desktop-grid;
+
   }
 }

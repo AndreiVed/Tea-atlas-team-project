@@ -1,5 +1,6 @@
-@use '@/styles/utils/colors' as *;
-@use '@/styles/utils/mixins/grid-mixins' as *;
+@use "@/styles/utils/colors" as *;
+@use "@/styles/utils/mixins/grid-mixins" as *;
+@use "@/styles/utils/vars" as *;
 
 .footer {
   box-sizing: border-box;
@@ -16,6 +17,9 @@
   }
 
   &__links-wrap {
+    max-width: $large-desktop-min-width;
+    margin-inline: auto;
+
     @include on-tablet {
       display: flex;
       justify-content: space-between;
@@ -86,11 +90,11 @@
     height: 56px;
     margin: 24px auto 40px auto;
 
-    background-image: url('/icons/logo.svg');
+    background-image: url("/icons/logo.svg");
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
-    transition: transform .4s;
+    transition: transform 0.4s;
 
     @include on-tablet {
       width: 64px;
@@ -100,7 +104,7 @@
 
     &:hover {
       transform: scale(1.1);
-      transition: transform .4s;
+      transition: transform 0.4s;
     }
   }
 
@@ -113,7 +117,7 @@
       color: $gray-60;
       margin-inline: 2px 8px;
     }
-    
+
     &-text {
       color: $gray-60;
     }

@@ -17,25 +17,27 @@ export const LikedItPage: FC = () => {
         />
         <h1 className={styles["liked-it__banner-title"]}>Liked it</h1>
       </div>
-      <div className={styles["liked-it__products"]}>
-        {Array.isArray(likedProducts)
-          ? likedProducts.map((product) => (
-              <ProductCard
-                product={product}
-                key={product.id}
-                usedIn="liked-it"
-              />
-            ))
-          : null}
-      </div>
-      <div className={styles["liked-it__complete-order"]}>
-        <h3 className={styles["liked-it__complete-order-text"]}>
-          Complete the list of your favorite teas
-        </h3>
-        <div className={styles["liked-it__complete-order-btn-wrap"]}>
-          <GeneralButton type="primary" text="TEA CATALOG" to="/catalog" />
+      <section className={styles["liked-it__content"]}>
+        <div className={styles["liked-it__products"]}>
+          {Array.isArray(likedProducts)
+            ? likedProducts.map((product) => (
+                <ProductCard
+                  product={product}
+                  key={product.id}
+                  usedIn="liked-it"
+                />
+              ))
+            : null}
         </div>
-      </div>
+        <div className={styles["liked-it__complete-order"]}>
+          <h3 className={styles["liked-it__complete-order-text"]}>
+            Complete the list of your favorite teas
+          </h3>
+          <div className={styles["liked-it__complete-order-btn-wrap"]}>
+            <GeneralButton type="primary" text="TEA CATALOG" to="/catalog" />
+          </div>
+        </div>
+      </section>
     </section>
   );
 };

@@ -1,0 +1,33 @@
+@use "./grid-mixins.scss" as *;
+@use "../colors" as *;
+@use "../vars" as *;
+
+@mixin banner-title-left {
+  @include on-large-desktop {
+    left: calc((100% - $large-desktop-min-width) / 2 + 80px);
+  }
+
+  @media (min-width: calc($large-desktop-min-width + 80px)) {
+    left: calc((100% - $large-desktop-min-width) / 2);
+  }
+}
+
+@mixin banner-title {
+  position: absolute;
+  margin: 0;
+  color: $white;
+  bottom: 16px;
+  left: 16px;
+
+  @include on-tablet {
+    bottom: 32px;
+    left: 32px;
+  }
+
+  @include on-desktop {
+    bottom: 40px;
+    left: 80px;
+  }
+
+  @include banner-title-left;
+}

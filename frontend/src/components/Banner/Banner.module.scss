@@ -36,6 +36,7 @@
 
   @include on-tablet {
     height: 65vh;
+    object-position: center;
     object-fit: cover;
     grid-column: span 6;
   }

@@ -1,6 +1,14 @@
-@use '@/styles/utils/mixins/styling-mixins.scss' as *;
+@use "@/styles/utils/mixins/styling-mixins.scss" as *;
 @use "@/styles/utils/mixins/grid-mixins.scss" as *;
 @use "@/styles/utils/colors" as *;
+@use "@/styles/utils/vars.scss" as *;
+
+// .home-page {
+//   width: 100%;
+//   max-width: 1920px;
+//   margin: 0 auto;
+//   box-sizing: border-box;
+// }
 
 .discover-world-of-tea {
   position: relative;
@@ -24,6 +32,14 @@
       left: 80px;
       padding: 0;
     }
+
+    @include on-large-desktop {
+      left: calc((100% - $large-desktop-min-width) / 2 + 80px);
+    }
+
+    @media (min-width: calc($large-desktop-min-width + 80px)) {
+      left: calc((100% - $large-desktop-min-width) / 2);
+    }
   }
 
   &__title {
@@ -43,7 +59,6 @@
   background-color: $gray-30;
   margin-block: 56px;
 
-  @include apply-appear-on-scroll;
   @include tablet-grid;
   @include desktop-grid;
 
@@ -55,6 +70,8 @@
   @include on-desktop {
     margin-block: 140px;
   }
+
+  @include apply-appear-on-scroll;
 
   &__info {
     padding: 16px 16px 24px 16px;
@@ -176,6 +193,8 @@
     margin-block: 32px;
     padding-inline: 52px;
 
+    max-width: $large-desktop-min-width;
+
     @include on-tablet {
       padding-inline: 172px;
     }
@@ -196,4 +215,6 @@
 
 .carousel {
   padding-inline: 16px;
+  max-width: $large-desktop-min-width;
+  margin-inline: auto;
 }

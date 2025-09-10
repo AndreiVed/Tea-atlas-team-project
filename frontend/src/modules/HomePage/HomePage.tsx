@@ -54,7 +54,7 @@ export const HomePage = () => {
   }, [location.search, dispatch]);
 
   return (
-    <>
+    <section className={styles["home-page"]}>
       {isLoginError && <LoginErrorModal setIsLoginError={setIsLoginError} />}
       {showReauth && <LogoutModal setShowReauth={setShowReauth} />}
 
@@ -120,6 +120,6 @@ export const HomePage = () => {
         </p>
         <GeneralButton type="secondary" text="BLOG" to="/blog" />
       </section>
-    </>
+    </section>
   );
 };

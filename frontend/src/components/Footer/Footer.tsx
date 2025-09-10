@@ -2,7 +2,6 @@ import { footerLinks } from "@/constants/links";
 import { pagesWithoutFooter } from "@/constants/pagesWithoutFooter";
 import { shouldHideComponent } from "@/handlers/shouldHideComponent";
 import { useCursorEffect } from "@/hooks/useCursorEffect";
-
 import cn from "classnames";
 import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
